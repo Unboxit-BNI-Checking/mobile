@@ -7,6 +7,9 @@ import pembayaran from "../assets/images/pembayaran.png";
 import rekeningku from "../assets/images/rekeningku.png";
 import transfer from "../assets/images/transfer.png";
 import promotion from "../assets/images/promotion.jpg";
+import background46 from "../assets/images/background-46.png";
+import lpslogo from "../assets/images/lps-logo.png";
+import bnilogo from "../assets/images/bni-logo.png";
 
 export default {
   ewallet,
@@ -18,4 +21,7 @@ export default {
   rekeningku,
   transfer,
   promotion,
+  background46,
+  lpslogo,
+  bnilogo,
 };

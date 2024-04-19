@@ -15,6 +15,7 @@ const Home = () => {
         options={{
           headerStyle: { backgroundColor: "#F37548" },
           headerShadowVisible: false,
+         
           headerLeft: () => (
            <View style={{ flexDirection: "row", gap: 10, paddingHorizontal: 18 }}>
              <Image
@@ -30,6 +31,7 @@ const Home = () => {
               <ScreenHeaderBtn
                 iconUrl={icons.icNotification}
                 dimension={24}
+              
                 handlePress={() => {}}
               />
               <ScreenHeaderBtn
