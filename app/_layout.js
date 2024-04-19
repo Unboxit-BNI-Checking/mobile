@@ -11,7 +11,6 @@ import { Foundation } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import SpalshScreen from "../screens/SplashScreen";
 import AlertTest from "../screens/AlertTest";
 
 const Layout = () => {
@@ -187,7 +186,7 @@ const Layout = () => {
     //     }}
     //   />
     // </Tabs>
-   <SpalshScreen/>
+   <AlertTest/>
   );
 };
 

@@ -2,7 +2,7 @@ import { View, Text, Image, ImageBackground } from "react-native";
 import React from "react";
 import images from "../constants/images";
 
-const SpalshScreen = () => {
+const SplashScreen = () => {
   return (
     <View
       style={{ flex: 1, justifyContent: "space-between", alignItems: "center" }}
@@ -79,4 +79,4 @@ const SpalshScreen = () => {
   );
 };
 
-export default SpalshScreen;
+export default SplashScreen;

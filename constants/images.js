@@ -24,4 +24,5 @@ export default {
   background46,
   lpslogo,
   bnilogo,
+  
 };
