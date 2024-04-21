@@ -1,19 +1,24 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 
-const ButtonNextClose = ({closeName, handlePressModal, nextName}) => {
+const ButtonNextClose = ({
+  nextName,
+  closeName,
+  handleNextButtonClick,
+  handleCloseButtonClick,
+}) => {
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        gap: 10,
-        marginTop: 20,
-      }}
-    >
-      <TouchableOpacity style={styles.closeButton} onPress={handlePressModal}>
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.closeButton}
+        onPress={handleCloseButtonClick}
+      >
         <Text style={styles.closeButtonText}>{closeName}</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.nextButton} onPress={handlePressModal}>
+      <TouchableOpacity
+        style={styles.nextButton}
+        onPress={handleNextButtonClick}
+      >
         <Text style={styles.nextButtonText}>{nextName}</Text>
       </TouchableOpacity>
     </View>
@@ -21,34 +26,35 @@ const ButtonNextClose = ({closeName, handlePressModal, nextName}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    gap: 10,
+  },
+
   closeButton: {
     flex: 1,
+    padding: 14,
     backgroundColor: "#FEEEE9",
-    padding: 10,
     borderRadius: 100,
-    width: 160,
-    height: 50,
     justifyContent: "center",
     alignItems: "center",
   },
   closeButtonText: {
     color: "#F15922",
-    fontSize: 16,
+
     fontFamily: "PlusJakartaSansMedium",
   },
   nextButton: {
     flex: 1,
     backgroundColor: "#F15922",
-    padding: 10,
     borderRadius: 100,
-    width: 160,
-    height: 50,
     justifyContent: "center",
     alignItems: "center",
+    padding: 14,
   },
   nextButtonText: {
     color: "white",
-    fontSize: 16,
+
     fontFamily: "PlusJakartaSansMedium",
   },
 });
