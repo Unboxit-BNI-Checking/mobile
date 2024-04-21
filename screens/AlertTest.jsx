@@ -3,99 +3,99 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
   Modal,
+  StyleSheet,
   Image,
-} from "react-native";
-import images from "../constants/images";
+} from "react-native"; // Import Checkbox and ButtonNextClose from their respective paths
+// Import icons from its path
 import icons from "../constants/icons";
-import Checkbox from "expo-checkbox";
-import ButtonNextClose from "../component/common/button/ButtonNextClose";
+import ModalCustom from "../component/common/modal/ModalCustom";
+import ButtonPrimary from "../component/common/button/ButtonPrimary";
 
 const AlertTest = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [status, setStatus] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
+
+  const openModal = (newStatus) => {
+    setStatus(newStatus);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleNextButtonClick = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  const handleCloseButtonClick = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  // Define content and icons for different statuses
+  const modalContent = {
+    1: {
+      linkText: "Cek No Rek Disini",
+      mediumText:
+        "Hati-hati dalam bertransaksi dengan Nomor Rekening Asing ini.",
+      titleText: "Rekening Asing",
+      iconStatus: icons.icStatusGreen,
+    },
+    2: {
+      linkText: "Investigate Details",
+      mediumText:
+        "We are investigating this account. Please refrain from transactions.",
+      titleText: "Investigate",
+      iconStatus: icons.icStatusYellow,
+    },
+    3: {
+      linkText: "Block Details",
+      mediumText: "This account has been blocked. Transactions are prohibited.",
+      titleText: "Blocked Account",
+      iconStatus: icons.icStatusRed,
+    },
+  };
+
+  // Determine whether to show checkbox based on status
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.buttonText}>Open Bottom Sheet</Text>
-      </TouchableOpacity>
+      <ButtonPrimary
+        iconUrl={icons.icQris}
+        onPress={() => openModal(3)} // Set status to 1 for REKENING_ASING
+        text={"Selanjutnya"}
+        dimension={24}
+      />
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.bottomSheet}>
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 5,
-                alignItems: "center",
-                alignContent: "center",
-              }}
-            >
-              <Image
-                source={icons.icStatusGreen}
-                style={{ width: 20, height: 20 }}
-              />
-              <Text style={styles.bottomSheetText}>Rekening Asing</Text>
-            </View>
-            <View>
-              <Text
-                style={{
-                  fontFamily: "PlusJakartaSansMedium",
-                  color: "#243757",
-                }}
-              >
-                Hati-hati dalam bertransaksi dengan Nomor Rekening Asing ini.
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "PlusJakartaSansMedium",
-                  color: "#F15922",
-                  textDecorationLine: "underline",
-                }}
-              >
-                Cek No Rek Disini
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
-            >
-              <Checkbox
-                style={styles.checkbox}
-                value={isChecked}
-                onValueChange={setIsChecked}
-                color={isChecked ? "#F15922" : undefined}
-              />
-              <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-                Jangan tunjukan ini lagi hari ini
-              </Text>
-            </View>
-            <ButtonNextClose
-              closeName="Close"
-              handlePressModal={() => setModalVisible(false)}
-              nextName="Lanjutkan"
-            />
-          </View>
-        </View>
-      </Modal>
+      <ModalCustom
+        modalVisible={modalVisible}
+        closeModal={closeModal}
+        linkText={status == 3 ? null : modalContent[status].linkText}
+        mediumText={modalContent[status].mediumText}
+        titleText={modalContent[status].titleText}
+        iconStatus={modalContent[status].iconStatus}
+        handleNextButtonClick={handleNextButtonClick}
+        handleCloseButtonClick={handleCloseButtonClick}
+        handleCheckboxChange={handleCheckboxChange}
+        isChecked={isChecked}
+        showCheckbox={status != 1 ? false : true}
+        showCloseButton={status == 3 ? false : true}
+      />
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    gap: 10,
   },
   button: {
     backgroundColor: "blue",
@@ -122,6 +122,25 @@ const styles = StyleSheet.create({
   bottomSheetText: {
     fontSize: 16,
     fontFamily: "PlusJakartaSansBold",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+  },
+  mediumText: {
+    fontFamily: "PlusJakartaSansMedium",
+    color: "#243757",
+  },
+  linkText: {
+    textDecorationLine: "underline",
+    color: "#F15922",
   },
 });
 
