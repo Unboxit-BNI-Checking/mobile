@@ -29,6 +29,11 @@ import icLainnyaLogin from "../assets/icons/ic-lainnya-login.png";
 import icQrisLogin from "../assets/icons/ic-qris-login.png";
 import icWalletLogin from "../assets/icons/ic-wallet-login.png";
 import icSearchCekRekening from "../assets/icons/ic-search-cek-rekening.png";
+import icInfoHasilCekRekening from "../assets/icons/ic-info-hasil-cek-rekening.png";
+import icBniChecking from "../assets/icons/ic-bni-checking.png";
+import icPelaporan from "../assets/icons/ic-pelaporan.png";
+
+
 
 export default {
   icBni,
@@ -62,4 +67,7 @@ export default {
   icQrisLogin,
   icWalletLogin,
   icSearchCekRekening,
+  icInfoHasilCekRekening,
+  icBniChecking,
+  icPelaporan,
 };
