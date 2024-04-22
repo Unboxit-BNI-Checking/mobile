@@ -4,7 +4,7 @@ import React from 'react'
 const Favorite = () => {
   return (
     <View style={{ flex: 1, alignContent: "center", justifyContent: "center", alignItems: "center" }}>
-    <Text>KEPO :p</Text>
+    <Text>Favorite</Text>
   </View>
   )
 }

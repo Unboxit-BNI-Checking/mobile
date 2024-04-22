@@ -11,7 +11,7 @@ const Riwayat = () => {
         alignItems: "center",
       }}
     >
-      <Text>KEPO :p</Text>
+      <Text>Riwayat</Text>
     </View>
   );
 };

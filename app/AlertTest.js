@@ -67,10 +67,8 @@ const AlertTest = () => {
   return (
     <View style={styles.container}>
       <ButtonPrimary
-        iconUrl={icons.icQris}
-        onPress={() => openModal(3)} // Set status to 1 for REKENING_ASING
+        onPress={() =>  openModal(1)} // Set status to 1 for REKENING_ASING
         text={"Selanjutnya"}
-        dimension={24}
       />
 
       <ModalCustom

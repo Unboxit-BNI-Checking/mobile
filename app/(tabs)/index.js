@@ -1,10 +1,12 @@
 import { View, SafeAreaView, ScrollView, Image } from "react-native";
 import { Stack, useRouter } from "expo-router";
-import icons from "../constants/icons";
-import MenuComponent from "../component/home/MenuComponent";
-import RekeningComponent from "../component/home/RekeningComponent";
-import PromotionComponent from "../component/home/PromotionComponent";
-import ScreenHeaderBtn from "../component/common/header/ScreenHeaderBtn";
+import MenuComponent from "../../component/home/MenuComponent";
+import RekeningComponent from "../../component/home/RekeningComponent";
+import PromotionComponent from "../../component/home/PromotionComponent";
+import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
+import icons from "../../constants/icons";
+import images from "../../constants/images";
+
 
 const Home = () => {
   const router = useRouter();
@@ -45,7 +47,7 @@ const Home = () => {
           headerTitle: "",
         }}
       />
-      <ScrollView showsVerticalScrollIndicator={true}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {/* <View style={{ flex: 1, padding: SIZES.medium }}>
         <Welcome />
         <Popularjobs />
@@ -54,7 +56,7 @@ const Home = () => {
 
         <View>
           <RekeningComponent />
-          <MenuComponent />
+          <MenuComponent  />
           <PromotionComponent />
         </View>
       </ScrollView>

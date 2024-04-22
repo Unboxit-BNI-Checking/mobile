@@ -3,7 +3,14 @@ import React from "react";
 
 const Pengaturan = () => {
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Text>Pengaturan</Text>
     </View>
   );
