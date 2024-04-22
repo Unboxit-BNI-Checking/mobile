@@ -28,6 +28,7 @@ import icBiometricLogin from "../assets/icons/ic-biometric-login.png";
 import icLainnyaLogin from "../assets/icons/ic-lainnya-login.png";
 import icQrisLogin from "../assets/icons/ic-qris-login.png";
 import icWalletLogin from "../assets/icons/ic-wallet-login.png";
+import icArrowForward from "../assets/icons/ic-arrow-forward.png";
 
 export default {
   icBni,
@@ -60,4 +61,5 @@ export default {
   icLainnyaLogin,
   icQrisLogin,
   icWalletLogin,
+  icArrowForward
 };

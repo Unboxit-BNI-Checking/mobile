@@ -7,41 +7,49 @@ const data = [
   {
     id: 1,
     name: "Transfer",
+    route: "transfer/Transfer",
     image: icons.icTransfer,
   },
   {
     id: 2,
     name: "E-Wallet",
+    route: "transfer/TransferEwallet",
     image: icons.icEwallet,
   },
   {
     id: 3,
     name: "Pembayaran",
+    route: "transfer/TransferPembayaran",
     image: icons.icPembayaran,
   },
   {
     id: 4,
     name: "Pembelian",
+    route: "transfer/TransferPembelian",
     image: icons.icPembelian,
   },
   {
     id: 5,
     name: "Investasi",
+    route: "transfer/TransferInvestasi",
     image: icons.icInvestasi,
   },
   {
     id: 6,
     name: "Rekeningku",
+    route: "transfer/TransferRekeningku",
     image: icons.icRekeningku,
   },
   {
     id: 7,
-    name: "BNI Checking",
+    name: "BNI\nChecking",
+    route: "transfer/TransferBNI",
     image: icons.icKredible,
   },
   {
     id: 8,
     name: "Lainnya",
+    route: "transfer/TransferLainnya",
     image: icons.icLainnya,
   },
 ];
@@ -54,11 +62,19 @@ const MenuComponent = () => {
           <TouchableOpacity
             key={item.id}
             // onPress={() => sampleCallback(item.name)}\
-            onPress={() => router.push('/' + item.name)}
+            onPress={() => router.push("/" + item.route)}
           >
             <View>
               <Image source={item.image} style={styles.imageMenu} />
-              <Text style={{ textAlign: "center" }}>{item.name}</Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontFamily: "PlusJakartaSansMedium",
+                  fontSize: 13,
+                }}
+              >
+                {item.name}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -69,15 +85,15 @@ const MenuComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#fff",
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
     paddingHorizontal: 20,
   },
   contentMenu: {
     width: "25%",
     alignItems: "center",
-    justifyContent: "center",
   },
   imageMenu: {
     width: 60,

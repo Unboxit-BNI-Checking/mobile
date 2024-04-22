@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
-
 const Layout = () => {
   const [fontsLoaded] = useFonts({
     PlusJakartaSansMedium: require("../assets/fonts/PlusJakartaSans-Medium.ttf"),
@@ -30,7 +29,6 @@ const Layout = () => {
     <Stack onLayout={onLayoutRootView}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     </Stack>
-   
   );
 };
 
