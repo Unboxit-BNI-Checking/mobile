@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
-import LoginScreen from "./LoginScreen";
+import CekRekening from "./CekRekening";
 
 const Layout = () => {
   const [fontsLoaded] = useFonts({
@@ -31,7 +31,7 @@ const Layout = () => {
     // <Stack onLayout={onLayoutRootView}>
     //   <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     // </Stack>
-    <LoginScreen/>
+    <CekRekening/>
   );
 };
 
