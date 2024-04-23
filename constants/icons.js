@@ -34,8 +34,8 @@ import icInfoHasilCekRekening from "../assets/icons/ic-info-hasil-cek-rekening.p
 import icBniChecking from "../assets/icons/ic-bni-checking.png";
 import icPelaporan from "../assets/icons/ic-pelaporan.png";
 import icAddButton from "../assets/icons/ic-add-button.png";
-
-
+import icRadioActive from "../assets/icons/ic-radio-active.png";
+import icRadioInactive from "../assets/icons/ic-radio-inactive.png";
 
 export default {
   icBni,
@@ -73,5 +73,7 @@ export default {
   icInfoHasilCekRekening,
   icBniChecking,
   icPelaporan,
-  icAddButton
+  icAddButton,
+  icRadioActive,
+  icRadioInactive,
 };
