@@ -41,6 +41,12 @@ import icArrowRightPoin from "../assets/icons/ic-arrow-right-poin.png";
 import icInfoValidasiPayment from "../assets/icons/ic-info-validasi-payment.png";
 import icMataValidasiPayment from "../assets/icons/ic-mata-validasi-payment.png";
 import icCeklisValidasiSuccessPayment from "../assets/icons/ic-ceklis-validasi-success-payment.png";
+import icPaste from "../assets/icons/ic-paste-sertakan-laporan.png";
+import icPaste2 from "../assets/icons/ic-paste2-sertakan-laporan.png";
+import icX from "../assets/icons/ic-x-sertakan-laporan.png";
+import icCeklis from "../assets/icons/ic-ceklis.png";
+import icInfoRingkasanLaporan from "../assets/icons/ic-info-ringkasan-laporan.png";
+
 
 export default {
   icBni,
@@ -86,4 +92,9 @@ export default {
   icInfoValidasiPayment,
   icMataValidasiPayment,
   icCeklisValidasiSuccessPayment,
+  icPaste,
+  icPaste2,
+  icX,
+  icCeklis,
+  icInfoRingkasanLaporan,
 };

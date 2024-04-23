@@ -1,15 +1,21 @@
-import { View, Text, StyleSheet, Image, TextInput, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TextInput, Image, ScrollView } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
 import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
+import CheckboxCustom from "../../../component/common/checkbox/CheckboxCustom";
 
-const SertakanLaporan = () => {
+const SertakanLaporanSummary = () => {
   const [text, setText] = useState("");
-  const route = useRouter();
+  const router = useRouter();
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  }
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <Stack.Screen
         options={{
           headerTitleAlign: "center",
@@ -32,7 +38,7 @@ const SertakanLaporan = () => {
         }}
       />
       <ScrollView>
-      <View style={{ padding: 20, gap: 10, marginBottom:250 }}>
+      <View style={{ marginTop: 30, gap: 10, marginHorizontal: 20, marginBottom: 200 }}>
         <View style={{ gap: 4 }}>
           <Text style={styles.headerText}>Rekening Pelapor</Text>
           <View style={{ flexDirection: "row", gap: 5 }}>
@@ -67,51 +73,91 @@ const SertakanLaporan = () => {
               Kronologi
             </Text>
             <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder=""
-                value={text}
-                onChangeText={setText}
-              />
+              <Text style={styles.input}>
+                InputLorem Ipsumis simply dummy text of the printing and
+                typesetting industry. Lorem Ipsum has been the industry's
+                standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type
+                specimen book.
+              </Text>
             </View>
           </View>
-        </View>
-        <View style={{ gap: 6 }}>
-          <Text
-            style={{ color: "#243757", fontFamily: "PlusJakartaSansRegular" }}
-          >
-            Lampiran
-          </Text>
-          <View style={styles.inputContainer2}>
-            <Image source={icons.icPaste} style={{ height: 24, width: 24 }} />
+          <View style={{ gap: 6 }}>
             <Text
+              style={{ color: "#243757", fontFamily: "PlusJakartaSansRegular" }}
+            >
+              Lampiran
+            </Text>
+            <View style={styles.inputContainer2}>
+              <Image source={icons.icPaste} style={{ height: 24, width: 24 }} />
+              <Text
+                style={{
+                  textDecorationLine: "underline",
+                  color: "#6B788E",
+                  fontSize: 12,
+                  fontFamily: "PlusJakartaSansRegular",
+                }}
+              >
+                Tambahkan Bukti Disini
+              </Text>
+              <Text
+                style={{
+                  color: "#6B788E",
+                  fontSize: 12,
+                  fontFamily: "PlusJakartaSansRegular",
+                }}
+              >
+                Anda bisa upload lebih dari 1 file
+              </Text>
+            </View>
+            <View
               style={{
-                textDecorationLine: "underline",
-                color: "#6B788E",
-                fontSize: 12,
-                fontFamily: "PlusJakartaSansRegular",
+                flexDirection: "row",
+                height: 56,
+                backgroundColor: "#F5F6F7",
+                borderRadius: 6,
+                padding: 16,
+                justifyContent: "space-between",
               }}
             >
-              Tambahkan Bukti Disini
-            </Text>
-            <Text
-              style={{
-                color: "#6B788E",
-                fontSize: 12,
-                fontFamily: "PlusJakartaSansRegular",
-              }}
-            >
-              Anda bisa upload lebih dari 1 file
-            </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 4,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  source={icons.icPaste2}
+                  style={{ width: 24, height: 24 }}
+                />
+                <Text
+                  style={{
+                    textDecorationLine: "underline",
+                    color: "#6B788E",
+                    fontSize: 12,
+                    fontFamily: "PlusJakartaSansRegular",
+                  }}
+                >
+                  Screenshot-WhatsApp-3827.jpg
+                </Text>
+              </View>
+
+              <Image source={icons.icX} style={{ width: 24, height: 24 }} />
+            </View>
           </View>
         </View>
       </View>
       </ScrollView>
+      
+      
       <View style={styles.bottomButtonContainer}>
+        <CheckboxCustom label={"Syarat dan Ketentuan"} value={isChecked} onValueChange={handleCheckboxChange} />
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            route.push("/bnichecking/laporan/SertakanLaporanSummary");
+            router.push("/bnichecking/laporan/StatusBerhasilTerkirim");
           }}
         />
       </View>
@@ -122,12 +168,11 @@ const SertakanLaporan = () => {
 const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
-    alignItems: "center",
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 8,
     padding: 16,
-    height: 52,
+    height: 152,
   },
   inputContainer2: {
     alignItems: "center",
@@ -141,7 +186,9 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    marginLeft: 10,
+    textAlign: "justify",
+    color: "#5D6B82",
+    fontFamily: "PlusJakartaSansRegular",
   },
   headerText: { color: "#243757", fontFamily: "PlusJakartaSansBold" },
   subHeaderText: {
@@ -156,9 +203,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopWidth: 1,
     borderTopColor: "rgba(204, 204, 204, 0.5)",
-    height: 102,
-    alignItems: "center",
+    height: 152,
+    gap:20
+   
   },
 });
 
-export default SertakanLaporan;
+export default SertakanLaporanSummary;

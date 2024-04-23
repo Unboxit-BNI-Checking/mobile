@@ -1,10 +1,34 @@
 import { View, Text, Image, StyleSheet, TextInput } from "react-native";
 import React from "react";
 import icons from "../../../constants/icons";
+import { Stack } from "expo-router";
+import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 const RingkasanLaporan = () => {
   return (
     <View style={{ marginTop: 40, gap: 10, marginHorizontal: 20 }}>
+      <Stack.Screen
+        options={{
+          headerTitleAlign: "center",
+          // headerStyle: { backgroundColor: "red" },
+          headerTitleStyle: {
+            color: "#243757",
+          },
+          headerShadowVisible: false,
+
+          headerLeft: () => (
+            <ScreenHeaderBtn
+              iconUrl={icons.icArrowForward}
+              dimension={24}
+              handlePress={() => {
+                router.back();
+              }}
+            />
+          ),
+          headerTitle: "Transfer Antar BNI",
+        }}
+      />
+
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <View
           style={{
