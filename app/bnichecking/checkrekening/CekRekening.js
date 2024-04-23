@@ -10,13 +10,35 @@ import React, { useState } from "react";
 import icons from "../../../constants/icons";
 import { AntDesign } from "@expo/vector-icons";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
+import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 const CekRekening = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [text, setText] = useState("");
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          headerTitleAlign: "center",
+          // headerStyle: { backgroundColor: "red" },
+          headerTitleStyle: {
+            color: "#243757",
+          },
+          headerShadowVisible: false,
+
+          headerLeft: () => (
+            <ScreenHeaderBtn
+              iconUrl={icons.icArrowForward}
+              dimension={24}
+              handlePress={() => {
+                router.back();
+              }}
+            />
+          ),
+          headerTitle: "Cek Rekening",
+        }}
+      />
       <View style={{ padding: 20 }}>
         <View style={{ gap: 8 }}>
           <Text
