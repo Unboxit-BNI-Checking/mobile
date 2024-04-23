@@ -36,6 +36,8 @@ import icPelaporan from "../assets/icons/ic-pelaporan.png";
 import icAddButton from "../assets/icons/ic-add-button.png";
 import icRadioActive from "../assets/icons/ic-radio-active.png";
 import icRadioInactive from "../assets/icons/ic-radio-inactive.png";
+import icPoinHome from "../assets/icons/ic-poin-home.png";
+import icArrowRightPoin from "../assets/icons/ic-arrow-right-poin.png";
 
 export default {
   icBni,
@@ -76,4 +78,6 @@ export default {
   icAddButton,
   icRadioActive,
   icRadioInactive,
+  icPoinHome,
+  icArrowRightPoin
 };

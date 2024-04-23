@@ -2,13 +2,16 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import icons from "../../../constants/icons";
+import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
+import { Stack } from "expo-router";
+import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 // Impor dummy transaction data
 
@@ -19,18 +22,34 @@ const dataRekening = [
 
 const dummyTransactionHistory = [
   {
-    date: "19/04/2024",
+    date: "19/04/2024_1",
     type: "TransferBNI",
     accountNumber: "123144142",
-    accountNumberDestination : "12839405948",
+    accountNumberDestination: "12839405948",
     accountOwner: "Nama Pemilik Rekening",
     amount: -10000,
   },
   {
-    date: "20/04/2024",
+    date: "20/04/2024_1",
     type: "TransferBCA",
     accountNumber: "123144142",
-    accountNumberDestination : "9999999999",
+    accountNumberDestination: "9999999999",
+    accountOwner: "Nama Pemilik Rekening",
+    amount: -15000,
+  },
+  {
+    date: "19/04/2024_2",
+    type: "TransferBNI",
+    accountNumber: "123144142",
+    accountNumberDestination: "12839405948",
+    accountOwner: "Nama Pemilik Rekening",
+    amount: -10000,
+  },
+  {
+    date: "20/04/2024_2",
+    type: "TransferBCA",
+    accountNumber: "123144142",
+    accountNumberDestination: "9999999999",
     accountOwner: "Nama Pemilik Rekening",
     amount: -15000,
   },
@@ -38,18 +57,55 @@ const dummyTransactionHistory = [
     date: "21/04/2024",
     type: "Top Up",
     accountNumber: "123456789",
-    accountNumberDestination : "888888",
+    accountNumberDestination: "888888",
     accountOwner: "Nama Pemilik Rekening",
     amount: 20000,
   },
-  // Add more transactions as needed
+  {
+    date: "19/04/2024_3",
+    type: "TransferBNI",
+    accountNumber: "123144142",
+    accountNumberDestination: "12839405948",
+    accountOwner: "Nama Pemilik Rekening",
+    amount: -10000,
+  },
+  {
+    date: "20/04/2024_3",
+    type: "TransferBCA",
+    accountNumber: "123144142",
+    accountNumberDestination: "9999999999",
+    accountOwner: "Nama Pemilik Rekening",
+    amount: -15000,
+  },
+  {
+    date: "19/04/2024_4",
+    type: "TransferBNI",
+    accountNumber: "123144142",
+    accountNumberDestination: "12839405948",
+    accountOwner: "Nama Pemilik Rekening",
+    amount: -10000,
+  },
+  {
+    date: "20/04/2024_4",
+    type: "TransferBCA",
+    accountNumber: "123144142",
+    accountNumberDestination: "9999999999",
+    accountOwner: "Nama Pemilik Rekening",
+    amount: -15000,
+  },
+  {
+    date: "21/04/2024_1",
+    type: "Top Up",
+    accountNumber: "123456789",
+    accountNumberDestination: "888888",
+    accountOwner: "Nama Pemilik Rekening",
+    amount: 20000,
+  },
 ];
 
 const BuatLaporan = () => {
-  const [valueRekening, setValueRekening] = useState(null);
   const [selectedTransaction, setSelectedTransaction] = useState(null); // State untuk menyimpan transaksi yang dipilih
-
-  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState(dataRekening[0]);
   const selectTransaction = (transaction) => {
     setSelectedTransaction(transaction); // Memilih transaksi yang dipilih
   };
@@ -146,46 +202,78 @@ const BuatLaporan = () => {
     </TouchableOpacity>
   );
 
+  useEffect(() => {
+    setSelectedAccount(dataRekening[0]);
+  }, []);
+
   return (
-    <View style={{ padding: 20 }}>
-      <Text
-        style={{
-          fontSize: 16,
-          fontFamily: "PlusJakartaSansBold",
-          marginBottom: 8,
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <Stack.Screen
+        options={{
+          headerTitleAlign: "center",
+          // headerStyle: { backgroundColor: "red" },
+          headerTitleStyle: {
+            color: "#243757",
+          },
+          headerShadowVisible: false,
+
+          headerLeft: () => (
+            <ScreenHeaderBtn
+              iconUrl={icons.icArrowForward}
+              dimension={24}
+              handlePress={() => {
+                router.back();
+              }}
+            />
+          ),
+          headerTitle: "Pelapor",
         }}
-      >
-        Rekening Yang Melaporkan
-      </Text>
-      <View style={{ gap: 8 }}>
-        <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-          Rekening Pelaporan
-        </Text>
+      />
+      <ScrollView>
+        <View style={{ padding: 20, marginBottom: 120 }}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: "PlusJakartaSansBold",
+              marginBottom: 8,
+            }}
+          >
+            Rekening Yang Melaporkan
+          </Text>
+          <View style={{ gap: 8 }}>
+            <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
+              Rekening Pelaporan
+            </Text>
 
-        <Dropdown
-          style={styles.dropdown}
-          data={dataRekening}
-          labelField="label"
-          valueField="value"
-          placeholder={dataRekening[0].label}
-          searchPlaceholder="Search..."
-          value={selectedAccount}
-          onChange={(item) => selectAccount(item.value)}
-          renderItem={(item) => (
-            <View style={styles.item}>
-              <Text style={styles.textItem}>{item.label}</Text>
-            </View>
-          )}
-        />
+            <Dropdown
+              style={styles.dropdown}
+              data={dataRekening}
+              labelField="label"
+              valueField="value"
+              placeholder={"Pilih Rekening"}
+              searchPlaceholder="Search..."
+              value={null}
+              onChange={(item) => selectAccount(item.value)}
+              renderItem={(item) => (
+                <View style={styles.item}>
+                  <Text style={styles.textItem}>{item.label}</Text>
+                </View>
+              )}
+            />
 
-        {/* Tampilkan item transaksi */}
-        {dummyTransactionHistory
-          .filter((transaction) => {
-            return selectedAccount
-              ? transaction.accountNumber === selectedAccount
-              : true;
-          })
-          .map((transaction) => renderItem(transaction))}
+            {/* Tampilkan item transaksi */}
+            {dummyTransactionHistory
+              .filter((transaction) => {
+                return selectedAccount
+                  ? transaction.accountNumber === selectedAccount
+                  : true;
+              })
+              .map((transaction) => renderItem(transaction))}
+          </View>
+        </View>
+      </ScrollView>
+      <View style={styles.bottomButtonContainer}>
+        <ButtonPrimary text="Konfirmasi" onPress={() => {}} />
       </View>
     </View>
   );
@@ -209,6 +297,17 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontFamily: "PlusJakartaSansMedium",
+  },
+  bottomButtonContainer: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    padding: 20,
+    backgroundColor: "#fff",
+    borderTopWidth: 1,
+    borderTopColor: "rgba(204, 204, 204, 0.5)",
+    height: 102,
+    alignItems: "center",
   },
 });
 

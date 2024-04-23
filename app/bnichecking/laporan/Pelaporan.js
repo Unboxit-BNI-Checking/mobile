@@ -4,7 +4,8 @@ import CardPelaporan from "../../../component/common/pelaporan/CardPelaporan";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import icons from "../../../constants/icons";
 import { AntDesign } from '@expo/vector-icons';
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
+import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 const Pelaporan = () => {
 
@@ -18,6 +19,29 @@ const Pelaporan = () => {
   };
   return (
     <View style={styles.container}>
+       <Stack.Screen
+        options={{
+          headerTitleAlign: "center",
+          // headerStyle: { backgroundColor: "red" },
+          headerTitleStyle: {
+            color: "#243757",
+           
+            
+          },
+          headerShadowVisible: false,
+
+          headerLeft: () => (
+            <ScreenHeaderBtn
+              iconUrl={icons.icArrowForward}
+              dimension={24}
+              handlePress={() => {
+                router.back();
+              }}
+            />
+          ),
+          headerTitle: "Pelaporan",
+        }}
+      />
       {/* TOPBAR DAFTAR FAVORIT */}
       <View style={{ backgroundColor: "white" }}>
         <View style={styles.tabRekTujuan}>
