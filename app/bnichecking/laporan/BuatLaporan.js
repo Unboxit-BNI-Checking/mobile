@@ -273,7 +273,9 @@ const BuatLaporan = () => {
         </View>
       </ScrollView>
       <View style={styles.bottomButtonContainer}>
-        <ButtonPrimary text="Konfirmasi" onPress={() => {}} />
+        <ButtonPrimary text="Selanjutnya" onPress={() => {
+          router.push("bnichecking/laporan/SertakanLaporan");
+        }} />
       </View>
     </View>
   );
