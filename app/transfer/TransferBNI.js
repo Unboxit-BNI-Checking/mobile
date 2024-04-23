@@ -55,7 +55,7 @@ const TransferBNI = () => {
   };
 
   const handleNextButtonClick = () => {
-    setModalVisible(!modalVisible);
+   router.push("/transfer/TransferConfirm");
   };
 
   const handleCloseButtonClick = () => {

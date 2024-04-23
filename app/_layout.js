@@ -29,6 +29,7 @@ const Layout = () => {
     <Stack onLayout={onLayoutRootView}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     </Stack>
+
   );
 };
 

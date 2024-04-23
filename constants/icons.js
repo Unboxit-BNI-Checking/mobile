@@ -38,6 +38,9 @@ import icRadioActive from "../assets/icons/ic-radio-active.png";
 import icRadioInactive from "../assets/icons/ic-radio-inactive.png";
 import icPoinHome from "../assets/icons/ic-poin-home.png";
 import icArrowRightPoin from "../assets/icons/ic-arrow-right-poin.png";
+import icInfoValidasiPayment from "../assets/icons/ic-info-validasi-payment.png";
+import icMataValidasiPayment from "../assets/icons/ic-mata-validasi-payment.png";
+import icCeklisValidasiSuccessPayment from "../assets/icons/ic-ceklis-validasi-success-payment.png";
 
 export default {
   icBni,
@@ -79,5 +82,8 @@ export default {
   icRadioActive,
   icRadioInactive,
   icPoinHome,
-  icArrowRightPoin
+  icArrowRightPoin,
+  icInfoValidasiPayment,
+  icMataValidasiPayment,
+  icCeklisValidasiSuccessPayment,
 };
