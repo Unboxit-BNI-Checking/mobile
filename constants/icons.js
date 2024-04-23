@@ -42,6 +42,7 @@ import icPaste from "../assets/icons/ic-paste-sertakan-laporan.png";
 import icPaste2 from "../assets/icons/ic-paste2-sertakan-laporan.png";
 import icX from "../assets/icons/ic-x-sertakan-laporan.png";
 import icCeklis from "../assets/icons/ic-ceklis.png";
+import icInfoRingkasanLaporan from "../assets/icons/ic-info-ringkasan-laporan.png";
 
 export default {
   icBni,
@@ -88,4 +89,5 @@ export default {
   icPaste2,
   icX,
   icCeklis,
+  icInfoRingkasanLaporan,
 };
