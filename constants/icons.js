@@ -23,6 +23,10 @@ import icPembayaran from "../assets/icons/ic-pembayaran.png";
 import icPembelian from "../assets/icons/ic-pembelian.png";
 import icRekeningku from "../assets/icons/ic-rekeningku.png";
 import icTransfer from "../assets/icons/ic-transfer.png";
+import icInfoValidasiPayment from "../assets/icons/ic-info-validasi-payment.png";
+import icMataValidasiPayment from "../assets/icons/ic-mata-validasi-payment.png";
+import icCeklisValidasiSuccessPayment from "../assets/icons/ic-ceklis-validasi-success-payment.png";
+
 
 export default {
   icBni,
@@ -50,4 +54,8 @@ export default {
   icPembelian,
   icRekeningku,
   icTransfer,
+  icInfoValidasiPayment,
+  icMataValidasiPayment,
+  icCeklisValidasiSuccessPayment,
+
 };

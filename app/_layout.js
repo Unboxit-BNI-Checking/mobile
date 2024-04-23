@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
-import TfAntarBNI from "./TfAntarBNI";
+import ValidasiPayment from "./ValidasiPayment";
 
 const Layout = () => {
   const [fontsLoaded] = useFonts({
@@ -28,9 +28,10 @@ const Layout = () => {
   }
 
   return (
-    <Stack onLayout={onLayoutRootView}>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    // <Stack onLayout={onLayoutRootView}>
+    //   <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    // </Stack>
+    <ValidasiPayment />
   );
 };
 
