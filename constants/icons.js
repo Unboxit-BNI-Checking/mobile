@@ -38,6 +38,7 @@ import icRadioActive from "../assets/icons/ic-radio-active.png";
 import icRadioInactive from "../assets/icons/ic-radio-inactive.png";
 import icPoinHome from "../assets/icons/ic-poin-home.png";
 import icArrowRightPoin from "../assets/icons/ic-arrow-right-poin.png";
+import icPaste from "../assets/icons/ic-paste-sertakan-laporan.png";
 
 export default {
   icBni,
@@ -79,5 +80,6 @@ export default {
   icRadioActive,
   icRadioInactive,
   icPoinHome,
-  icArrowRightPoin
+  icArrowRightPoin,
+  icPaste,
 };
