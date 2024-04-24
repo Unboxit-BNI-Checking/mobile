@@ -11,6 +11,7 @@ import icons from "../../../constants/icons";
 import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
+import ButtonNextClose from "../../../component/common/button/ButtonNextClose";
 
 const HasilCekRekening = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -21,6 +22,14 @@ const HasilCekRekening = () => {
 
   const closeModal = () => {
     setModalVisible(!modalVisible);
+  };
+
+  const handleNextButtonClick = () => {
+    route.replace("/bnichecking/checkrekening/CekRekening");
+  };
+
+  const handleCloseButtonClick = () => {
+    route.replace("(tabs)");
   };
   const route = useRouter();
   return (
@@ -101,7 +110,7 @@ const HasilCekRekening = () => {
             <View style={styles.row}>
               <Text style={styles.titleText}>Status Rekening</Text>
             </View>
-            <View style={{ gap: 16, marginTop:4 }}>
+            <View style={{ gap: 16, marginTop: 4 }}>
               <View style={{ gap: 8 }}>
                 <View
                   style={{
@@ -177,7 +186,14 @@ const HasilCekRekening = () => {
           </View>
         </View>
       </Modal>
-      
+      <View style={styles.bottomButtonContainer}>
+        <ButtonNextClose
+          nextName="Cek Rekening Lagi"
+          closeName="Kembali Ke Home"
+          handleNextButtonClick={handleNextButtonClick}
+          handleCloseButtonClick={handleCloseButtonClick}
+        />
+      </View>
     </View>
   );
 };
@@ -290,6 +306,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
+  },
+  bottomButtonContainer: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    padding: 20,
+    backgroundColor: "#fff",
+    borderTopWidth: 1,
+    borderTopColor: "rgba(204, 204, 204, 0.5)",
+    height: 102,
+    alignItems: "center",
   },
 });
 

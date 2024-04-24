@@ -1,8 +1,16 @@
 import React from "react";
-import { Modal, View, StyleSheet, Text, Image } from "react-native";
+import {
+  Modal,
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import ButtonNextClose from "../button/ButtonNextClose";
 import CheckboxCustom from "../checkbox/CheckboxCustom";
 import ButtonPrimary from "../button/ButtonPrimary";
+import { useRouter } from "expo-router";
 
 const ModalCustom = ({
   modalVisible,
@@ -19,6 +27,9 @@ const ModalCustom = ({
   showCloseButton,
   // New prop to control checkbox visibility
 }) => {
+  const route = useRouter();
+
+   
   return (
     <Modal
       animationType="slide"
@@ -34,7 +45,12 @@ const ModalCustom = ({
           </View>
           <View>
             <Text style={styles.mediumText}>{mediumText}</Text>
-            <Text style={[styles.mediumText, styles.linkText]}>{linkText}</Text>
+            <TouchableOpacity onPress={() => route.replace("/bnichecking/checkrekening/CekRekening")}>
+             
+              <Text style={[styles.mediumText, styles.linkText]}>
+                {linkText}
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={{ marginTop: 5, marginBottom: 10 }}>
             {showCheckbox && (

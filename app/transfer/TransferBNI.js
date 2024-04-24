@@ -311,7 +311,7 @@ const TransferBNI = () => {
         <ButtonPrimary
           text="Konfirmasi"
           onPress={() => {
-            openModal(1);
+            openModal(2);
           }}
         />
       </View>
