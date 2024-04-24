@@ -45,28 +45,13 @@ const LoginScreen = () => {
       </View>
 
       <View style={{ marginBottom: 143, alignItems: "center", gap: 40 }}>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            gap: 14,
-            justifyContent: "center",
-            alignItems: "center",
-            width: 335,
-            height: 48,
-            borderRadius: 100,
-            backgroundColor: "#F15922",
-          }}
-        >
-          <Text style={{ color: "#FFFFFF", fontSize: 14 }}>Login</Text>
-          <Image
-            source={icons.icBiometricLogin}
-            style={{
-              width: 20,
-              height: 20,
-            }}
+        <View style={{ flexDirection: "row", marginHorizontal: 20 }}>
+          <ButtonPrimary
+            text="Login"
+            iconUrl={icons.icBiometricLogin}
+            dimension={20}
           />
-        </TouchableOpacity>
-    
+        </View>
 
         <View style={{ flexDirection: "row", gap: 25 }}>
           <View

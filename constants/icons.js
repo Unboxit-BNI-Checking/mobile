@@ -28,11 +28,24 @@ import icBiometricLogin from "../assets/icons/ic-biometric-login.png";
 import icLainnyaLogin from "../assets/icons/ic-lainnya-login.png";
 import icQrisLogin from "../assets/icons/ic-qris-login.png";
 import icWalletLogin from "../assets/icons/ic-wallet-login.png";
+import icArrowForward from "../assets/icons/ic-arrow-forward.png";
 import icSearchCekRekening from "../assets/icons/ic-search-cek-rekening.png";
 import icInfoHasilCekRekening from "../assets/icons/ic-info-hasil-cek-rekening.png";
 import icBniChecking from "../assets/icons/ic-bni-checking.png";
 import icPelaporan from "../assets/icons/ic-pelaporan.png";
-
+import icAddButton from "../assets/icons/ic-add-button.png";
+import icRadioActive from "../assets/icons/ic-radio-active.png";
+import icRadioInactive from "../assets/icons/ic-radio-inactive.png";
+import icPoinHome from "../assets/icons/ic-poin-home.png";
+import icArrowRightPoin from "../assets/icons/ic-arrow-right-poin.png";
+import icInfoValidasiPayment from "../assets/icons/ic-info-validasi-payment.png";
+import icMataValidasiPayment from "../assets/icons/ic-mata-validasi-payment.png";
+import icCeklisValidasiSuccessPayment from "../assets/icons/ic-ceklis-validasi-success-payment.png";
+import icPaste from "../assets/icons/ic-paste-sertakan-laporan.png";
+import icPaste2 from "../assets/icons/ic-paste2-sertakan-laporan.png";
+import icX from "../assets/icons/ic-x-sertakan-laporan.png";
+import icCeklis from "../assets/icons/ic-ceklis.png";
+import icInfoRingkasanLaporan from "../assets/icons/ic-info-ringkasan-laporan.png";
 
 
 export default {
@@ -66,8 +79,22 @@ export default {
   icLainnyaLogin,
   icQrisLogin,
   icWalletLogin,
+  icArrowForward,
   icSearchCekRekening,
   icInfoHasilCekRekening,
   icBniChecking,
   icPelaporan,
+  icAddButton,
+  icRadioActive,
+  icRadioInactive,
+  icPoinHome,
+  icArrowRightPoin,
+  icInfoValidasiPayment,
+  icMataValidasiPayment,
+  icCeklisValidasiSuccessPayment,
+  icPaste,
+  icPaste2,
+  icX,
+  icCeklis,
+  icInfoRingkasanLaporan,
 };

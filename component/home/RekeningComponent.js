@@ -1,11 +1,12 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { Octicons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import icons from "../../constants/icons";
 
 const RekeningComponent = () => {
   return (
-    <View style={{ height: 260,  }}>
+    <View style={{ height: 260 }}>
       <View
         style={{
           backgroundColor: "#F37548",
@@ -73,8 +74,43 @@ const RekeningComponent = () => {
               BNI Taplus Muda
             </Text>
             <View
-              style={{ height: 30, width: 30, backgroundColor: "green" }}
-            ></View>
+              style={{
+                height: 26,
+
+                backgroundColor: "#F5F6F7",
+                flexDirection: "row",
+                paddingHorizontal: 8,
+                paddingVertical: 4,
+                borderRadius: 50,
+              }}
+            >
+              <Image
+                source={icons.icPoinHome}
+                style={{
+                  height: 15,
+                  width: 32,
+                }}
+                resizeMode="contain"
+              />
+              <Text
+                style={{
+                  color: "#F15922",
+                  fontSize: 12,
+                  fontFamily: "PlusJakartaSansBold",
+                }}
+              >
+                3.165
+              </Text>
+              <Image
+                source={icons.icArrowRightPoin}
+                style={{
+                  height: 10,
+                  width: 10,
+                  alignSelf: "center",
+                }}
+                resizeMode="contain"
+              />
+            </View>
           </View>
           <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
             <Text
