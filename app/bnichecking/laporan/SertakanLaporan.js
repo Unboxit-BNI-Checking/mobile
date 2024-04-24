@@ -24,7 +24,7 @@ const SertakanLaporan = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                router.back();
+                route.back();
               }}
             />
           ),
@@ -111,7 +111,7 @@ const SertakanLaporan = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            route.push("/bnichecking/laporan/SertakanLaporanSummary");
+            route.navigate("/bnichecking/laporan/SertakanLaporanSummary");
           }}
         />
       </View>

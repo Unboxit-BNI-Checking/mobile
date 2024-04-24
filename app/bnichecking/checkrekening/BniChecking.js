@@ -1,8 +1,14 @@
-import { View, Text, SafeAreaView, Image, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import icons from "../../../constants/icons";
 import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
-
 
 const data = [
   {
@@ -17,10 +23,9 @@ const data = [
     route: "bnichecking/laporan/Pelaporan",
     image: icons.icPelaporan,
   },
-  
 ];
 const BniChecking = () => {
-  router = useRouter();
+  const route = useRouter();
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -36,11 +41,11 @@ const BniChecking = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                router.back();
+                route.back();
               }}
             />
           ),
-          headerTitle: "Transfer",
+          headerTitle: "BNI Checking",
         }}
       />
       {data.map((item) => (
@@ -48,7 +53,7 @@ const BniChecking = () => {
           <TouchableOpacity
             key={item.id}
             // onPress={() => sampleCallback(item.name)}\
-            onPress={() => router.push("/" + item.route)}
+            onPress={() => route.navigate("/" + item.route)}
           >
             <View>
               <Image source={item.image} style={styles.imageMenu} />

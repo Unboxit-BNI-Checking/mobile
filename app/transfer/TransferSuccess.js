@@ -5,20 +5,22 @@ import LabelValidasiComponent from "../../component/common/label/LabelValidasiCo
 import LabelValidasiPengirimComponent from "../../component/common/label/LabelValidasiPengirimComponent";
 import LabelStatusComponent from "../../component/common/label/LabelStatusComponent";
 import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
-import { Stack, useRouter } from "expo-router";
+import { Stack, router, useRouter } from "expo-router";
 import ButtonPrimary from "../../component/common/button/ButtonPrimary";
 
 const TransferSuccess = () => {
   const route = useRouter();
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1, backgroundColor: "white", paddingTop:30 }}>
       <Stack.Screen
         options={{
           headerTitleAlign: "center",
           // headerStyle: { backgroundColor: "red" },
+         
           headerTitleStyle: {
             color: "#243757",
           },
+          headerShown: false,
           headerShadowVisible: false,
           headerLeft: () => null,
           headerTitle: "Status",
@@ -33,7 +35,7 @@ const TransferSuccess = () => {
             marginBottom: 140,
           }}
         >
-          <View style={{ alignItems: "center", marginBottom: 20 }}>
+          <View style={{ alignItems: "center", marginBottom: 20, gap: 12 }}>
             <Image
               style={{
                 width: 54,
@@ -106,7 +108,7 @@ const TransferSuccess = () => {
           text="Kembali Ke Home"
           onPress={() => {
             //please create route to back home
-            route.push("(tabs)");
+            route.navigate("(tabs)");
           }}
         />
       </View>

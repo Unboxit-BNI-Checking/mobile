@@ -2,7 +2,21 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import icons from "../../../constants/icons";
 
-const CardPelaporan = () => {
+const CardPelaporan = ({ titleIdLaporan, dateLaporan, status }) => {
+  let backgroundColors = "blue";
+  let fontColos = "red";
+
+  if (status === "Dilaporkan") {
+    backgroundColors = "#FBE9ED";
+    fontColos = "#D6264F";
+  } else if (status === "Proses") {
+    backgroundColors = "#FFF6E6";
+    fontColos = "#FFA500";
+  } else if (status === "Selesai") {
+    backgroundColors = "#E7F8EF";
+    fontColos = "#10B55A";
+  }
+
   return (
     <View
       style={{
@@ -36,7 +50,7 @@ const CardPelaporan = () => {
                 fontFamily: "PlusJakartaSansMedium",
               }}
             >
-              1100100000
+              {titleIdLaporan}
             </Text>
           </View>
 
@@ -74,7 +88,7 @@ const CardPelaporan = () => {
               fontFamily: "PlusJakartaSansMedium",
             }}
           >
-            12/12/2024
+            {dateLaporan}
           </Text>
         </View>
       </View>
@@ -91,17 +105,17 @@ const CardPelaporan = () => {
             alignItems: "center",
             padding: 8,
             borderRadius: 50,
-            backgroundColor: "#FEEEE9",
+            backgroundColor: backgroundColors,
           }}
         >
           <Text
             style={{
-              color: "#F15922",
+              color: fontColos,
               fontSize: 12,
               fontFamily: "PlusJakartaSansBold",
             }}
           >
-            Dilaporkan
+            {status}
           </Text>
         </View>
       </View>

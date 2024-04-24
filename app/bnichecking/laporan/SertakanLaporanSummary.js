@@ -8,7 +8,7 @@ import CheckboxCustom from "../../../component/common/checkbox/CheckboxCustom";
 
 const SertakanLaporanSummary = () => {
   const [text, setText] = useState("");
-  const router = useRouter();
+  const route = useRouter();
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -30,7 +30,7 @@ const SertakanLaporanSummary = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                router.back();
+                route.back();
               }}
             />
           ),
@@ -157,7 +157,7 @@ const SertakanLaporanSummary = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            router.push("/bnichecking/laporan/StatusBerhasilTerkirim");
+            route.navigate("/bnichecking/laporan/StatusBerhasilTerkirim");
           }}
         />
       </View>

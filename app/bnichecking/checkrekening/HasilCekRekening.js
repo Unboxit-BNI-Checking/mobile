@@ -1,16 +1,33 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+} from "react-native";
+import React, { useState } from "react";
 import icons from "../../../constants/icons";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
+import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 
 const HasilCekRekening = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  const closeModal = () => {
+    setModalVisible(!modalVisible);
+  };
+  const route = useRouter();
   return (
     <View style={styles.container}>
       <Stack.Screen
         options={{
           headerTitleAlign: "center",
-          // headerStyle: { backgroundColor: "red" },
           headerTitleStyle: {
             color: "#243757",
           },
@@ -21,7 +38,7 @@ const HasilCekRekening = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                router.back();
+                route.back();
               }}
             />
           ),
@@ -35,15 +52,31 @@ const HasilCekRekening = () => {
           <Text style={styles.accountNumber}>1234567890</Text>
         </View>
         <View style={styles.divider}></View>
+
         <View style={styles.statusContainer}>
-          <Text>Status Rekening</Text>
-          <Image
-            source={icons.icInfoHasilCekRekening}
-            style={styles.infoIcon}
-          />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Investigasi</Text>
+          <TouchableOpacity onPress={openModal}>
+            <View
+              style={{ flexDirection: "row", gap: 4, alignItems: "center" }}
+            >
+              <Text>Status Rekening</Text>
+              <Image
+                source={icons.icInfoHasilCekRekening}
+                style={styles.infoIcon}
+              />
+            </View>
           </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: 79,
+              height: 26,
+              borderRadius: 50,
+              backgroundColor: "#FFF6E6",
+            }}
+          >
+            <Text style={styles.buttonText}>Investigasi</Text>
+          </View>
         </View>
       </View>
       <View style={styles.reportContainer}>
@@ -56,6 +89,95 @@ const HasilCekRekening = () => {
           <Text style={styles.reportText}>Laporan Sosial {"\n"}Media</Text>
         </View>
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.bottomSheet}>
+            <View style={styles.row}>
+              <Text style={styles.titleText}>Status Rekening</Text>
+            </View>
+            <View style={{ gap: 16, marginTop:4 }}>
+              <View style={{ gap: 8 }}>
+                <View
+                  style={{
+                    paddingHorizontal: 8,
+                    paddingVertical: 2,
+                    height: 26,
+                    width: 59,
+                    backgroundColor: "#E7F8EF",
+                    borderRadius: 50,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#10B55A",
+                      fontSize: 12,
+                    }}
+                  >
+                    Normal
+                  </Text>
+                </View>
+
+                <Text style={styles.statusDescription}>
+                  Nomor Rekening ini belum pernah menerima {"\n"}laporan dari
+                  orang lain.
+                </Text>
+              </View>
+              <View style={{ gap: 8 }}>
+                <View
+                  style={{
+                    paddingHorizontal: 8,
+                    paddingVertical: 2,
+                    height: 26,
+                    width: 79,
+                    backgroundColor: "#FFF6E6",
+                    borderRadius: 50,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ color: "#FFA500", fontSize: 12 }}>
+                    Investigasi
+                  </Text>
+                </View>
+
+                <Text style={styles.statusDescription}>
+                  Nomor Rekening ini pernah menerima laporan {"\n"}dari orang
+                  lain dan sedang dalam investigasi.
+                </Text>
+              </View>
+              <View style={{ gap: 8 }}>
+                <View
+                  style={{
+                    paddingHorizontal: 8,
+                    paddingVertical: 2,
+                    height: 26,
+                    width: 50,
+                    backgroundColor: "#FBE9ED",
+                    borderRadius: 50,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ color: "#D6264F", fontSize: 12 }}>Blokir</Text>
+                </View>
+
+                <Text style={styles.statusDescription}>
+                  Nomor Rekening ini terindikasi Penipuan dan {"\n"}sudah
+                  diblokir.
+                </Text>
+              </View>
+            </View>
+            <View style={{ marginTop: 5, marginBottom: 10 }}></View>
+            <ButtonPrimary text={"Batalkan"} onPress={closeModal} />
+          </View>
+        </View>
+      </Modal>
+      
     </View>
   );
 };
@@ -104,6 +226,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 8,
+    justifyContent: "space-between",
   },
   infoIcon: {
     width: 16,
@@ -145,6 +268,28 @@ const styles = StyleSheet.create({
   reportText: {
     color: "#6B788E",
     fontSize: 14,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  bottomSheet: {
+    backgroundColor: "white",
+    width: "100%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+  },
+  titleText: {
+    fontSize: 16,
+    fontFamily: "PlusJakartaSansBold",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
   },
 });
 

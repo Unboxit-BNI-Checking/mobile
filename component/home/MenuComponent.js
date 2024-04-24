@@ -54,7 +54,7 @@ const data = [
   },
 ];
 const MenuComponent = () => {
-  router = useRouter();
+  const route = useRouter();
   return (
     <View style={styles.container}>
       {data.map((item) => (
@@ -62,7 +62,7 @@ const MenuComponent = () => {
           <TouchableOpacity
             key={item.id}
             // onPress={() => sampleCallback(item.name)}\
-            onPress={() => router.push("/" + item.route)}
+            onPress={() => route.navigate("/" + item.route)}
           >
             <View>
               <Image source={item.image} style={styles.imageMenu} />

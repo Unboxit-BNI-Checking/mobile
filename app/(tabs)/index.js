@@ -9,7 +9,7 @@ import images from "../../constants/images";
 
 
 const Home = () => {
-  const router = useRouter();
+  const route = useRouter();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>

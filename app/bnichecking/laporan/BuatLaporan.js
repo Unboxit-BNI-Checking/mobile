@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import icons from "../../../constants/icons";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 // Impor dummy transaction data
@@ -104,6 +104,8 @@ const dummyTransactionHistory = [
 ];
 
 const BuatLaporan = () => {
+
+  const route = useRouter();
   const [selectedTransaction, setSelectedTransaction] = useState(null); // State untuk menyimpan transaksi yang dipilih
   const [selectedAccount, setSelectedAccount] = useState(dataRekening[0]);
   const selectTransaction = (transaction) => {
@@ -222,7 +224,7 @@ const BuatLaporan = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                router.back();
+                route.back();
               }}
             />
           ),
@@ -274,7 +276,7 @@ const BuatLaporan = () => {
       </ScrollView>
       <View style={styles.bottomButtonContainer}>
         <ButtonPrimary text="Selanjutnya" onPress={() => {
-          router.push("bnichecking/laporan/SertakanLaporan");
+          route.navigate("bnichecking/laporan/SertakanLaporan");
         }} />
       </View>
     </View>

@@ -1,15 +1,25 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import React, { useState } from "react";
 import CardPelaporan from "../../../component/common/pelaporan/CardPelaporan";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import icons from "../../../constants/icons";
-import { AntDesign } from '@expo/vector-icons';
 import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
+const dataLaporan = [
+  { idlaporan: 1343232432, status: "Dilaporkan", tanggal: "10/10/2022" },
+  { idlaporan: 2324324324, status: "Proses", tanggal: "10/10/2022" },
+  { idlaporan: 3324324324, status: "Selesai", tanggal: "10/10/2022" },
+  { idlaporan: 4324234324, status: "Dilaporkan", tanggal: "10/10/2022" },
+];
 const Pelaporan = () => {
-
-  const route = useRouter()
+  const route = useRouter();
   const [activeButton, setActiveButton] = useState("Dilaporkan");
   const [activeTabContent, setActiveTabContent] = useState("Dilaporkan");
 
@@ -19,14 +29,11 @@ const Pelaporan = () => {
   };
   return (
     <View style={styles.container}>
-       <Stack.Screen
+      <Stack.Screen
         options={{
           headerTitleAlign: "center",
-          // headerStyle: { backgroundColor: "red" },
           headerTitleStyle: {
             color: "#243757",
-           
-            
           },
           headerShadowVisible: false,
 
@@ -35,7 +42,7 @@ const Pelaporan = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                router.back();
+                route.back();
               }}
             />
           ),
@@ -128,17 +135,69 @@ const Pelaporan = () => {
         </View>
       </View>
       {/* CONTENT YANG AKTIF SESUAI DENGAN TAB YANG AKTIF */}
-      {activeTabContent === "Dilaporkan" && (
-        <View style={{ padding: 20 }}>
-          <CardPelaporan />
-        </View>
-      )}
-      {activeTabContent === "Proses" && <Text>Proses</Text>}
-      {activeTabContent === "Selesai" && <Text>Selesai</Text>}
+      {activeTabContent === "Dilaporkan" &&
+        dataLaporan
+          .filter((item) => item.status === "Dilaporkan")
+          .map((item) => (
+            <Pressable
+              key={item.idlaporan} // Move key to the outermost JSX element
+              onPress={() =>
+                route.push("/bnichecking/laporan/RingkasanLaporan")
+              }
+            >
+              <View style={{ paddingHorizontal: 20, paddingVertical: 10, }}>
+                <CardPelaporan
+                  titleIdLaporan={item.idlaporan}
+                  dateLaporan={item.tanggal}
+                  status={item.status}
+                />
+              </View>
+            </Pressable>
+          ))}
+      {activeTabContent === "Proses" &&
+       dataLaporan
+       .filter((item) => item.status === "Proses")
+       .map((item) => (
+         <Pressable
+           key={item.idlaporan} // Move key to the outermost JSX element
+           onPress={() =>
+             route.push("/bnichecking/laporan/RingkasanLaporan")
+           }
+         >
+           <View style={{ paddingHorizontal: 20, paddingVertical: 10, }}>
+             <CardPelaporan
+               titleIdLaporan={item.idlaporan}
+               dateLaporan={item.tanggal}
+               status={item.status}
+             />
+           </View>
+         </Pressable>
+       ))}
+      {activeTabContent === "Selesai" &&  dataLaporan
+          .filter((item) => item.status === "Selesai")
+          .map((item) => (
+            <Pressable
+              key={item.idlaporan} // Move key to the outermost JSX element
+              onPress={() =>
+                route.push("/bnichecking/laporan/RingkasanLaporan")
+              }
+            >
+              <View style={{ paddingHorizontal: 20, paddingVertical: 10, }}>
+                <CardPelaporan
+                  titleIdLaporan={item.idlaporan}
+                  dateLaporan={item.tanggal}
+                  status={item.status}
+                />
+              </View>
+            </Pressable>
+          ))}
       <View style={styles.bottomButtonContainer}>
-        <ButtonPrimary text="Buat Laporan" onPress={() => {
-          route.push("/bnichecking/laporan/BuatLaporan")
-        } }/>
+        <ButtonPrimary
+          text="Buat Laporan"
+          onPress={() => {
+            route.navigate("/bnichecking/laporan/BuatLaporan");
+          }}
+        />
       </View>
     </View>
   );

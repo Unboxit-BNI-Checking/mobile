@@ -34,7 +34,7 @@ const dataRekening = [
 ];
 
 const TransferBNI = () => {
-  const router = useRouter();
+  const route = useRouter();
   const [showSaldo, setShowSaldo] = useState(false);
   const [activeButton, setActiveButton] = useState("Daftar Favorit");
   const [activeTabContent, setActiveTabContent] = useState("Daftar Favorit");
@@ -55,7 +55,7 @@ const TransferBNI = () => {
   };
 
   const handleNextButtonClick = () => {
-   router.push("/transfer/TransferConfirm");
+   route.replace("/transfer/TransferConfirm");
   };
 
   const handleCloseButtonClick = () => {
@@ -118,7 +118,7 @@ const TransferBNI = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                router.back();
+                route.back();
               }}
             />
           ),

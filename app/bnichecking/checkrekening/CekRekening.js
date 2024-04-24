@@ -14,7 +14,7 @@ import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 const CekRekening = () => {
-  const router = useRouter();
+  const route = useRouter();
   const [text, setText] = useState("");
   return (
     <View style={styles.container}>
@@ -32,7 +32,7 @@ const CekRekening = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                router.back();
+                route.back();
               }}
             />
           ),
@@ -81,9 +81,10 @@ const CekRekening = () => {
             <Image source={icons.icSearchCekRekening} />
             <TextInput
               style={styles.input}
-              placeholder="Enter your name"
+              placeholder="Masukan Nomor Rekening"
               value={text}
               onChangeText={setText}
+              keyboardType="number-pad"
             />
           </View>
         </View>
@@ -93,7 +94,7 @@ const CekRekening = () => {
         <ButtonPrimary
           text="Cek Rekening"
           onPress={() => {
-            router.push("/bnichecking/checkrekening/HasilCekRekening");
+            route.navigate("/bnichecking/checkrekening/HasilCekRekening");
           }}
         />
       </View>

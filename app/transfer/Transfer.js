@@ -49,7 +49,7 @@ const data = [
   },
 ];
 const Transfer = () => {
-  router = useRouter();
+ const route = useRouter();
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -65,7 +65,7 @@ const Transfer = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                router.back();
+                route.back();
               }}
             />
           ),
@@ -77,7 +77,7 @@ const Transfer = () => {
           <TouchableOpacity
             key={item.id}
             // onPress={() => sampleCallback(item.name)}\
-            onPress={() => router.push("/" + item.route)}
+            onPress={() => route.navigate("/" + item.route)}
           >
             <View>
               <Image source={item.image} style={styles.imageMenu} />
