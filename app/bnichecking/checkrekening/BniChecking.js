@@ -13,13 +13,13 @@ import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 const data = [
   {
     id: 1,
-    name: "BNI\nChecking",
+    name: "Cek\nRekening",
     route: "bnichecking/checkrekening/CekRekening",
     image: icons.icBniChecking,
   },
   {
     id: 2,
-    name: "Laporan",
+    name: "Pelaporan",
     route: "bnichecking/laporan/Pelaporan",
     image: icons.icPelaporan,
   },
