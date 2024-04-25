@@ -127,7 +127,7 @@ const TransferConfirm = () => {
       </ScrollView>
       <View style={styles.bottomButtonContainer}>
         <ButtonPrimary
-          text="Konfirmasi"
+          text="Selanjutnya"
           onPress={() => {
             route.replace("/transfer/TransferSuccess");
           }}

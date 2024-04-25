@@ -32,7 +32,7 @@ const RekeningComponent = () => {
               fontSize: 16,
             }}
           >
-            Jhon Dhean
+            Amelia Qatrunnada
           </Text>
         </View>
       </View>

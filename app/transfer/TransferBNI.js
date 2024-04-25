@@ -55,7 +55,7 @@ const TransferBNI = () => {
   };
 
   const handleNextButtonClick = () => {
-   route.replace("/transfer/TransferConfirm");
+    route.replace("/transfer/TransferConfirm");
   };
 
   const handleCloseButtonClick = () => {
@@ -75,16 +75,16 @@ const TransferBNI = () => {
       iconStatus: icons.icStatusGreen,
     },
     2: {
-      linkText: "Investigate Details",
+      linkText: "Cek No Rek Disini",
       mediumText:
-        "We are investigating this account. Please refrain from transactions.",
-      titleText: "Investigate",
+        "Nomor Rekening ini pernah menerima laporan dari orang lain dan sedang dalam investigasi.",
+      titleText: "Rekening Sedang Dalam Investigasi",
       iconStatus: icons.icStatusYellow,
     },
     3: {
       linkText: "Block Details",
-      mediumText: "This account has been blocked. Transactions are prohibited.",
-      titleText: "Blocked Account",
+      mediumText: "Nomor Rekening ini terindikasi Penipuan dan sudah diblokir.",
+      titleText: "Rekening Telah Diblokir",
       iconStatus: icons.icStatusRed,
     },
   };
@@ -108,8 +108,6 @@ const TransferBNI = () => {
           // headerStyle: { backgroundColor: "red" },
           headerTitleStyle: {
             color: "#243757",
-           
-            
           },
           headerShadowVisible: false,
 
@@ -150,7 +148,7 @@ const TransferBNI = () => {
             >
               <Text style={{ fontSize: 14, fontWeight: "bold" }}>Saldo</Text>
               <View style={{ flexDirection: "row", gap: 10 }}>
-                <Text>{showSaldo ? "Rp. 300.478" : "Rp. *******"}</Text>
+                <Text>{showSaldo ? "Rp 300.478" : "Rp *******"}</Text>
                 <TouchableOpacity onPress={() => setShowSaldo(!showSaldo)}>
                   {showSaldo ? (
                     <Ionicons name="eye-outline" size={18} color="#F37548" />
@@ -285,7 +283,7 @@ const TransferBNI = () => {
         <View style={{ alignItems: "center", marginBottom: 120 }}>
           <View style={styles.Nominal}>
             <Text style={{}}>Nominal</Text>
-            <TextInput style={styles.textInput} />
+            <TextInput style={styles.textInput} placeholder="Rp0" />
             <Text style={{}}>Keterangan</Text>
             <TextInput style={styles.textInput} />
           </View>
@@ -309,9 +307,9 @@ const TransferBNI = () => {
 
       <View style={styles.bottomButtonContainer}>
         <ButtonPrimary
-          text="Konfirmasi"
+          text="Selanjutnya"
           onPress={() => {
-            openModal(2);
+            openModal(1);
           }}
         />
       </View>

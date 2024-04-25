@@ -36,8 +36,7 @@ const StatusRekening = () => {
         </View>
 
         <Text style={styles.statusDescription}>
-          Nomor Rekening ini belum pernah menerima {"\n"}laporan dari orang
-          lain.
+          Nomor Rekening ini belum pernah melalui proses investigasi.
         </Text>
       </View>
       <View style={{ gap: 8 }}>
