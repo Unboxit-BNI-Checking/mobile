@@ -134,8 +134,7 @@ const HasilCekRekening = () => {
                 </View>
 
                 <Text style={styles.statusDescription}>
-                  Nomor Rekening ini belum pernah menerima {"\n"}laporan dari
-                  orang lain.
+                  Nomor Rekening ini belum pernah melalui proses investigasi.
                 </Text>
               </View>
               <View style={{ gap: 8 }}>
@@ -156,8 +155,7 @@ const HasilCekRekening = () => {
                 </View>
 
                 <Text style={styles.statusDescription}>
-                  Nomor Rekening ini pernah menerima laporan {"\n"}dari orang
-                  lain dan sedang dalam investigasi.
+                  Nomor Rekening ini sedang dalam investigasi.
                 </Text>
               </View>
               <View style={{ gap: 8 }}>
@@ -182,7 +180,7 @@ const HasilCekRekening = () => {
               </View>
             </View>
             <View style={{ marginTop: 5, marginBottom: 10 }}></View>
-            <ButtonPrimary text={"Batalkan"} onPress={closeModal} />
+            <ButtonPrimary text={"Mengerti"} onPress={closeModal} />
           </View>
         </View>
       </Modal>
