@@ -5,12 +5,13 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import icons from "../../../constants/icons";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
-import { Stack, useRouter } from "expo-router";
+
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 // Impor dummy transaction data
@@ -23,91 +24,28 @@ const dataRekening = [
 const dummyTransactionHistory = [
   {
     date: "19/04/2024_1",
-    type: "TransferBNI",
+    time : "18:23:28",
+    type: "Bank Negara Indonesia",
     accountNumber: "123144142",
     accountNumberDestination: "12839405948",
     accountOwner: "Nama Pemilik Rekening",
     amount: -10000,
   },
   {
-    date: "20/04/2024_1",
-    type: "TransferBCA",
+    date: "20/04/2024",
+    time : "18:23:28",
+    type: "Bank Negara Indonesia",
     accountNumber: "123144142",
     accountNumberDestination: "9999999999",
     accountOwner: "Nama Pemilik Rekening",
     amount: -15000,
-  },
-  {
-    date: "19/04/2024_2",
-    type: "TransferBNI",
-    accountNumber: "123144142",
-    accountNumberDestination: "12839405948",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: -10000,
-  },
-  {
-    date: "20/04/2024_2",
-    type: "TransferBCA",
-    accountNumber: "123144142",
-    accountNumberDestination: "9999999999",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: -15000,
-  },
-  {
-    date: "21/04/2024",
-    type: "Top Up",
-    accountNumber: "123456789",
-    accountNumberDestination: "888888",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: 20000,
-  },
-  {
-    date: "19/04/2024_3",
-    type: "TransferBNI",
-    accountNumber: "123144142",
-    accountNumberDestination: "12839405948",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: -10000,
-  },
-  {
-    date: "20/04/2024_3",
-    type: "TransferBCA",
-    accountNumber: "123144142",
-    accountNumberDestination: "9999999999",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: -15000,
-  },
-  {
-    date: "19/04/2024_4",
-    type: "TransferBNI",
-    accountNumber: "123144142",
-    accountNumberDestination: "12839405948",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: -10000,
-  },
-  {
-    date: "20/04/2024_4",
-    type: "TransferBCA",
-    accountNumber: "123144142",
-    accountNumberDestination: "9999999999",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: -15000,
-  },
-  {
-    date: "21/04/2024_1",
-    type: "Top Up",
-    accountNumber: "123456789",
-    accountNumberDestination: "888888",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: 20000,
-  },
+  }
 ];
 
 const BuatLaporan = () => {
-
-  const route = useRouter();
   const [selectedTransaction, setSelectedTransaction] = useState(null); // State untuk menyimpan transaksi yang dipilih
   const [selectedAccount, setSelectedAccount] = useState(dataRekening[0]);
+  const [searchInput, setSearchInput] = useState("");
   const selectTransaction = (transaction) => {
     setSelectedTransaction(transaction); // Memilih transaksi yang dipilih
   };
@@ -167,7 +105,7 @@ const BuatLaporan = () => {
                   : "#243757",
             }}
           >
-            {transaction.type}
+            {transaction.accountOwner}
           </Text>
           <Text
             style={{
@@ -191,13 +129,24 @@ const BuatLaporan = () => {
                   : "#6B788E",
             }}
           >
-            {transaction.accountOwner}
+            {transaction.type}
           </Text>
         </View>
         <View style={{ flex: 1 }}></View>
-        <View>
-          <Text style={{ fontFamily: "PlusJakartaSansBold", marginRight: 8 }}>
+        <View style={{}} >
+          <Text style={{ fontFamily: "PlusJakartaSansBold", marginRight: 8, textAlign: "right",  color:
+                selectedTransaction &&
+                selectedTransaction.date === transaction.date
+                  ? "#F15922"
+                  : "#6B788E", }} >
             {transaction.amount}
+          </Text>
+          <Text style={{ fontFamily: "PlusJakartaSansMedium", marginRight: 8, color: "#6B788E", textAlign: "right", color:
+                selectedTransaction &&
+                selectedTransaction.date === transaction.date
+                  ? "#F15922"
+                  : "#6B788E" }}>
+            {transaction.time}
           </Text>
         </View>
       </View>
@@ -208,6 +157,14 @@ const BuatLaporan = () => {
     setSelectedAccount(dataRekening[0]);
   }, []);
 
+  const filteredTransactionsByAccount = dummyTransactionHistory.filter((transaction) => {
+    return selectedAccount ? transaction.accountNumber === selectedAccount.value : true;
+  });
+  
+  {/* Filter transaksi berdasarkan pencarian jika akun sudah dipilih */}
+  const filteredTransactionsBySearch = filteredTransactionsByAccount.filter((transaction) => {
+    return searchInput === "" || transaction.accountNumberDestination.includes(searchInput);
+  });
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <Stack.Screen
@@ -254,7 +211,7 @@ const BuatLaporan = () => {
               valueField="value"
               placeholder={"Pilih Rekening"}
               searchPlaceholder="Search..."
-              value={null}
+              value={selectedAccount}
               onChange={(item) => selectAccount(item.value)}
               renderItem={(item) => (
                 <View style={styles.item}>
@@ -263,7 +220,17 @@ const BuatLaporan = () => {
               )}
             />
 
-            {/* Tampilkan item transaksi */}
+            <View style={styles.inputContainer}>
+              <Image source={icons.icSearchCekRekening} />
+              <TextInput
+                style={styles.input}
+                placeholder="Cari Transaksi"
+                value={searchInput}
+                onChangeText={(text) => setSearchInput(text)}
+                keyboardType="number-pad"
+              />
+            </View>
+
             {dummyTransactionHistory
               .filter((transaction) => {
                 return selectedAccount
@@ -271,13 +238,21 @@ const BuatLaporan = () => {
                   : true;
               })
               .map((transaction) => renderItem(transaction))}
+
+              
+            {/* {filteredTransactionsBySearch.map((transaction) => 
+              renderItem(transaction)
+            )} */}
           </View>
         </View>
       </ScrollView>
       <View style={styles.bottomButtonContainer}>
-        <ButtonPrimary text="Selanjutnya" onPress={() => {
-          route.navigate("bnichecking/laporan/SertakanLaporan");
-        }} />
+        <ButtonPrimary
+          text="Selanjutnya"
+          onPress={() => {
+            route.navigate("bnichecking/laporan/SertakanLaporan");
+          }}
+        />
       </View>
     </View>
   );
@@ -312,6 +287,19 @@ const styles = StyleSheet.create({
     borderTopColor: "rgba(204, 204, 204, 0.5)",
     height: 102,
     alignItems: "center",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 11,
+  },
+  input: {
+    flex: 1,
+    marginLeft: 10,
+    fontFamily: "PlusJakartaSansRegular",
   },
 });
 

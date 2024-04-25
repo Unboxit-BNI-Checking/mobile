@@ -8,14 +8,12 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
-import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import CheckboxCustom from "../../../component/common/checkbox/CheckboxCustom";
 
 const SertakanLaporanSummary = () => {
   const [text, setText] = useState("");
-  const route = useRouter();
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {

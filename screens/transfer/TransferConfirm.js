@@ -13,42 +13,20 @@ import LabelValidasiComponent from "../../component/common/label/LabelValidasiCo
 import LabelValidasiPengirimComponent from "../../component/common/label/LabelValidasiPengirimComponent";
 import LabelStatusComponent from "../../component/common/label/LabelStatusComponent";
 import ButtonPrimary from "../../component/common/button/ButtonPrimary";
-import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
 
 const TransferConfirm = () => {
-  const route = useRouter();
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigation = useNavigation();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          // headerStyle: { backgroundColor: "red" },
-
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
-
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.back();
-              }}
-            />
-          ),
-          headerTitle: "Validasi",
-        }}
-      />
       <ScrollView>
         <View
           style={{
@@ -67,7 +45,6 @@ const TransferConfirm = () => {
             subTitle={"Sdr Jeon Wonwoo"}
           />
 
-         
           <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
           <LabelStatusComponent title={"Status Rekening"} subTitle={"Normal"} />
           <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
@@ -126,12 +103,9 @@ const TransferConfirm = () => {
         </View>
       </ScrollView>
       <View style={styles.bottomButtonContainer}>
-        <ButtonPrimary
-          text="Selanjutnya"
-          onPress={() => {
-            route.replace("/transfer/TransferSuccess");
-          }}
-        />
+        <ButtonPrimary text="Selanjutnya" onPress={() => {
+          navigation.navigate("TransferSuccess");
+        }} />
       </View>
     </View>
   );

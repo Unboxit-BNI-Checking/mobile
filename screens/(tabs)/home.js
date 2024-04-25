@@ -1,19 +1,16 @@
-import { View, SafeAreaView, ScrollView, Image } from "react-native";
-import { Stack, useRouter } from "expo-router";
+import { View, SafeAreaView, ScrollView, Image, StatusBar } from "react-native";
 import MenuComponent from "../../component/home/MenuComponent";
 import RekeningComponent from "../../component/home/RekeningComponent";
 import PromotionComponent from "../../component/home/PromotionComponent";
 import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
 import icons from "../../constants/icons";
-import images from "../../constants/images";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-
-const Home = () => {
-  const route = useRouter();
-
+export default function Home() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <Stack.Screen
+      {/* <ScreenStack
         options={{
           headerStyle: { backgroundColor: "#F37548" },
           headerShadowVisible: false,
@@ -46,22 +43,14 @@ const Home = () => {
 
           headerTitle: "",
         }}
-      />
+      /> */}
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <View style={{ flex: 1, padding: SIZES.medium }}>
-        <Welcome />
-        <Popularjobs />
-        <Nearbyjobs />
-      </View> */}
-
         <View>
           <RekeningComponent />
-          <MenuComponent  />
+          <MenuComponent />
           <PromotionComponent />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-};
-
-export default Home;
+}

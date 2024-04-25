@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
-import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import ButtonNextClose from "../../../component/common/button/ButtonNextClose";
@@ -31,7 +30,6 @@ const HasilCekRekening = () => {
   const handleCloseButtonClick = () => {
     route.replace("(tabs)");
   };
-  const route = useRouter();
   return (
     <View style={styles.container}>
       <Stack.Screen

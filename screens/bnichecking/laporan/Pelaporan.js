@@ -9,7 +9,6 @@ import React, { useState } from "react";
 import CardPelaporan from "../../../component/common/pelaporan/CardPelaporan";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import icons from "../../../constants/icons";
-import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 const dataLaporan = [
@@ -19,7 +18,7 @@ const dataLaporan = [
   { idlaporan: 4324234324, status: "Dilaporkan", tanggal: "10/10/2022" },
 ];
 const Pelaporan = () => {
-  const route = useRouter();
+
   const [activeButton, setActiveButton] = useState("Dilaporkan");
   const [activeTabContent, setActiveTabContent] = useState("Dilaporkan");
 

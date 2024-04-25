@@ -8,13 +8,13 @@ import {
 } from "react-native";
 import React from "react";
 import icons from "../../../constants/icons";
-import { Stack, useRouter } from "expo-router";
+
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import StepperCustom from "../../../component/common/progress/ProgressBarComponent";
 import ProgressBarComponent from "../../../component/common/progress/ProgressBarComponent";
 
 const RingkasanLaporan = () => {
-  const route = useRouter();
+
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <Stack.Screen

@@ -1,17 +1,30 @@
-import { Tabs } from "expo-router";
-import { useCallback, useEffect } from "react";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { View, Platform, Image } from "react-native";
-import icons from "../../constants/icons";
+import {
+  View,
+  Text,
+  Platform,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Home from "./home";
+import Riwayat from "./riwayat";
+import Qris from "./qris";
+import Favorite from "./favorite";
+import Pengaturan from "./pengaturan";
 import { Foundation } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
-import { FontAwesome6 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-
-const TabsLayout = () => {
+import icons from "../../constants/icons";
+import { FontAwesome6 } from "@expo/vector-icons";
+import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
+ 
+const Tabs = () => {
+  const Tab = createBottomTabNavigator();
   return (
-    <Tabs
+    <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
           position: "absolute",
@@ -33,10 +46,10 @@ const TabsLayout = () => {
         background: "#fff",
       }}
     >
-      <Tabs.Screen
-        name="index"
+      <Tab.Screen
+        name="Home"
+        component={Home}
         options={{
-          title: "Home",
           tabBarLabelStyle: {
             fontFamily: "PlusJakartaSansMedium",
             fontSize: 12,
@@ -54,10 +67,42 @@ const TabsLayout = () => {
               </View>
             );
           },
+          headerStyle: { backgroundColor: "#F37548" },
+          headerShadowVisible: false,
+
+          headerLeft: () => (
+            <View style={{ flexDirection: "row", marginHorizontal: 15 }}>
+              <Image
+                source={icons.icBni}
+                style={{ width: 80, height: 50 }}
+                resizeMode="contain"
+              />
+            </View>
+          ),
+
+          headerRight: () => (
+            <View
+              style={{ flexDirection: "row", gap: 10, paddingHorizontal: 18 }}
+            >
+              <ScreenHeaderBtn
+                iconUrl={icons.icNotification}
+                dimension={24}
+                handlePress={() => {}}
+              />
+              <ScreenHeaderBtn
+                iconUrl={icons.icListen}
+                dimension={38}
+                handlePress={() => {}}
+              />
+            </View>
+          ),
+
+          headerTitle: "",
         }}
       />
-      <Tabs.Screen
-        name="riwayat"
+      <Tab.Screen
+        name="Riwayat"
+        component={Riwayat}
         options={{
           title: "Riwayat",
           tabBarLabelStyle: {
@@ -79,8 +124,9 @@ const TabsLayout = () => {
           },
         }}
       />
-      <Tabs.Screen
-        name="qris"
+      <Tab.Screen
+        name="Qris"
+        component={Qris}
         options={{
           title: "",
           tabBarLabelStyle: {
@@ -112,8 +158,10 @@ const TabsLayout = () => {
           },
         }}
       />
-      <Tabs.Screen
-        name="favorite"
+
+      <Tab.Screen
+        name="Favorite"
+        component={Favorite}
         options={{
           title: "Favorite",
           tabBarLabelStyle: {
@@ -135,8 +183,9 @@ const TabsLayout = () => {
           },
         }}
       />
-      <Tabs.Screen
-        name="pengaturan"
+      <Tab.Screen
+        name="Pengaturan"
+        component={Pengaturan}
         options={{
           title: "Pengaturan",
           tabBarLabelStyle: {
@@ -158,8 +207,8 @@ const TabsLayout = () => {
           },
         }}
       />
-    </Tabs>
+    </Tab.Navigator>
   );
 };
 
-export default TabsLayout;
+export default Tabs;

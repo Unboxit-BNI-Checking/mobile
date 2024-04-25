@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect } from "react";
-import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 const Layout = () => {
   const [fontsLoaded] = useFonts({

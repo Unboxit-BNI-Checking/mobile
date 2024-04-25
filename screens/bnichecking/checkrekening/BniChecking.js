@@ -1,55 +1,30 @@
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
-import icons from "../../constants/icons";
-import { Stack, useRouter } from "expo-router";
-import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import icons from "../../../constants/icons";
+import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 const data = [
   {
     id: 1,
-    name: "Rekening Sendiri",
-    route: "TransferRekeningSendiri",
-    image: icons.icRekeningSendiri,
+    name: "Cek\nRekening",
+    route: "bnichecking/checkrekening/CekRekening",
+    image: icons.icBniChecking,
   },
   {
     id: 2,
-    name: "BNI",
-    route: "transfer/TransferBNI",
-    image: icons.icTransferBni,
-  },
-  {
-    id: 3,
-    name: "Antarbank",
-    route: "TransferAntarbank",
-    image: icons.icTransferAntarbank,
-  },
-  {
-    id: 4,
-    name: "Dana Pensiun / BNI SImponi",
-    route: "TransferDanaPensiun",
-    image: icons.icDanaPensiun,
-  },
-  {
-    id: 5,
-    name: "Virtual Account Bil",
-    route: "TransferVirtualAccountBill",
-    image: icons.icVirtualAccountBill,
-  },
-  {
-    id: 6,
-    name: "International Remittence",
-    route: "TransferInternationalRemitance",
-    image: icons.icInternationalRemitance,
-  },
-  {
-    id: 7,
-    name: "Transfer Valas Antar BNI",
-    route: "TransferValas",
-    image: icons.icTransferValas,
+    name: "Pelaporan",
+    route: "bnichecking/laporan/Pelaporan",
+    image: icons.icPelaporan,
   },
 ];
-const Transfer = () => {
- const route = useRouter();
+const BniChecking = () => {
+
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -65,11 +40,11 @@ const Transfer = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                route.back();
+                route.replace("/");
               }}
             />
           ),
-          headerTitle: "Transfer",
+          headerTitle: "BNI Checking",
         }}
       />
       {data.map((item) => (
@@ -113,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Transfer;
+export default BniChecking;

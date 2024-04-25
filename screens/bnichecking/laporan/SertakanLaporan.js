@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
-import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import * as ImagePicker from "expo-image-picker";
@@ -23,7 +22,7 @@ const SertakanLaporan = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const route = useRouter();
+
 
   const pickImages = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

@@ -1,13 +1,13 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import images from "../../constants/images";
-import { useRouter } from "expo-router";
+import { useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import icons from "../../constants/icons";
 
 const data = [
   {
     id: 1,
     name: "Transfer",
-    route: "transfer/Transfer",
+    route: "Transfer",
     image: icons.icTransfer,
   },
   {
@@ -54,7 +54,9 @@ const data = [
   },
 ];
 const MenuComponent = () => {
-  const route = useRouter();
+
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       {data.map((item) => (
@@ -62,7 +64,7 @@ const MenuComponent = () => {
           <TouchableOpacity
             key={item.id}
             // onPress={() => sampleCallback(item.name)}\
-            onPress={() => route.navigate("/" + item.route)}
+            onPress={() => navigation.navigate(item.route)}
           >
             <View>
               <Image source={item.image} style={styles.imageMenu} />

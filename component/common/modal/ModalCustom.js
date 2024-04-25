@@ -10,7 +10,6 @@ import {
 import ButtonNextClose from "../button/ButtonNextClose";
 import CheckboxCustom from "../checkbox/CheckboxCustom";
 import ButtonPrimary from "../button/ButtonPrimary";
-import { useRouter } from "expo-router";
 
 const ModalCustom = ({
   modalVisible,
@@ -27,7 +26,6 @@ const ModalCustom = ({
   showCloseButton,
   // New prop to control checkbox visibility
 }) => {
-  const route = useRouter();
 
    
   return (

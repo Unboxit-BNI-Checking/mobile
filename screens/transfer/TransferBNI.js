@@ -12,10 +12,10 @@ import ButtonPrimary from "../../component/common/button/ButtonPrimary";
 import { Dropdown } from "react-native-element-dropdown";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CheckboxCustom from "../../component/common/checkbox/CheckboxCustom";
-import { Stack, useRouter } from "expo-router";
 import icons from "../../constants/icons";
 import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
 import ModalCustom from "../../component/common/modal/ModalCustom";
+import { useNavigation } from "@react-navigation/native";
 
 const dataFavorite = [
   { label: "Item 1", value: "1" },
@@ -34,7 +34,6 @@ const dataRekening = [
 ];
 
 const TransferBNI = () => {
-  const route = useRouter();
   const [showSaldo, setShowSaldo] = useState(false);
   const [activeButton, setActiveButton] = useState("Daftar Favorit");
   const [activeTabContent, setActiveTabContent] = useState("Daftar Favorit");
@@ -44,6 +43,8 @@ const TransferBNI = () => {
   const [isCheckedModal, setIsCheckedModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(1);
+
+  const navigation = useNavigation();
 
   const openModal = (newStatus) => {
     setStatus(newStatus);
@@ -55,7 +56,7 @@ const TransferBNI = () => {
   };
 
   const handleNextButtonClick = () => {
-    route.replace("/transfer/TransferConfirm");
+    navigation.replace("TransferConfirm");
   };
 
   const handleCloseButtonClick = () => {
@@ -102,27 +103,7 @@ const TransferBNI = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          // headerStyle: { backgroundColor: "red" },
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
 
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.back();
-              }}
-            />
-          ),
-          headerTitle: "Transfer Antar BNI",
-        }}
-      />
       <ScrollView>
         {/* Rekening, Saldo */}
         <View style={{ alignItems: "center" }}>

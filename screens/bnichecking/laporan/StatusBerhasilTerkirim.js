@@ -1,14 +1,12 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import icons from "../../../constants/icons";
-import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
-import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import ButtonNextClose from "../../../component/common/button/ButtonNextClose";
 
 const StatusBerhasilTerkirim = () => {
 
-  const route = useRouter();
+
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <Stack.Screen

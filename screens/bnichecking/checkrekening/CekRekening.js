@@ -10,11 +10,10 @@ import React, { useState } from "react";
 import icons from "../../../constants/icons";
 import { AntDesign } from "@expo/vector-icons";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
-import { Stack, useRouter } from "expo-router";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 
 const CekRekening = () => {
-  const route = useRouter();
+
   const [text, setText] = useState("");
   return (
     <View style={styles.container}>

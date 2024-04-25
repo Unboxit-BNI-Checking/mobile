@@ -1,32 +1,21 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import icons from "../../constants/icons";
 import LabelValidasiComponent from "../../component/common/label/LabelValidasiComponent";
 import LabelValidasiPengirimComponent from "../../component/common/label/LabelValidasiPengirimComponent";
 import LabelStatusComponent from "../../component/common/label/LabelStatusComponent";
 import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
-import { Stack, router, useRouter } from "expo-router";
 import ButtonPrimary from "../../component/common/button/ButtonPrimary";
+import { useNavigation } from "@react-navigation/native";
+
 
 const TransferSuccess = () => {
-  const route = useRouter();
-  return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          // headerStyle: { backgroundColor: "red" },
 
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
-          headerLeft: () => (
-            <ScreenHeaderBtn handlePress={() => route.back()} />
-          ),
-          headerTitle: "Status",
-        }}
-      />
+  const navigation = useNavigation();
+  return (
+    
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      
       <ScrollView>
         <View
           style={{
@@ -111,11 +100,12 @@ paddingHorizontal: 10,
           text="Kembali Ke Home"
           onPress={() => {
             //please create route to back home
-            route.navigate("(tabs)");
+           navigation.navigate("Tabs");
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
+    
   );
 };
 
