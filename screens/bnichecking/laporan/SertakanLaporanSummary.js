@@ -11,8 +11,10 @@ import icons from "../../../constants/icons";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import CheckboxCustom from "../../../component/common/checkbox/CheckboxCustom";
+import { useNavigation } from "@react-navigation/native";
 
 const SertakanLaporanSummary = () => {
+  const navigation = useNavigation();
   const [text, setText] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
@@ -21,27 +23,6 @@ const SertakanLaporanSummary = () => {
   };
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          // headerStyle: { backgroundColor: "red" },
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
-
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.back();
-              }}
-            />
-          ),
-          headerTitle: "Sertakan Laporan",
-        }}
-      />
       <ScrollView>
         <View
           style={{
@@ -174,14 +155,14 @@ const SertakanLaporanSummary = () => {
 
       <View style={styles.bottomButtonContainer}>
         <CheckboxCustom
-          label={"Sudah yakin?"}
+          label={"Saya menyatakan bahwa data yang saya input \n adalah benar."}
           value={isChecked}
           onValueChange={handleCheckboxChange}
         />
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            route.navigate("/bnichecking/laporan/StatusBerhasilTerkirim");
+            navigation.navigate("LaporanBerhasilTerkirim");
           }}
         />
       </View>

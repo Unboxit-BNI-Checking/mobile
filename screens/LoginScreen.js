@@ -3,11 +3,18 @@ import React from "react";
 import images from "../constants/images";
 import icons from "../constants/icons";
 import ButtonPrimary from "../component/common/button/ButtonPrimary";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
+  const navigation = useNavigation();
   return (
     <View
-      style={{ flex: 1, justifyContent: "space-between", alignItems: "center" }}
+      style={{
+        flex: 1,
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "white",
+      }}
     >
       <Image
         source={images.background46}
@@ -50,6 +57,7 @@ const LoginScreen = () => {
             text="Login"
             iconUrl={icons.icBiometricLogin}
             dimension={20}
+            onPress={() => navigation.navigate("Tabs")}
           />
         </View>
 

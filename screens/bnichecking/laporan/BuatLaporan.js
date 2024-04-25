@@ -13,6 +13,7 @@ import icons from "../../../constants/icons";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
+import { useNavigation } from "@react-navigation/native";
 
 // Impor dummy transaction data
 
@@ -43,6 +44,7 @@ const dummyTransactionHistory = [
 ];
 
 const BuatLaporan = () => {
+  const navigation = useNavigation();
   const [selectedTransaction, setSelectedTransaction] = useState(null); // State untuk menyimpan transaksi yang dipilih
   const [selectedAccount, setSelectedAccount] = useState(dataRekening[0]);
   const [searchInput, setSearchInput] = useState("");
@@ -166,28 +168,10 @@ const BuatLaporan = () => {
     return searchInput === "" || transaction.accountNumberDestination.includes(searchInput);
   });
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          // headerStyle: { backgroundColor: "red" },
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
 
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.back();
-              }}
-            />
-          ),
-          headerTitle: "Pelapor",
-        }}
-      />
+
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+     
       <ScrollView>
         <View style={{ padding: 20, marginBottom: 120 }}>
           <Text
@@ -250,7 +234,7 @@ const BuatLaporan = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            route.navigate("bnichecking/laporan/SertakanLaporan");
+            navigation.navigate("SertakanLaporan");
           }}
         />
       </View>

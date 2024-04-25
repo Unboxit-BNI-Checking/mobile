@@ -10,6 +10,7 @@ import CardPelaporan from "../../../component/common/pelaporan/CardPelaporan";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import icons from "../../../constants/icons";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
+import { useNavigation } from "@react-navigation/native";
 
 const dataLaporan = [
   { idlaporan: 1343232432, status: "Dilaporkan", tanggal: "10/10/2022" },
@@ -18,6 +19,7 @@ const dataLaporan = [
   { idlaporan: 4324234324, status: "Dilaporkan", tanggal: "10/10/2022" },
 ];
 const Pelaporan = () => {
+  const navigation = useNavigation();
 
   const [activeButton, setActiveButton] = useState("Dilaporkan");
   const [activeTabContent, setActiveTabContent] = useState("Dilaporkan");
@@ -28,26 +30,6 @@ const Pelaporan = () => {
   };
   return (
     <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
-
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.back();
-              }}
-            />
-          ),
-          headerTitle: "Pelaporan",
-        }}
-      />
       {/* TOPBAR DAFTAR FAVORIT */}
       <View style={{ backgroundColor: "white" }}>
         <View style={styles.tabRekTujuan}>
@@ -140,11 +122,9 @@ const Pelaporan = () => {
           .map((item) => (
             <Pressable
               key={item.idlaporan} // Move key to the outermost JSX element
-              onPress={() =>
-                route.push("/bnichecking/laporan/RingkasanLaporan")
-              }
+              onPress={() => navigation.navigate("RingkasanLaporan")}
             >
-              <View style={{ paddingHorizontal: 20, paddingVertical: 10, }}>
+              <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                 <CardPelaporan
                   titleIdLaporan={item.idlaporan}
                   dateLaporan={item.tanggal}
@@ -154,34 +134,31 @@ const Pelaporan = () => {
             </Pressable>
           ))}
       {activeTabContent === "Proses" &&
-       dataLaporan
-       .filter((item) => item.status === "Proses")
-       .map((item) => (
-         <Pressable
-           key={item.idlaporan} // Move key to the outermost JSX element
-           onPress={() =>
-             route.push("/bnichecking/laporan/RingkasanLaporan")
-           }
-         >
-           <View style={{ paddingHorizontal: 20, paddingVertical: 10, }}>
-             <CardPelaporan
-               titleIdLaporan={item.idlaporan}
-               dateLaporan={item.tanggal}
-               status={item.status}
-             />
-           </View>
-         </Pressable>
-       ))}
-      {activeTabContent === "Selesai" &&  dataLaporan
+        dataLaporan
+          .filter((item) => item.status === "Proses")
+          .map((item) => (
+            <Pressable
+              key={item.idlaporan} // Move key to the outermost JSX element
+              onPress={() => navigation.navigate("RingkasanLaporan")}
+            >
+              <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
+                <CardPelaporan
+                  titleIdLaporan={item.idlaporan}
+                  dateLaporan={item.tanggal}
+                  status={item.status}
+                />
+              </View>
+            </Pressable>
+          ))}
+      {activeTabContent === "Selesai" &&
+        dataLaporan
           .filter((item) => item.status === "Selesai")
           .map((item) => (
             <Pressable
               key={item.idlaporan} // Move key to the outermost JSX element
-              onPress={() =>
-                route.push("/bnichecking/laporan/RingkasanLaporan")
-              }
+              onPress={() => navigation.navigate("RingkasanLaporan")}
             >
-              <View style={{ paddingHorizontal: 20, paddingVertical: 10, }}>
+              <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                 <CardPelaporan
                   titleIdLaporan={item.idlaporan}
                   dateLaporan={item.tanggal}
@@ -194,7 +171,7 @@ const Pelaporan = () => {
         <ButtonPrimary
           text="Buat Laporan"
           onPress={() => {
-            route.navigate("/bnichecking/laporan/BuatLaporan");
+            navigation.navigate("BuatLaporan");
           }}
         />
       </View>

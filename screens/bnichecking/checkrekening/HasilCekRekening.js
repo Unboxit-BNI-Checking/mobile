@@ -11,9 +11,11 @@ import icons from "../../../constants/icons";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import ButtonNextClose from "../../../component/common/button/ButtonNextClose";
+import { useNavigation } from "@react-navigation/native";
 
 const HasilCekRekening = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
   const openModal = () => {
     setModalVisible(!modalVisible);
@@ -24,34 +26,14 @@ const HasilCekRekening = () => {
   };
 
   const handleNextButtonClick = () => {
-    route.replace("/bnichecking/checkrekening/CekRekening");
+    navigation.replace("CekRekening");
   };
 
   const handleCloseButtonClick = () => {
-    route.replace("(tabs)");
+    navigation.replace("Tabs");
   };
   return (
     <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
-
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.back();
-              }}
-            />
-          ),
-          headerTitle: "Hasil Cek Rekening",
-        }}
-      />
       <View style={styles.rekeningInfoContainer}>
         <View style={styles.rekeningInfo}>
           <Text style={styles.name}>Jeon Wonwoo</Text>

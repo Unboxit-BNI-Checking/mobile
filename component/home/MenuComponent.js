@@ -43,7 +43,7 @@ const data = [
   {
     id: 7,
     name: "BNI\nChecking",
-    route: "bnichecking/checkrekening/BniChecking",
+    route: "BNIChecking",
     image: icons.icKredible,
   },
   {

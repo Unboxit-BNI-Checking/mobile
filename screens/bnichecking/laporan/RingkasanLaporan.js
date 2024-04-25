@@ -14,37 +14,14 @@ import StepperCustom from "../../../component/common/progress/ProgressBarCompone
 import ProgressBarComponent from "../../../component/common/progress/ProgressBarComponent";
 
 const RingkasanLaporan = () => {
-
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          // headerStyle: { backgroundColor: "red" },
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
-
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.back();
-              }}
-            />
-          ),
-          headerTitle: "Ringkasan Laporan",
-        }}
-      />
       <ScrollView>
         <View style={{ gap: 10, marginBottom: 200 }}>
-         <View style={{ paddingHorizontal: 60 }}>
-         <ProgressBarComponent currentStep={1} />
-         </View>
-          
-          
+          <View style={{ paddingHorizontal: 60 }}>
+            <ProgressBarComponent currentStep={1} />
+          </View>
+
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <View
               style={{

@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: 'PlusJakartaSansMedium',
     fontSize: 12,
+    
   },
 });
 

@@ -8,51 +8,32 @@ import {
 } from "react-native";
 import icons from "../../../constants/icons";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
+import { useNavigation } from "@react-navigation/native";
 
 const data = [
   {
     id: 1,
     name: "Cek\nRekening",
-    route: "bnichecking/checkrekening/CekRekening",
+    route: "CekRekening",
     image: icons.icBniChecking,
   },
   {
     id: 2,
     name: "Pelaporan",
-    route: "bnichecking/laporan/Pelaporan",
+    route: "Pelaporan",
     image: icons.icPelaporan,
   },
 ];
 const BniChecking = () => {
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          headerShadowVisible: false,
-          headerTitleStyle: {
-            color: "#243757",
-          },
-
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.replace("/");
-              }}
-            />
-          ),
-          headerTitle: "BNI Checking",
-        }}
-      />
       {data.map((item) => (
         <View style={styles.contentMenu} key={item.id}>
           <TouchableOpacity
             key={item.id}
-            // onPress={() => sampleCallback(item.name)}\
-            onPress={() => route.navigate("/" + item.route)}
+            onPress={() => navigation.navigate(item.route)}
           >
             <View>
               <Image source={item.image} style={styles.imageMenu} />

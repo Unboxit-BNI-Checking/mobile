@@ -1,11 +1,25 @@
 import { View, Text, Image, ImageBackground } from "react-native";
 import React from "react";
 import images from "../constants/images";
+import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 
-const SplashScreen = () => {
+const SplashScreenCustom = () => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate("LoginScreen");
+    }, 2000);
+  }, []);
+
   return (
     <View
-      style={{ flex: 1, justifyContent: "space-between", alignItems: "center" }}
+      style={{
+        flex: 1,
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "white",
+      }}
     >
       <Image
         source={images.background46}
@@ -17,7 +31,7 @@ const SplashScreen = () => {
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          top: "30%",
+          top: "28%",
         }}
       >
         <Image
@@ -79,4 +93,4 @@ const SplashScreen = () => {
   );
 };
 
-export default SplashScreen;
+export default SplashScreenCustom;

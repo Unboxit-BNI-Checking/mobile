@@ -3,33 +3,14 @@ import React from "react";
 import icons from "../../../constants/icons";
 import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonNextClose from "../../../component/common/button/ButtonNextClose";
+import { useNavigation } from "@react-navigation/native";
 
-const StatusBerhasilTerkirim = () => {
+const LaporanBerhasilTerkirim = () => {
 
-
+const navigation = useNavigation();
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
-          headerShown: false,
-
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.back();
-              }}
-            />
-          ),
-          headerTitle: "Sertakan Laporan",
-        }}
-      />
+     
       <View
         style={{
           flex: 1,
@@ -62,10 +43,10 @@ const StatusBerhasilTerkirim = () => {
           closeName={"Balik Ke Home"}
           nextName={"Lihat Laporan"}
           handleNextButtonClick={() => {
-            route.navigate("/bnichecking/laporan/Pelaporan");
+           navigation.navigate("Pelaporan");
           }}
           handleCloseButtonClick={() => {
-            route.replace("(tabs)");
+            navigation.navigate("Tabs");
           }}
           onPress={() => {
            
@@ -90,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StatusBerhasilTerkirim;
+export default LaporanBerhasilTerkirim;

@@ -15,8 +15,10 @@ import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const SertakanLaporan = () => {
+  const navigation = useNavigation();
   const [text, setText] = useState("");
   const [images, setImages] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -52,26 +54,7 @@ const SertakanLaporan = () => {
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
-      <Stack.Screen
-        options={{
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            color: "#243757",
-          },
-          headerShadowVisible: false,
-
-          headerLeft: () => (
-            <ScreenHeaderBtn
-              iconUrl={icons.icArrowForward}
-              dimension={24}
-              handlePress={() => {
-                route.back();
-              }}
-            />
-          ),
-          headerTitle: "Sertakan Laporan",
-        }}
-      />
+     
       <ScrollView>
         <View style={{ padding: 20, gap: 10, marginBottom: 250 }}>
           <View style={{ gap: 4 }}>
@@ -228,7 +211,7 @@ const SertakanLaporan = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            route.navigate("/bnichecking/laporan/SertakanLaporanSummary");
+           navigation.navigate("SertakanLaporanSummary");
           }}
         />
       </View>
