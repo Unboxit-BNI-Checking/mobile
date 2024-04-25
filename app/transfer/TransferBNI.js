@@ -127,7 +127,7 @@ const TransferBNI = () => {
         {/* Rekening, Saldo */}
         <View style={{ alignItems: "center" }}>
           <View style={styles.Rekening}>
-            <Text>Rekening Debet</Text>
+            <Text style={{ fontSize: 14, fontFamily: "PlusJakartaSansRegular" }} >Rekening Debet</Text>
             <Dropdown
               style={styles.dropdown}
               data={dataRekening}
@@ -146,9 +146,9 @@ const TransferBNI = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Text style={{ fontSize: 14, fontWeight: "bold" }}>Saldo</Text>
+              <Text style={{fontFamily: "PlusJakartaSansBold" }}>Saldo</Text>
               <View style={{ flexDirection: "row", gap: 10 }}>
-                <Text>{showSaldo ? "Rp 300.478" : "Rp *******"}</Text>
+                <Text style={{ fontFamily: "PlusJakartaSansRegular" }} >{showSaldo ? "Rp 300.478" : "Rp *******"}</Text>
                 <TouchableOpacity onPress={() => setShowSaldo(!showSaldo)}>
                   {showSaldo ? (
                     <Ionicons name="eye-outline" size={18} color="#F37548" />
@@ -231,10 +231,10 @@ const TransferBNI = () => {
         {activeTabContent === "Daftar Favorit" && (
           <View style={styles.activeTabContent}>
             <View style={styles.DaftarFavorit}>
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              <Text style={{ fontSize: 16,  fontFamily: "PlusJakartaSansBold" }}>
                 Rekening Tujuan
               </Text>
-              <Text style={{ fontSize: 14 }}>Nama</Text>
+              <Text style={{  fontFamily: "PlusJakartaSansRegular" }}>Nama</Text>
               <Dropdown
                 style={styles.dropdown}
                 data={dataFavorite}
@@ -250,7 +250,10 @@ const TransferBNI = () => {
               />
 
               <Text style={{}}>Rekening Tujuan</Text>
-              <TextInput style={styles.textInput} />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Masukan Nomor Rekening"
+              />
             </View>
           </View>
         )}
@@ -282,10 +285,17 @@ const TransferBNI = () => {
 
         <View style={{ alignItems: "center", marginBottom: 120 }}>
           <View style={styles.Nominal}>
-            <Text style={{}}>Nominal</Text>
+            <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>
+              Nominal
+            </Text>
             <TextInput style={styles.textInput} placeholder="Rp0" />
-            <Text style={{}}>Keterangan</Text>
-            <TextInput style={styles.textInput} />
+            <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>
+              Keterangan
+            </Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Tulis Keterangan Transaksi (Optional)"
+            />
           </View>
         </View>
 

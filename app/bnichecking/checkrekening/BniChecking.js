@@ -41,7 +41,7 @@ const BniChecking = () => {
               iconUrl={icons.icArrowForward}
               dimension={24}
               handlePress={() => {
-                route.back();
+                route.replace("/");
               }}
             />
           ),

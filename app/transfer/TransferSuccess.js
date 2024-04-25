@@ -11,25 +11,26 @@ import ButtonPrimary from "../../component/common/button/ButtonPrimary";
 const TransferSuccess = () => {
   const route = useRouter();
   return (
-    <View style={{ flex: 1, backgroundColor: "white", paddingTop:30 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <Stack.Screen
         options={{
           headerTitleAlign: "center",
           // headerStyle: { backgroundColor: "red" },
-         
+
           headerTitleStyle: {
             color: "#243757",
           },
-          headerShown: false,
           headerShadowVisible: false,
-          headerLeft: () => null,
+          headerLeft: () => (
+            <ScreenHeaderBtn handlePress={() => route.back()} />
+          ),
           headerTitle: "Status",
         }}
       />
       <ScrollView>
         <View
           style={{
-            marginTop: 20,
+            marginTop: 10,
             gap: 10,
             marginHorizontal: 20,
             marginBottom: 140,
@@ -70,7 +71,6 @@ const TransferSuccess = () => {
             title={"Waktu Transaksi"}
             subTitle={"19:48:23 WIB"}
           />
-          <LabelValidasiComponent title={"Email Penerima"} subTitle={""} />
           <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
           <LabelStatusComponent title={"Status Rekening"} subTitle={"Normal"} />
           <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
@@ -91,15 +91,18 @@ const TransferSuccess = () => {
             style={{
               backgroundColor: "#F5F6F7",
 
+paddingHorizontal: 10,
               height: 48,
               justifyContent: "center",
               borderRadius: 6,
             }}
           >
-            <LabelValidasiPengirimComponent
-              title={"Total"}
-              subTitle={"10.000"}
-            />
+           
+              <LabelValidasiPengirimComponent
+                title={"Total"}
+                subTitle={"10.000"}
+              />
+           
           </View>
         </View>
       </ScrollView>

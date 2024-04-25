@@ -67,7 +67,7 @@ const TransferConfirm = () => {
             subTitle={"Sdr Jeon Wonwoo"}
           />
 
-          <LabelValidasiComponent title={"Email Penerima"} subTitle={""} />
+         
           <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
           <LabelStatusComponent title={"Status Rekening"} subTitle={"Normal"} />
           <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
@@ -106,7 +106,7 @@ const TransferConfirm = () => {
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                placeholder="Masukan Nomor Rekening"
+                placeholder="Masukan Password Transaksi"
                 secureTextEntry={!showPassword}
                 value={password}
                 onChangeText={(text) => setPassword(text)}
