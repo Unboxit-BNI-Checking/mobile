@@ -1,12 +1,16 @@
 import React from "react";
 import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
 
+const ButtonPrimary = ({ text, iconUrl, onPress, dimension, disable }) => {
+  const buttonStyles = disable
+    ? [styles.button, styles.disabledButton]
+    : styles.button;
+  const textStyles = disable ? [styles.text, styles.disabledText] : styles.text;
 
-const ButtonPrimary = ({ text, iconUrl, onPress, dimension }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={buttonStyles} onPress={onPress} disabled={disable}>
       <View style={styles.container}>
-        <Text style={styles.text}>{text}</Text>
+        <Text style={textStyles}>{text}</Text>
         <Image
           source={iconUrl}
           style={styles.btnImg(dimension)}
@@ -36,10 +40,16 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontFamily: "PlusJakartaSansMedium",
   },
+  disabledButton: {
+    backgroundColor: "#CCCCCC", // Change to gray color
+  },
+  disabledText: {
+    color: "#999999", // Change to gray color
+  },
   btnImg: (dimension) => ({
     width: dimension,
     height: dimension,
-  })
+  }),
 });
 
 export default ButtonPrimary;

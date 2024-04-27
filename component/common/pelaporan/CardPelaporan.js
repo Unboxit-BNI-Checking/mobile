@@ -9,7 +9,7 @@ const CardPelaporan = ({ titleIdLaporan, dateLaporan, status }) => {
   if (status === "Dilaporkan") {
     backgroundColors = "#FBE9ED";
     fontColos = "#D6264F";
-  } else if (status === "Proses") {
+  } else if (status === "Diproses") {
     backgroundColors = "#FFF6E6";
     fontColos = "#FFA500";
   } else if (status === "Selesai") {
