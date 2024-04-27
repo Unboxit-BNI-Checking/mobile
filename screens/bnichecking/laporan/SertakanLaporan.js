@@ -11,11 +11,14 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
-import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
+
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAppBar from "../../../component/common/header/CustomAppBar";
+import CardDataPelaporan from "../../../component/common/pelaporan/CardDataPelaporan";
 
 const SertakanLaporan = () => {
   const navigation = useNavigation();
@@ -23,8 +26,6 @@ const SertakanLaporan = () => {
   const [images, setImages] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-
-
 
   const pickImages = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -53,89 +54,47 @@ const SertakanLaporan = () => {
   };
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
-     
+    <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
+      <CustomAppBar
+        title="Sertakan Laporan"
+        onLeftPress={() => navigation.goBack()}
+        leftIcon={icons.icArrowForward}
+        dimension={24}
+      />
       <ScrollView>
-        <View style={{ padding: 20, gap: 10, marginBottom: 250 }}>
-          <View style={{ gap: 4 }}>
-            <Text style={styles.headerText}>Rekening Pelapor</Text>
-            <View style={{ flexDirection: "row", gap: 5 }}>
-              <Text style={{ color: "#6B788E" }}>1818181818</Text>
-              <Text style={{ color: "#6B788E" }}>Nama Rekening Pelapor</Text>
-            </View>
-          </View>
-          <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
-          <View style={{ gap: 4 }}>
-            <Text style={styles.headerText}>Transaksi yang dipilih</Text>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <Text style={styles.headerText}>Transfer BNI</Text>
-              <Text style={styles.headerText}>Rp-10.0000</Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <Text style={styles.subHeaderText}>1234567890</Text>
-              <Text style={styles.subHeaderText}>19/04/202</Text>
-            </View>
-            <Text style={styles.subHeaderText}>Nama Pemilik Rek</Text>
-          </View>
-          <View style={{ height: 8, backgroundColor: "#F5F6F7" }}></View>
-          <View style={{ gap: 10 }}>
+        <View style={styles.contentContainer}>
+          <CardDataPelaporan
+            namaRekeningPelapor={"Amelia Qatrunnada "}
+            nomorRekeningPelapor={"1818181818"}
+            namaRekeningDilaporkan={"Nama Pemilik Norek"}
+            nominalRekeningDilaporkan={"100.000"}
+            nomorRekeningDilaporkan={"1234567890"}
+            tanggalTransaksiDilaporkan={"19/04/2024"}
+            bankRekeningDilaporkan={"Bank Negara Indonesia"}
+            jamTransaksiDilaporkan={"18:23:28"}
+          />
+          <View style={styles.separator}></View>
+          <View style={styles.peristiwaContainer}>
             <Text style={styles.headerText}>Peristiwa Yang Dilaporkan</Text>
-            <View style={{ gap: 6 }}>
-              <Text
-                style={{
-                  color: "#243757",
-                  fontFamily: "PlusJakartaSansRegular",
-                }}
-              >
-                Kronologi
-              </Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.textArea}
-                  multiline={true}
-                  numberOfLines={7}
-                  onChangeText={setText}
-                  value={text}
-                />
-              </View>
+            <View style={styles.kronologiContainer}>
+              <Text style={styles.label}>Kronologi</Text>
+              <TextInput
+                style={styles.textArea}
+                multiline={true}
+                onChangeText={setText}
+                value={text}
+              />
             </View>
           </View>
 
-          <View style={{ gap: 6 }}>
-            <Text
-              style={{ color: "#243757", fontFamily: "PlusJakartaSansRegular" }}
-            >
-              Lampiran
-            </Text>
-
+          <View style={styles.lampiranContainer}>
+            <Text style={styles.label}>Lampiran</Text>
             {images.length === 0 ? (
               <TouchableOpacity onPress={pickImages}>
                 <View style={styles.inputImage}>
-                  <Image
-                    source={icons.icPaste}
-                    style={{ height: 24, width: 24 }}
-                  />
-                  <Text
-                    style={{
-                      textDecorationLine: "underline",
-                      color: "#6B788E",
-                      fontSize: 12,
-                      fontFamily: "PlusJakartaSansRegular",
-                    }}
-                  >
-                    Tambahkan Bukti Disini
-                  </Text>
-                  <Text
-                    style={{
-                      color: "#6B788E",
-                      fontSize: 12,
-                      fontFamily: "PlusJakartaSansRegular",
-                    }}
-                  >
+                  <Image source={icons.icPaste} style={styles.pasteIcon} />
+                  <Text style={styles.addText}>Tambahkan Bukti Disini</Text>
+                  <Text style={styles.uploadInfo}>
                     Anda bisa upload lebih dari 1 file
                   </Text>
                 </View>
@@ -145,38 +104,24 @@ const SertakanLaporan = () => {
                 <TouchableOpacity onPress={pickImages}>
                   <View style={styles.addButtonImage}>
                     <MaterialIcons name="add" size={24} color="#F15922" />
-                    <Text style={{ fontFamily: "PlusJakartaSansRegular", color: "#F15922" }}  >Tambah Lampiran</Text>
+                    <Text style={styles.addTextMore}>Tambah Lampiran</Text>
                   </View>
                 </TouchableOpacity>
                 <View style={styles.imagesContainer}>
                   {images.map((image, index) => (
-                    <View
-                      key={index}
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <View>
-                        <TouchableOpacity
-                          onPress={() => handleImageClick(image)}
-                        >
-                          <Image
-                            source={{ uri: image.uri }}
-                            style={styles.image}
-                          />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => deleteImage(index)}
-                          style={styles.deleteButton}
-                        >
-                          <MaterialIcons
-                            name="close"
-                            size={24}
-                            color="white"
-                          />
-                        </TouchableOpacity>
-                      </View>
+                    <View key={index} style={styles.imageContainer}>
+                      <TouchableOpacity onPress={() => handleImageClick(image)}>
+                        <Image
+                          source={{ uri: image.uri }}
+                          style={styles.image}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => deleteImage(index)}
+                        style={styles.deleteButton}
+                      >
+                        <MaterialIcons name="close" size={24} color="white" />
+                      </TouchableOpacity>
                     </View>
                   ))}
                 </View>
@@ -189,12 +134,12 @@ const SertakanLaporan = () => {
               onRequestClose={() => setModalVisible(false)}
             >
               <View style={styles.modalContainer}>
-                <TouchableHighlight
+                <TouchableOpacity
                   onPress={() => setModalVisible(false)}
-                  style={{ position: "absolute", top: 20, right: 20 }}
+                  style={styles.closeButton}
                 >
-                  <Text style={{ color: "white", fontSize: 20 }}>Close</Text>
-                </TouchableHighlight>
+                  <MaterialIcons name="close" size={24} color="white" />
+                </TouchableOpacity>
                 <View style={styles.modalContent}>
                   <Image
                     source={{ uri: selectedImage?.uri }}
@@ -211,68 +156,106 @@ const SertakanLaporan = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-           navigation.navigate("SertakanLaporanSummary");
+            navigation.navigate("SertakanLaporanSummary", {});
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  container: {
+    backgroundColor: "white",
     flex: 1,
+  },
+  contentContainer: {
+    gap: 10,
+    marginBottom: 150,
+  },
+  separator: {
+    height: 8,
+    backgroundColor: "#F5F6F7",
+  },
+  peristiwaContainer: {
+    gap: 10,
+    paddingHorizontal: 20,
+  },
+  kronologiContainer: {
+    gap: 6,
+  },
+  label: {
+    color: "#243757",
+    fontFamily: "PlusJakartaSansRegular",
+  },
+
+  textArea: {
+    fontFamily: "PlusJakartaSansRegular",
+    borderWidth: 1,
+    borderColor: "#C2C7D0",
+    borderRadius: 8,
+    padding: 10,
+    textAlignVertical: "top",
+  },
+  lampiranContainer: {
+    gap: 6,
+    paddingHorizontal: 20,
   },
   inputImage: {
     alignItems: "center",
     borderWidth: 1,
     borderStyle: "dashed",
-    borderColor: "#ccc",
+    borderColor: "#C2C7D0",
     borderRadius: 8,
     justifyContent: "center",
     padding: 16,
     height: 94,
   },
-  input: {
-    flex: 1,
-    marginLeft: 10,
+  pasteIcon: {
+    height: 24,
+    width: 24,
   },
-  headerText: { color: "#243757", fontFamily: "PlusJakartaSansBold" },
-  subHeaderText: {
+  addText: {
+    textDecorationLine: "underline",
     color: "#6B788E",
+    fontSize: 12,
     fontFamily: "PlusJakartaSansRegular",
   },
-  bottomButtonContainer: {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    padding: 20,
-    backgroundColor: "#fff",
-    borderTopWidth: 1,
-    borderTopColor: "rgba(204, 204, 204, 0.5)",
-    height: 102,
+  addTextMore: {
+    textDecorationLine: "underline",
+    color: "#F15922",
+    fontSize: 12,
+    fontFamily: "PlusJakartaSansRegular",
+  },
+  uploadInfo: {
+    color: "#6B788E",
+    fontSize: 12,
+    fontFamily: "PlusJakartaSansRegular",
+  },
+  addButtonImage: {
+    flexDirection: "row",
     alignItems: "center",
-  },
-  textArea: {
-    fontFamily: "PlusJakartaSansRegular",
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    textAlignVertical: "top",
+    borderStyle: "dashed",
+    borderColor: "#C2C7D0",
+    borderRadius: 8,
+    justifyContent: "center",
+    padding: 8,
+    gap: 5,
   },
-
   imagesContainer: {
-    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     marginTop: 10,
     borderWidth: 1,
     borderStyle: "dashed",
-    borderColor: "#ccc",
+    borderColor: "#C2C7D0",
     borderRadius: 8,
     padding: 4,
     alignItems: "flex-start",
+  },
+  imageContainer: {
+    position: "relative",
   },
   image: {
     width: 100,
@@ -286,6 +269,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  closeButton: {
+    position: "absolute",
+    top: 15,
+    right: 20,
+    backgroundColor: "#D6264F",
+    borderRadius: 50,
+  },
+
   modalContent: {
     width: "90%",
     height: "90%",
@@ -309,17 +300,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
-  addButtonImage: {
-    flexDirection: "row",
+  bottomButtonContainer: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    padding: 20,
+    backgroundColor: "#fff",
+    borderTopWidth: 1,
+    borderTopColor: "rgba(204, 204, 204, 0.5)",
+    height: 102,
     alignItems: "center",
-    borderWidth: 1,
-    borderStyle: "dashed",
-    borderColor: "#F15922",
-    borderRadius: 8,
-    justifyContent: "center",
-    padding: 8,
-    gap: 5,
+  },
+  headerText: {
+    color: "#243757",
+    fontFamily: "PlusJakartaSansBold",
   },
 });
 

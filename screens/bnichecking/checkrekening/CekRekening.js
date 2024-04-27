@@ -10,16 +10,22 @@ import React, { useState } from "react";
 import icons from "../../../constants/icons";
 import { AntDesign } from "@expo/vector-icons";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
-import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAppBar from "../../../component/common/header/CustomAppBar";
 
 const CekRekening = () => {
 
   const navigation = useNavigation();
-
-  const [text, setText] = useState("");
+  const [text, setText] = useState("")
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <CustomAppBar
+        title="Cek Rekening"
+        onLeftPress={() => navigation.navigate("BNIChecking")}
+        leftIcon={icons.icArrowForward}
+        dimension={24}
+      />
       
       <View style={{ padding: 20 }}>
         <View style={{ gap: 8 }}>
@@ -80,7 +86,7 @@ const CekRekening = () => {
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

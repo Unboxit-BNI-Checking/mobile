@@ -9,12 +9,13 @@ import React, { useState } from "react";
 import CardPelaporan from "../../../component/common/pelaporan/CardPelaporan";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import icons from "../../../constants/icons";
-import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAppBar from "../../../component/common/header/CustomAppBar";
 
 const dataLaporan = [
   { idlaporan: 1343232432, status: "Dilaporkan", tanggal: "10/10/2022" },
-  { idlaporan: 2324324324, status: "Proses", tanggal: "10/10/2022" },
+  { idlaporan: 2324324324, status: "Diproses", tanggal: "10/10/2022" },
   { idlaporan: 3324324324, status: "Selesai", tanggal: "10/10/2022" },
   { idlaporan: 4324234324, status: "Dilaporkan", tanggal: "10/10/2022" },
 ];
@@ -29,7 +30,13 @@ const Pelaporan = () => {
     setActiveTabContent(tab);
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <CustomAppBar
+        title="Pelaporan"
+        onLeftPress={() => navigation.goBack()}
+        leftIcon={icons.icArrowForward}
+        dimension={24}
+      />
       {/* TOPBAR DAFTAR FAVORIT */}
       <View style={{ backgroundColor: "white" }}>
         <View style={styles.tabRekTujuan}>
@@ -55,6 +62,10 @@ const Pelaporan = () => {
                   activeButton === "Dilaporkan"
                     ? "rgb(241, 89, 34)"
                     : "rgba(204, 204, 204, 1)",
+                    fontFamily:
+                  activeButton === "Dilaporkan"
+                    ? "PlusJakartaSansBold"
+                    : "PlusJakartaSansMedium",
               }}
             >
               Dilaporkan
@@ -63,27 +74,31 @@ const Pelaporan = () => {
           <TouchableOpacity
             style={[
               styles.textRekTujuan,
-              activeButton === "Proses" && styles.activeTab,
+              activeButton === "Diproses" && styles.activeTab,
               {
                 borderBottomColor:
-                  activeButton === "Proses"
+                  activeButton === "Diproses"
                     ? "rgb(241, 89, 34)"
                     : "rgba(204, 204, 204, 0.5)",
-                borderBottomWidth: activeButton === "Proses" ? 3 : 2,
+                borderBottomWidth: activeButton === "Diproses" ? 3 : 2,
               },
             ]}
-            onPress={() => handleTabPress("Proses")}
+            onPress={() => handleTabPress("Diproses")}
           >
             <Text
               style={{
                 fontSize: 14,
                 color:
-                  activeButton === "Proses"
+                  activeButton === "Diproses"
                     ? "rgb(241, 89, 34)"
                     : "rgba(204, 204, 204, 1)",
+                fontFamily:
+                  activeButton === "Diproses"
+                    ? "PlusJakartaSansBold"
+                    : "PlusJakartaSansMedium",
               }}
             >
-              Proses
+              Diproses
             </Text>
           </TouchableOpacity>
 
@@ -104,10 +119,14 @@ const Pelaporan = () => {
             <Text
               style={{
                 fontSize: 14,
+                fontFamily: activeButton === "Selesai"
+                ? "PlusJakartaSansBold"
+                : "PlusJakartaSansMedium",
                 color:
                   activeButton === "Selesai"
                     ? "rgb(241, 89, 34)"
                     : "rgba(204, 204, 204, 1)",
+                    
               }}
             >
               Selesai
@@ -133,9 +152,9 @@ const Pelaporan = () => {
               </View>
             </Pressable>
           ))}
-      {activeTabContent === "Proses" &&
+      {activeTabContent === "Diproses" &&
         dataLaporan
-          .filter((item) => item.status === "Proses")
+          .filter((item) => item.status === "Diproses")
           .map((item) => (
             <Pressable
               key={item.idlaporan} // Move key to the outermost JSX element
@@ -175,13 +194,14 @@ const Pelaporan = () => {
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   tabRekTujuan: {
     flexDirection: "row",

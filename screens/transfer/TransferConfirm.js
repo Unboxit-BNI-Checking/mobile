@@ -13,20 +13,42 @@ import LabelValidasiComponent from "../../component/common/label/LabelValidasiCo
 import LabelValidasiPengirimComponent from "../../component/common/label/LabelValidasiPengirimComponent";
 import LabelStatusComponent from "../../component/common/label/LabelStatusComponent";
 import ButtonPrimary from "../../component/common/button/ButtonPrimary";
-import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
+
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAppBar from "../../component/common/header/CustomAppBar";
+import ModalStatusInformation from "../../component/common/modal/ModalStatusInformation";
 
 const TransferConfirm = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+  };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const openModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  const closeModal = () => {
+    setModalVisible(!modalVisible);
+  };
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <CustomAppBar
+        title="Validasi"
+        onLeftPress={() => navigation.goBack()}
+        leftIcon={icons.icArrowForward}
+        dimension={24}
+      />
       <ScrollView>
         <View
           style={{
@@ -46,7 +68,10 @@ const TransferConfirm = () => {
           />
 
           <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
-          <LabelStatusComponent title={"Status Rekening"} subTitle={"Normal"} />
+          <TouchableOpacity onPress={openModal}>
+            <LabelStatusComponent title={"Status Rekening"} status={1} />
+          </TouchableOpacity>
+
           <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
           <LabelValidasiPengirimComponent
             title={"Nama Pengirim"}
@@ -58,7 +83,7 @@ const TransferConfirm = () => {
           />
           <LabelValidasiPengirimComponent
             title={"Nominal"}
-            subTitle={"10.000"}
+            subTitle={"100.000"}
           />
           <LabelValidasiPengirimComponent title={"Fee"} subTitle={"0"} />
           <View
@@ -68,11 +93,12 @@ const TransferConfirm = () => {
               height: 48,
               justifyContent: "center",
               borderRadius: 6,
+              paddingHorizontal: 10,
             }}
           >
             <LabelValidasiPengirimComponent
               title={"Total"}
-              subTitle={"10.000"}
+              subTitle={"100.000"}
             />
           </View>
           <View style={{ height: 48, gap: 6, marginTop: 10 }}>
@@ -86,7 +112,7 @@ const TransferConfirm = () => {
                 placeholder="Masukan Password Transaksi"
                 secureTextEntry={!showPassword}
                 value={password}
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={handlePasswordChange}
               />
               <TouchableOpacity
                 onPress={toggleShowPassword}
@@ -101,13 +127,22 @@ const TransferConfirm = () => {
             </View>
           </View>
         </View>
+
+        <ModalStatusInformation
+          modalVisible={modalVisible}
+          closeModal={closeModal}
+        />
       </ScrollView>
       <View style={styles.bottomButtonContainer}>
-        <ButtonPrimary text="Selanjutnya" onPress={() => {
-          navigation.navigate("TransferSuccess");
-        }} />
+        <ButtonPrimary
+          text="Selanjutnya"
+          onPress={() => {
+            navigation.navigate("TransferSuccess");
+          }}
+          disable={!password}
+        />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,7 +1,16 @@
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
 import React from "react";
 import icons from "../../constants/icons";
- import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAppBar from "../../component/common/header/CustomAppBar";
 
 const data = [
   {
@@ -50,25 +59,32 @@ const data = [
 const Transfer = () => {
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-     
-      {data.map((item) => (
-        <View style={styles.contentMenu} key={item.id}>
-          <TouchableOpacity
-            key={item.id}
-            // onPress={() => sampleCallback(item.name)}\
-            onPress={() => navigation.navigate(item.route) }
-          >
-            <View>
-              <Image source={item.image} style={styles.imageMenu} />
-              <Text style={{ textAlign: "center" }} numberOfLines={2}>
-                {item.name}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      ))}
-    </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <CustomAppBar
+        title="Transfer"
+        onLeftPress={() => navigation.goBack()}
+        leftIcon={icons.icArrowForward}
+        dimension={24}
+      />
+      <View style={styles.container}>
+        {data.map((item) => (
+          <View style={styles.contentMenu} key={item.id}>
+            <TouchableOpacity
+              key={item.id}
+              // onPress={() => sampleCallback(item.name)}\
+              onPress={() => navigation.navigate(item.route)}
+            >
+              <View>
+                <Image source={item.image} style={styles.imageMenu} />
+                <Text style={{ textAlign: "center" }} numberOfLines={2}>
+                  {item.name}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
+    </SafeAreaView>
   );
 };
 

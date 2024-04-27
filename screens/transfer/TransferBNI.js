@@ -13,23 +13,19 @@ import { Dropdown } from "react-native-element-dropdown";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CheckboxCustom from "../../component/common/checkbox/CheckboxCustom";
 import icons from "../../constants/icons";
-import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
-import ModalCustom from "../../component/common/modal/ModalCustom";
+
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAppBar from "../../component/common/header/CustomAppBar";
+import ModalStatusCheck from "../../component/common/modal/ModalStatusCheck";
 
 const dataFavorite = [
-  { label: "Item 1", value: "1" },
-  { label: "Item 2", value: "2" },
-  { label: "Item 3", value: "3" },
-  { label: "Item 4", value: "4" },
-  { label: "Item 5", value: "5" },
-  { label: "Item 6", value: "6" },
-  { label: "Item 7", value: "7" },
-  { label: "Item 8", value: "8" },
+  { label: "Tiansi Pratama", value: "1" },
+  { label: "Sdr Jeon Wonwoo", value: "2" },
 ];
 
 const dataRekening = [
-  { label: "11111111111", value: "1" },
+  { label: "1818181818", value: "1" },
   { label: "12839405948", value: "2" },
 ];
 
@@ -43,6 +39,7 @@ const TransferBNI = () => {
   const [isCheckedModal, setIsCheckedModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(1);
+  const [nominal, setNominal] = useState("");
 
   const navigation = useNavigation();
 
@@ -67,27 +64,8 @@ const TransferBNI = () => {
     setIsCheckedModal(!isCheckedModal);
   };
 
-  const modalContent = {
-    1: {
-      linkText: "Cek No Rek Disini",
-      mediumText:
-        "Hati-hati dalam bertransaksi dengan Nomor Rekening Asing ini.",
-      titleText: "Rekening Asing",
-      iconStatus: icons.icStatusGreen,
-    },
-    2: {
-      linkText: "Cek No Rek Disini",
-      mediumText:
-        "Nomor Rekening ini pernah menerima laporan dari orang lain dan sedang dalam investigasi.",
-      titleText: "Rekening Sedang Dalam Investigasi",
-      iconStatus: icons.icStatusYellow,
-    },
-    3: {
-      linkText: "Block Details",
-      mediumText: "Nomor Rekening ini terindikasi Penipuan dan sudah diblokir.",
-      titleText: "Rekening Telah Diblokir",
-      iconStatus: icons.icStatusRed,
-    },
+  const handleNominalChange = (text) => {
+    setNominal(text); // Perbarui state nominal dengan nilai input
   };
 
   const renderItem = (item) => (
@@ -102,22 +80,34 @@ const TransferBNI = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <CustomAppBar
+        title="Transfer Antar BNI"
+        onLeftPress={() => navigation.goBack()}
+        leftIcon={icons.icArrowForward}
+        dimension={24}
+      />
       <ScrollView>
         {/* Rekening, Saldo */}
         <View style={{ alignItems: "center" }}>
           <View style={styles.Rekening}>
-            <Text style={{ fontSize: 14, fontFamily: "PlusJakartaSansRegular" }} >Rekening Debet</Text>
+            <Text style={{ fontSize: 14, fontFamily: "PlusJakartaSansMedium" }}>
+              Rekening Debet
+            </Text>
             <Dropdown
               style={styles.dropdown}
               data={dataRekening}
               labelField="label"
               valueField="value"
-              placeholder={dataRekening[0].label}
+              placeholder={"Pilih Rekening"}
               searchPlaceholder="Search..."
               value={valueRekening}
               onChange={(item) => setValueRekening(item.value)}
+              placeholderStyle={{
+                fontFamily: "PlusJakartaSansMedium",
+                color: "#98A1B0",
+                fontSize: 14,
+              }}
               renderItem={renderItem}
             />
 
@@ -127,9 +117,11 @@ const TransferBNI = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Text style={{fontFamily: "PlusJakartaSansBold" }}>Saldo</Text>
+              <Text style={{ fontFamily: "PlusJakartaSansBold" }}>Saldo</Text>
               <View style={{ flexDirection: "row", gap: 10 }}>
-                <Text style={{ fontFamily: "PlusJakartaSansRegular" }} >{showSaldo ? "Rp 300.478" : "Rp *******"}</Text>
+                <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
+                  {showSaldo ? "Rp 300.478" : "Rp *******"}
+                </Text>
                 <TouchableOpacity onPress={() => setShowSaldo(!showSaldo)}>
                   {showSaldo ? (
                     <Ionicons name="eye-outline" size={18} color="#F37548" />
@@ -170,7 +162,10 @@ const TransferBNI = () => {
             >
               <Text
                 style={{
-                  fontSize: 14,
+                  fontFamily:
+                    activeButton === "Daftar Favorit"
+                      ? "PlusJakartaSansBold"
+                      : "PlusJakartaSansMedium",
                   color:
                     activeButton === "Daftar Favorit"
                       ? "rgb(241, 89, 34)"
@@ -196,7 +191,10 @@ const TransferBNI = () => {
             >
               <Text
                 style={{
-                  fontSize: 14,
+                  fontFamily:
+                    activeButton === "Input Baru"
+                      ? "PlusJakartaSansBold"
+                      : "PlusJakartaSansMedium",
                   color:
                     activeButton === "Input Baru"
                       ? "rgb(241, 89, 34)"
@@ -212,10 +210,10 @@ const TransferBNI = () => {
         {activeTabContent === "Daftar Favorit" && (
           <View style={styles.activeTabContent}>
             <View style={styles.DaftarFavorit}>
-              <Text style={{ fontSize: 16,  fontFamily: "PlusJakartaSansBold" }}>
+              <Text style={{ fontSize: 16, fontFamily: "PlusJakartaSansBold" }}>
                 Rekening Tujuan
               </Text>
-              <Text style={{  fontFamily: "PlusJakartaSansRegular" }}>Nama</Text>
+              <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>Nama</Text>
               <Dropdown
                 style={styles.dropdown}
                 data={dataFavorite}
@@ -223,17 +221,25 @@ const TransferBNI = () => {
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
-                placeholder=""
+                placeholder="Pilih Nama"
+                placeholderStyle={{
+                  fontFamily: "PlusJakartaSansMedium",
+                  color: "#98A1B0",
+                  fontSize: 14,
+                }}
                 searchPlaceholder="Search..."
                 value={valueFavorite}
                 onChange={(item) => setValueFavorite(item.value)}
                 renderItem={renderItem}
               />
 
-              <Text style={{}}>Rekening Tujuan</Text>
+              <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
+                Rekening Tujuan
+              </Text>
               <TextInput
                 style={styles.textInput}
                 placeholder="Masukan Nomor Rekening"
+                placeholderTextColor={"#98A1B0"}
               />
             </View>
           </View>
@@ -241,7 +247,9 @@ const TransferBNI = () => {
         {activeTabContent === "Input Baru" && (
           <View style={styles.activeTabContent}>
             <View style={styles.DaftarFavorit}>
-              <Text style={{ fontSize: 14 }}>Rekening Tujuan</Text>
+              <Text style={{ fontFamily: "PlusJakartaSansBold" }}>
+                Rekening Tujuan
+              </Text>
               <TextInput style={styles.textInput} />
 
               <CheckboxCustom
@@ -256,6 +264,7 @@ const TransferBNI = () => {
                 ]}
                 editable={isChecked}
                 placeholder={!isChecked ? "(max 30 karakter)" : null}
+                placeholderTextColor={"#98A1B0"}
               />
             </View>
           </View>
@@ -269,30 +278,33 @@ const TransferBNI = () => {
             <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>
               Nominal
             </Text>
-            <TextInput style={styles.textInput} placeholder="Rp0" />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Rp0"
+              value={nominal} // Mengikat nilai ke state nominal
+              onChangeText={handleNominalChange}
+              placeholderTextColor={"#98A1B0"}
+              keyboardType="numeric"
+            />
             <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>
               Keterangan
             </Text>
             <TextInput
               style={styles.textInput}
               placeholder="Tulis Keterangan Transaksi (Optional)"
+              placeholderTextColor={"#98A1B0"}
             />
           </View>
         </View>
 
-        <ModalCustom
-          modalVisible={modalVisible}
+        <ModalStatusCheck
           closeModal={closeModal}
-          linkText={status == 3 ? null : modalContent[status].linkText}
-          mediumText={modalContent[status].mediumText}
-          titleText={modalContent[status].titleText}
-          iconStatus={modalContent[status].iconStatus}
+          status={status}
+          modalVisible={modalVisible}
           handleNextButtonClick={handleNextButtonClick}
           handleCloseButtonClick={handleCloseButtonClick}
-          handleCheckboxChange={handleCheckboxChange}
           isChecked={isCheckedModal}
-          showCheckbox={status != 1 ? false : true}
-          showCloseButton={status == 3 ? false : true}
+          handleCheckboxChange={handleCheckboxChange}
         />
       </ScrollView>
 
@@ -302,9 +314,10 @@ const TransferBNI = () => {
           onPress={() => {
             openModal(1);
           }}
+          disable={!nominal}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -344,9 +357,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     borderColor: "#C2C7D0",
+    fontFamily: "PlusJakartaSansMedium",
   },
   disabledInput: {
     backgroundColor: "#f0f0f0",
+    fontFamily: "PlusJakartaSansMedium",
   },
   Nominal: {
     height: 198,

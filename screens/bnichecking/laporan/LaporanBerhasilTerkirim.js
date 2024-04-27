@@ -1,7 +1,6 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import icons from "../../../constants/icons";
-import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonNextClose from "../../../component/common/button/ButtonNextClose";
 import { useNavigation } from "@react-navigation/native";
 

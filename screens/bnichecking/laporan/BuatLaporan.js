@@ -11,9 +11,9 @@ import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import icons from "../../../constants/icons";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
-
-import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAppBar from "../../../component/common/header/CustomAppBar";
 
 // Impor dummy transaction data
 
@@ -25,7 +25,7 @@ const dataRekening = [
 const dummyTransactionHistory = [
   {
     date: "19/04/2024_1",
-    time : "18:23:28",
+    time: "18:23:28",
     type: "Bank Negara Indonesia",
     accountNumber: "123144142",
     accountNumberDestination: "12839405948",
@@ -34,13 +34,13 @@ const dummyTransactionHistory = [
   },
   {
     date: "20/04/2024",
-    time : "18:23:28",
+    time: "18:23:28",
     type: "Bank Negara Indonesia",
     accountNumber: "123144142",
     accountNumberDestination: "9999999999",
     accountOwner: "Nama Pemilik Rekening",
     amount: -15000,
-  }
+  },
 ];
 
 const BuatLaporan = () => {
@@ -135,19 +135,34 @@ const BuatLaporan = () => {
           </Text>
         </View>
         <View style={{ flex: 1 }}></View>
-        <View style={{}} >
-          <Text style={{ fontFamily: "PlusJakartaSansBold", marginRight: 8, textAlign: "right",  color:
+        <View style={{}}>
+          <Text
+            style={{
+              fontFamily: "PlusJakartaSansBold",
+              marginRight: 8,
+              textAlign: "right",
+              color:
                 selectedTransaction &&
                 selectedTransaction.date === transaction.date
                   ? "#F15922"
-                  : "#6B788E", }} >
+                  : "#6B788E",
+            }}
+          >
             {transaction.amount}
           </Text>
-          <Text style={{ fontFamily: "PlusJakartaSansMedium", marginRight: 8, color: "#6B788E", textAlign: "right", color:
+          <Text
+            style={{
+              fontFamily: "PlusJakartaSansMedium",
+              marginRight: 8,
+              color: "#6B788E",
+              textAlign: "right",
+              color:
                 selectedTransaction &&
                 selectedTransaction.date === transaction.date
                   ? "#F15922"
-                  : "#6B788E" }}>
+                  : "#6B788E",
+            }}
+          >
             {transaction.time}
           </Text>
         </View>
@@ -159,19 +174,33 @@ const BuatLaporan = () => {
     setSelectedAccount(dataRekening[0]);
   }, []);
 
-  const filteredTransactionsByAccount = dummyTransactionHistory.filter((transaction) => {
-    return selectedAccount ? transaction.accountNumber === selectedAccount.value : true;
-  });
-  
-  {/* Filter transaksi berdasarkan pencarian jika akun sudah dipilih */}
-  const filteredTransactionsBySearch = filteredTransactionsByAccount.filter((transaction) => {
-    return searchInput === "" || transaction.accountNumberDestination.includes(searchInput);
-  });
+  const filteredTransactionsByAccount = dummyTransactionHistory.filter(
+    (transaction) => {
+      return selectedAccount
+        ? transaction.accountNumber === selectedAccount.value
+        : true;
+    }
+  );
+
+  {
+    /* Filter transaksi berdasarkan pencarian jika akun sudah dipilih */
+  }
+  const filteredTransactionsBySearch = filteredTransactionsByAccount.filter(
+    (transaction) => {
+      return (
+        searchInput === "" ||
+        transaction.accountNumberDestination.includes(searchInput)
+      );
+    }
+  );
   return (
-
-
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-     
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+       <CustomAppBar
+        title="Pelapor"
+        onLeftPress={() => navigation.goBack()}
+        leftIcon={icons.icArrowForward}
+        dimension={24}
+      />
       <ScrollView>
         <View style={{ padding: 20, marginBottom: 120 }}>
           <Text
@@ -195,7 +224,7 @@ const BuatLaporan = () => {
               valueField="value"
               placeholder={"Pilih Rekening"}
               searchPlaceholder="Search..."
-              value={selectedAccount}
+              value={null}
               onChange={(item) => selectAccount(item.value)}
               renderItem={(item) => (
                 <View style={styles.item}>
@@ -203,7 +232,15 @@ const BuatLaporan = () => {
                 </View>
               )}
             />
-
+            <Text
+              style={{
+                fontSize: 16,
+                fontFamily: "PlusJakartaSansBold",
+                marginBottom: 8,
+              }}
+            >
+              Pilih Transaksi yang ingin di laporkan
+            </Text>
             <View style={styles.inputContainer}>
               <Image source={icons.icSearchCekRekening} />
               <TextInput
@@ -223,7 +260,6 @@ const BuatLaporan = () => {
               })
               .map((transaction) => renderItem(transaction))}
 
-              
             {/* {filteredTransactionsBySearch.map((transaction) => 
               renderItem(transaction)
             )} */}
@@ -238,7 +274,7 @@ const BuatLaporan = () => {
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

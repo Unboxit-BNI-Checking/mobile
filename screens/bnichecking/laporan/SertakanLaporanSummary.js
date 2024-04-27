@@ -5,181 +5,182 @@ import {
   TextInput,
   Image,
   ScrollView,
+  TouchableOpacity,
+  Modal,
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
-import ScreenHeaderBtn from "../../../component/common/header/ScreenHeaderBtn";
 import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
 import CheckboxCustom from "../../../component/common/checkbox/CheckboxCustom";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomAppBar from "../../../component/common/header/CustomAppBar";
+import CardDataPelaporan from "../../../component/common/pelaporan/CardDataPelaporan";
 
 const SertakanLaporanSummary = () => {
   const navigation = useNavigation();
-  const [text, setText] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [images, setImages] = useState([
+    {
+      uri: "https://picsum.photos/200",
+    },
+    {
+      uri: "https://picsum.photos/200",
+    },
+  ]);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
+  const handleImageClick = (image) => {
+    setImages(image);
+    setModalVisible(true);
+  };
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
+      <CustomAppBar
+        title="Sertakan Laporan"
+        onLeftPress={() => navigation.goBack()}
+        leftIcon={icons.icArrowForward}
+        dimension={24}
+      />
       <ScrollView>
-        <View
-          style={{
-            marginTop: 30,
-            gap: 10,
-            marginHorizontal: 20,
-            marginBottom: 200,
-          }}
-        >
-          <View style={{ gap: 4 }}>
-            <Text style={styles.headerText}>Rekening Pelapor</Text>
-            <View style={{ flexDirection: "row", gap: 5 }}>
-              <Text style={{ color: "#6B788E" }}>1818181818</Text>
-              <Text style={{ color: "#6B788E" }}>Nama Rekening Pelapor</Text>
-            </View>
-          </View>
-          <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
-          <View style={{ gap: 4 }}>
-            <Text style={styles.headerText}>Transaksi yang dipilih</Text>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <Text style={styles.headerText}>Transfer BNI</Text>
-              <Text style={styles.headerText}>Rp-10.0000</Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <Text style={styles.subHeaderText}>1234567890</Text>
-              <Text style={styles.subHeaderText}>19/04/202</Text>
-            </View>
-            <Text style={styles.subHeaderText}>Nama Pemilik Rek</Text>
-          </View>
-          <View style={{ height: 8, backgroundColor: "#F5F6F7" }}></View>
-          <View style={{ gap: 10 }}>
+        <View style={styles.contentContainer}>
+          <CardDataPelaporan
+            namaRekeningPelapor={"Amelia Qatrunnada "}
+            nomorRekeningPelapor={"1818181818"}
+            namaRekeningDilaporkan={"Nama Pemilik Norek"}
+            nominalRekeningDilaporkan={"100.000"}
+            nomorRekeningDilaporkan={"1234567890"}
+            tanggalTransaksiDilaporkan={"19/04/2024"}
+            bankRekeningDilaporkan={"Bank Negara Indonesia"}
+            jamTransaksiDilaporkan={"18:23:28"}
+          />
+          <View style={styles.separator}></View>
+          <View style={styles.peristiwaContainer}>
             <Text style={styles.headerText}>Peristiwa Yang Dilaporkan</Text>
-            <View style={{ gap: 6 }}>
-              <Text
-                style={{
-                  color: "#243757",
-                  fontFamily: "PlusJakartaSansRegular",
-                }}
-              >
-                Kronologi
-              </Text>
+            <View style={styles.kronologiContainer}>
+              <Text style={styles.label}>Kronologi</Text>
               <View style={styles.inputContainer}>
                 <Text style={styles.input}>
-                  InputLorem Ipsumis simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book.
+                  Lorem Ipsum is simply dummy 
+                 
                 </Text>
               </View>
             </View>
-            <View style={{ gap: 6 }}>
-              <Text
-                style={{
-                  color: "#243757",
-                  fontFamily: "PlusJakartaSansRegular",
-                }}
-              >
-                Lampiran
-              </Text>
-              <View style={styles.inputContainer2}>
-                <Image
-                  source={icons.icPaste}
-                  style={{ height: 24, width: 24 }}
-                />
-                <Text
-                  style={{
-                    textDecorationLine: "underline",
-                    color: "#6B788E",
-                    fontSize: 12,
-                    fontFamily: "PlusJakartaSansRegular",
-                  }}
-                >
-                  Tambahkan Bukti Disini
-                </Text>
-                <Text
-                  style={{
-                    color: "#6B788E",
-                    fontSize: 12,
-                    fontFamily: "PlusJakartaSansRegular",
-                  }}
-                >
-                  Anda bisa upload lebih dari 1 file
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  height: 56,
-                  backgroundColor: "#F5F6F7",
-                  borderRadius: 6,
-                  padding: 16,
-                  justifyContent: "space-between",
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    gap: 4,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Image
-                    source={icons.icPaste2}
-                    style={{ width: 24, height: 24 }}
-                  />
-                  <Text
-                    style={{
-                      textDecorationLine: "underline",
-                      color: "#6B788E",
-                      fontSize: 12,
-                      fontFamily: "PlusJakartaSansRegular",
-                    }}
-                  >
-                    Screenshot-WhatsApp-3827.jpg
-                  </Text>
-                </View>
+          </View>
 
-                <Image source={icons.icX} style={{ width: 24, height: 24 }} />
-              </View>
+          <View style={styles.lampiranContainer}>
+            <Text style={styles.label}>Lampiran</Text>
+            <View style={styles.imagesContainer}>
+              {images &&
+                images.map((image, index) => (
+                  <View key={index} style={styles.imageContainer}>
+                    <TouchableOpacity onPress={() => handleImageClick(images)}>
+                      <Image source={{ uri: image.uri }} style={styles.image} />
+                    </TouchableOpacity>
+                  </View>
+                ))}
             </View>
+
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+            >
+              <View style={styles.modalContainer}>
+                <TouchableOpacity
+                  onPress={() => setModalVisible(false)}
+                  style={styles.closeButton}
+                >
+                  <MaterialIcons name="close" size={24} color="white" />
+                </TouchableOpacity>
+                <View style={styles.modalContent}>
+                  <Image
+                    source={{ uri: images[0].uri }}
+                    style={styles.fullImage}
+                    resizeMode="contain"
+                  />
+                </View>
+              </View>
+            </Modal>
           </View>
         </View>
       </ScrollView>
-
       <View style={styles.bottomButtonContainer}>
         <CheckboxCustom
-          label={"Saya menyatakan bahwa data yang saya input \n adalah benar."}
+          label={"Saya menyatakan bahwa data yang saya input\nadalah benar."}
           value={isChecked}
           onValueChange={handleCheckboxChange}
         />
         <ButtonPrimary
-          text="Selanjutnya"
+          text="Kirim Laporan"
           onPress={() => {
             navigation.navigate("LaporanBerhasilTerkirim");
           }}
+          disable={!isChecked}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    flex: 1,
+  },
+  contentContainer: {
+    gap: 10,
+    marginBottom: 180,
+  },
+  separator: {
+    height: 8,
+    backgroundColor: "#F5F6F7",
+  },
+  peristiwaContainer: {
+    gap: 10,
+    paddingHorizontal: 20,
+  },
+  kronologiContainer: {
+    gap: 6,
+  },
+  label: {
+    color: "#243757",
+    fontFamily: "PlusJakartaSansRegular",
+  },
   inputContainer: {
     flexDirection: "row",
+    flexWrap: "wrap", // Menambahkan flexWrap agar teks dapat memanjang secara dinamis
+    borderWidth: 0.6,
+    borderColor: "#98A1B0",
+    backgroundColor: "#F5F6F7",
+    borderRadius: 8,
+    padding: 10,
+    height: "auto", // Mengubah height menjadi "auto" agar kontainer bisa membesar sesuai dengan teksnya
+  },
+  input: {
+    flex: 1,
+    color: "#98A1B0",
+    fontFamily: "PlusJakartaSansRegular",
+    textAlign: "justify",
+    // Menghilangkan flex: 1 agar teks bisa memanjang sesuai dengan kebutuhan
+  },
+  textArea: {
+    fontFamily: "PlusJakartaSansRegular",
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 16,
-    height: 152,
+    borderRadius: 5,
+    padding: 10,
+    textAlignVertical: "top",
   },
-  inputContainer2: {
+  lampiranContainer: {
+    paddingHorizontal: 20,
+  },
+  inputImage: {
     alignItems: "center",
     borderWidth: 1,
     borderStyle: "dashed",
@@ -189,16 +190,94 @@ const styles = StyleSheet.create({
     padding: 16,
     height: 94,
   },
-  input: {
-    flex: 1,
-    textAlign: "justify",
-    color: "#5D6B82",
+  pasteIcon: {
+    height: 24,
+    width: 24,
+  },
+  addText: {
+    textDecorationLine: "underline",
+    color: "#6B788E",
+    fontSize: 12,
     fontFamily: "PlusJakartaSansRegular",
   },
-  headerText: { color: "#243757", fontFamily: "PlusJakartaSansBold" },
-  subHeaderText: {
-    color: "#6B788E",
+  addTextMore: {
+    textDecorationLine: "underline",
+    color: "#F15922",
+    fontSize: 12,
     fontFamily: "PlusJakartaSansRegular",
+  },
+  uploadInfo: {
+    color: "#6B788E",
+    fontSize: 12,
+    fontFamily: "PlusJakartaSansRegular",
+  },
+  addButtonImage: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#F15922",
+    borderRadius: 8,
+    justifyContent: "center",
+    padding: 8,
+    gap: 5,
+  },
+  imagesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 10,
+    borderWidth: 1,
+    borderStyle: "dashed",
+    borderColor: "#98A1B0",
+    borderRadius: 8,
+    padding: 4,
+    alignItems: "flex-start",
+  },
+  imageContainer: {
+    position: "relative",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 5,
+    borderRadius: 8,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 15,
+    right: 20,
+    backgroundColor: "#D6264F",
+    borderRadius: 50,
+  },
+
+  modalContent: {
+    width: "90%",
+    height: "90%",
+    backgroundColor: "black",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  fullImage: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+  },
+  deleteButton: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+    backgroundColor: "#D6264F",
+    borderRadius: 50,
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
   bottomButtonContainer: {
     position: "absolute",
@@ -210,6 +289,10 @@ const styles = StyleSheet.create({
     borderTopColor: "rgba(204, 204, 204, 0.5)",
     height: 152,
     gap: 20,
+  },
+  headerText: {
+    color: "#243757",
+    fontFamily: "PlusJakartaSansBold",
   },
 });
 
