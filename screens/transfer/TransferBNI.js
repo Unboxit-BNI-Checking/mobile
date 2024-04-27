@@ -236,9 +236,19 @@ const TransferBNI = () => {
               <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
                 Rekening Tujuan
               </Text>
-              <TextInput
-                style={styles.textInput}
+              {/* <TextInput
+                style={styles.disabledInput}
                 placeholder="Masukan Nomor Rekening"
+                placeholderTextColor={"#98A1B0"}
+                editable={false}
+              /> */}
+              <TextInput
+                style={[
+                  styles.NamaRekening,
+                  styles.disabledInput,
+                ]}
+                editable={false}
+                placeholder={"Nomor Rekening"}
                 placeholderTextColor={"#98A1B0"}
               />
             </View>
@@ -250,7 +260,11 @@ const TransferBNI = () => {
               <Text style={{ fontFamily: "PlusJakartaSansBold" }}>
                 Rekening Tujuan
               </Text>
-              <TextInput style={styles.textInput} />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Masukan Nomor Rekening"
+                placeholderTextColor={"#98A1B0"}
+              />
 
               <CheckboxCustom
                 value={isChecked}

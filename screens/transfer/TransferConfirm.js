@@ -69,7 +69,7 @@ const TransferConfirm = () => {
 
           <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
           <TouchableOpacity onPress={openModal}>
-            <LabelStatusComponent title={"Status Rekening"} status={1} />
+            <LabelStatusComponent title={"Status Rekening"} status={2} />
           </TouchableOpacity>
 
           <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
