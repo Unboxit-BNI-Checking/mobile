@@ -17,7 +17,7 @@ import CustomAppBar from "../../../component/common/header/CustomAppBar";
 const CekRekening = () => {
 
   const navigation = useNavigation();
-  const [text, setText] = useState("")
+  const [rekening, setRekening] = useState("")
   return (
     <SafeAreaView style={styles.container}>
       <CustomAppBar
@@ -70,8 +70,8 @@ const CekRekening = () => {
             <TextInput
               style={styles.input}
               placeholder="Masukan Nomor Rekening"
-              value={text}
-              onChangeText={setText}
+              value={rekening}
+              onChangeText={setRekening}
               keyboardType="number-pad"
             />
           </View>
@@ -84,6 +84,7 @@ const CekRekening = () => {
           onPress={() => {
             navigation.navigate("HasilCekRekening");
           }}
+          disable={!rekening}
         />
       </View>
     </SafeAreaView>
