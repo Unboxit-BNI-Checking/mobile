@@ -19,8 +19,8 @@ import { Octicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import icons from "../../constants/icons";
 import { FontAwesome6 } from "@expo/vector-icons";
-import ScreenHeaderBtn from "../../component/common/header/ScreenHeaderBtn";
- 
+
+
 const Tabs = () => {
   const Tab = createBottomTabNavigator();
   return (
@@ -84,15 +84,13 @@ const Tabs = () => {
             <View
               style={{ flexDirection: "row", gap: 10, paddingHorizontal: 18 }}
             >
-              <ScreenHeaderBtn
-                iconUrl={icons.icNotification}
-                dimension={24}
-                handlePress={() => {}}
+              <Image
+                source={icons.icNotification}
+                style={{ width: 24, height: 24 }}
               />
-              <ScreenHeaderBtn
-                iconUrl={icons.icListen}
-                dimension={38}
-                handlePress={() => {}}
+              <Image
+                source={icons.icListen}
+                style={{ width: 24, height: 24 }}
               />
             </View>
           ),

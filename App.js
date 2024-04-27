@@ -1,12 +1,10 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useCallback, useEffect } from "react";
 import { useFonts } from "expo-font";
-import ScreenHeaderBtn from "./component/common/header/ScreenHeaderBtn";
 import Transfer from "./screens/transfer/Transfer";
 import Tabs from "./screens/(tabs)/tabs";
 import TransferBNI from "./screens/transfer/TransferBNI";
-import CustomOptionHeader from "./component/common/header/CustomOptionHeader";
 import TransferConfirm from "./screens/transfer/TransferConfirm";
 import TransferSuccess from "./screens/transfer/TransferSuccess";
 import BniChecking from "./screens/bnichecking/checkrekening/BniChecking";
@@ -19,9 +17,10 @@ import RingkasanLaporan from "./screens/bnichecking/laporan/RingkasanLaporan";
 import SertakanLaporan from "./screens/bnichecking/laporan/SertakanLaporan";
 import LaporanBerhasilTerkirim from "./screens/bnichecking/laporan/LaporanBerhasilTerkirim";
 import SertakanLaporanSummary from "./screens/bnichecking/laporan/SertakanLaporanSummary";
-import * as SplashScreen from "expo-splash-screen";
 import SplashScreenCustom from "./screens/SplashScreen";
 import LoginScreen from "./screens/LoginScreen";
+
+// import * as SplashScreen from "expo-splash-screen";
 
 // SplashScreen.preventAutoHideAsync();
 export default function App() {
@@ -46,8 +45,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Splash" onLayout={onLayoutRootView}>
         {/* HOME SCREEN ROOT */}
+
         <Stack.Screen
           name="Splash"
           component={SplashScreenCustom}
@@ -67,82 +67,83 @@ export default function App() {
         <Stack.Screen
           name="Transfer"
           component={Transfer}
-          options={CustomOptionHeader({ title: "Transfer" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="TransferBNI"
           component={TransferBNI}
-          options={CustomOptionHeader({ title: "Transfer Antar BNI" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="TransferConfirm"
           component={TransferConfirm}
-          options={CustomOptionHeader({ title: "Transfer Antar BNI" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="TransferSuccess"
           component={TransferSuccess}
-          options={{
-            headerTitleAlign: "center",
-            headerTitleStyle: {
-              color: "#243757",
-            },
-            headerShadowVisible: false,
-            headerLeft: () => <ScreenHeaderBtn handlePress={() => {}} />,
-            headerTitle: "Status",
-          }}
+          // options={{
+          //   headerTitleAlign: "center",
+          //   headerTitleStyle: {
+          //     color: "#243757",
+          //   },
+          //   headerShadowVisible: false,
+          //   headerLeft: () => <ScreenHeaderBtn handlePress={() => {}} />,
+          //   headerTitle: "Status",
+          // }}
+          options={ { headerShown: false } }
         />
         {/* CHEKING SCREEN */}
         <Stack.Screen
           name="BNIChecking"
           component={BniChecking}
-          options={CustomOptionHeader({ title: "BNI Checking" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="CekRekening"
           component={CekRekening}
-          options={CustomOptionHeader({ title: "Cek Rekening" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="HasilCekRekening"
           component={HasilCekRekening}
-          options={CustomOptionHeader({ title: "Hasil Cek Rekening" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="StatusRekening"
           component={StatusRekening}
-          options={CustomOptionHeader({ title: "Status Rekening" })}
+          options={ { headerShown: false } }
         />
         {/* LAPORAN SCREEN */}
         <Stack.Screen
           name="BuatLaporan"
           component={BuatLaporan}
-          options={CustomOptionHeader({ title: "Pelaporan" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="Pelaporan"
           component={Pelaporan}
-          options={CustomOptionHeader({ title: "Pelaporan" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="RingkasanLaporan"
           component={RingkasanLaporan}
-          options={CustomOptionHeader({ title: "Ringkasan Laporan" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="SertakanLaporan"
           component={SertakanLaporan}
-          options={CustomOptionHeader({ title: "Sertakan Laporan" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="SertakanLaporanSummary"
           component={SertakanLaporanSummary}
-          options={CustomOptionHeader({ title: "Sertakan Laporan" })}
+          options={ { headerShown: false } }
         />
         <Stack.Screen
           name="LaporanBerhasilTerkirim"
           component={LaporanBerhasilTerkirim}
-          options={{ headerShown: false }}
+          options={ { headerShown: false } }
         />
       </Stack.Navigator>
     </NavigationContainer>
