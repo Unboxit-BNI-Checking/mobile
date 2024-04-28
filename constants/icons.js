@@ -47,6 +47,7 @@ import icCeklis from "../assets/icons/ic-ceklis.png";
 import icInfoRingkasanLaporan from "../assets/icons/ic-info-ringkasan-laporan.png";
 import icRefresh from "../assets/icons/ic-refresh.png";
 import icShare from "../assets/icons/ic-share.png";
+import icBiometricLoginForm from "../assets/icons/ic-biometric-login-form.png";
 
 export default {
   icBni,
@@ -98,4 +99,5 @@ export default {
   icInfoRingkasanLaporan,
   icRefresh,
   icShare,
+  icBiometricLoginForm,
 };
