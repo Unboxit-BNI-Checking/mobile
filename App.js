@@ -7,7 +7,6 @@ import Tabs from "./screens/(tabs)/tabs";
 import TransferBNI from "./screens/transfer/TransferBNI";
 import TransferConfirm from "./screens/transfer/TransferConfirm";
 import TransferSuccess from "./screens/transfer/TransferSuccess";
-import BniChecking from "./screens/bnichecking/checkrekening/BniChecking";
 import CekRekening from "./screens/bnichecking/checkrekening/CekRekening";
 import HasilCekRekening from "./screens/bnichecking/checkrekening/HasilCekRekening";
 import StatusRekening from "./screens/bnichecking/checkrekening/StatusRekening";
@@ -19,6 +18,7 @@ import LaporanBerhasilTerkirim from "./screens/bnichecking/laporan/LaporanBerhas
 import SertakanLaporanSummary from "./screens/bnichecking/laporan/SertakanLaporanSummary";
 import SplashScreenCustom from "./screens/SplashScreen";
 import LoginScreen from "./screens/LoginScreen";
+import BniChecking from "./screens/bnichecking/BniChecking";
 
 // import * as SplashScreen from "expo-splash-screen";
 
@@ -82,15 +82,6 @@ export default function App() {
         <Stack.Screen
           name="TransferSuccess"
           component={TransferSuccess}
-          // options={{
-          //   headerTitleAlign: "center",
-          //   headerTitleStyle: {
-          //     color: "#243757",
-          //   },
-          //   headerShadowVisible: false,
-          //   headerLeft: () => <ScreenHeaderBtn handlePress={() => {}} />,
-          //   headerTitle: "Status",
-          // }}
           options={ { headerShown: false } }
         />
         {/* CHEKING SCREEN */}
