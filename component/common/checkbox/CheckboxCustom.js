@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   label: {
+    fontSize: 12,
     fontFamily: "PlusJakartaSansMedium",
   },
 });

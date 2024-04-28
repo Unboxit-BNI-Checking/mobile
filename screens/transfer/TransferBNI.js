@@ -118,7 +118,7 @@ const TransferBNI = () => {
               }}
             >
               <Text style={{ fontFamily: "PlusJakartaSansBold" }}>Saldo</Text>
-              <View style={{ flexDirection: "row", gap: 10 }}>
+              <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
                 <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
                   {showSaldo ? "Rp 300.478" : "Rp *******"}
                 </Text>
