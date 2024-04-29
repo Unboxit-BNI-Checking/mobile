@@ -39,9 +39,9 @@ const HasilCekRekening = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
-        title="Transfer"
-        onLeftPress={() => navigation.goBack()}
-        leftIcon={icons.icArrowForward}
+        title="Hasil Cek Rekening"
+        // onLeftPress={() => navigation.goBack()}
+        // leftIcon={icons.icArrowForward}
         dimension={24}
       />
       <View style={styles.container}>

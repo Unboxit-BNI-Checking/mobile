@@ -81,7 +81,7 @@ const StatusBadge = ({ status }) => {
   return (
     <View style={badgeStyle}>
       <Text style={textStyle}>
-        {status === 1 ? "Normal" : status === 2 ? "Investigasi" : "Blocked"}
+        {status === 1 ? "Normal" : status === 2 ? "Investigasi" : "Blokir"}
       </Text>
     </View>
   );
