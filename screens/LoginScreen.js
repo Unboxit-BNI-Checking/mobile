@@ -49,7 +49,7 @@ const LoginScreen = () => {
       />
       <View style={styles.logoContainer}>
         <Image source={images.bnilogo} style={styles.logo} />
-        <Text style={styles.logoText}>Melayani Negeri Kebanggaan Bangsa</Text>
+        {/* <Text style={styles.logoText}>Melayani Negeri Kebanggaan Bangsa</Text> */}
       </View>
 
       <View style={styles.buttonContainer}>

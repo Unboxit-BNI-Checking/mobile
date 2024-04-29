@@ -37,7 +37,8 @@ const ModalStatusInformation = ({ modalVisible, closeModal }) => {
                 <Text style={styles.statusTextBlocked}>Blokir</Text>
               </View>
               <Text style={styles.statusDescription}>
-                Nomor Rekening ini terindikasi Penipuan dan {"\n"}sudah diblokir.
+                Nomor Rekening ini terindikasi Penipuan dan {"\n"}sudah
+                diblokir.
               </Text>
             </View>
           </View>
@@ -126,7 +127,6 @@ const styles = StyleSheet.create({
     fontFamily: "PlusJakartaSansBold",
   },
   statusDescription: {
-  
     fontFamily: "PlusJakartaSansMedium",
   },
   buttonContainer: {

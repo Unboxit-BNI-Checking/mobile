@@ -1,37 +1,95 @@
 import React from "react";
-import {
-  Modal,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { Modal, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import ButtonNextClose from "../button/ButtonNextClose";
 import CheckboxCustom from "../checkbox/CheckboxCustom";
 import ButtonPrimary from "../button/ButtonPrimary";
 import { useNavigation } from "@react-navigation/native";
-import icons from "../../../constants/icons";
 const modalContent = {
   1: {
     linkText: "Cek No Rek Disini",
-    mediumText: "Hati-hati dalam bertransaksi dengan Nomor Rekening Asing ini.",
-    titleText: "Rekening Asing",
-    iconStatus: icons.icStatusGreen,
+    mediumText:
+      "Nomor Rekening ini belum pernah melalui proses investigasi. Tetap berhati-hati dalam bertransaksi.",
+    titleText: "Status Rekening:",
+    statusText: "Normal",
   },
   2: {
     linkText: "Cek No Rek Disini",
     mediumText:
-      "Nomor Rekening ini pernah menerima laporan dari orang lain dan sedang dalam investigasi.",
-    titleText: "Rekening Sedang Dalam Investigasi",
-    iconStatus: icons.icStatusYellow,
+      "Nomor Rekening ini pernah menerima laporan dari orang lain dan sedang dalam investigasi. ",
+    titleText: "Status Rekening:",
+    statusText: "Investigasi",
   },
   3: {
     linkText: "Block Details",
     mediumText: "Nomor Rekening ini terindikasi Penipuan dan sudah diblokir.",
-    titleText: "Rekening Telah Diblokir",
-    iconStatus: icons.icStatusRed,
+    titleText: "Status Rekening:",
+    statusText: "Blokir",
   },
+};
+
+const getStatusStyles = (status) => {
+  switch (status) {
+    case 1:
+      return {
+        badge: {
+          paddingHorizontal: 8,
+          paddingVertical: 2,
+          height: 26,
+          width: 59,
+          backgroundColor: "#E7F8EF",
+          borderRadius: 50,
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: 5,
+        },
+        text: {
+          color: "#10B55A",
+          fontSize: 12,
+          fontFamily: "PlusJakartaSansBold",
+        },
+      };
+    case 2:
+      return {
+        badge: {
+          paddingHorizontal: 8,
+          paddingVertical: 2,
+          height: 26,
+          width: 79,
+          backgroundColor: "#FFF6E6",
+          borderRadius: 50,
+          alignItems: "center",
+          justifyContent: "center",
+        },
+        text: {
+          color: "#FFA500",
+          fontSize: 12,
+          fontFamily: "PlusJakartaSansBold",
+        },
+      };
+    case 3:
+      return {
+        badge: {
+          paddingHorizontal: 8,
+          paddingVertical: 2,
+          height: 26,
+          width: 50,
+          backgroundColor: "#FBE9ED",
+          borderRadius: 50,
+          alignItems: "center",
+          justifyContent: "center",
+        },
+        text: {
+          color: "#D6264F",
+          fontSize: 12,
+          fontFamily: "PlusJakartaSansBold",
+        },
+      };
+    default:
+      return {
+        badge: {},
+        text: {},
+      };
+  }
 };
 const ModalStatusCheck = ({
   modalVisible,
@@ -43,7 +101,8 @@ const ModalStatusCheck = ({
   isChecked,
 }) => {
   const navigation = useNavigation();
-  const { linkText, mediumText, titleText, iconStatus } = modalContent[status];
+  const { linkText, mediumText, titleText, statusText } = modalContent[status];
+  const statusStyles = getStatusStyles(status);
 
   return (
     <Modal
@@ -55,14 +114,16 @@ const ModalStatusCheck = ({
       <View style={styles.modalContainer}>
         <View style={styles.bottomSheet}>
           <View style={styles.row}>
-            <Image source={iconStatus} style={styles.icon} />
             <Text style={styles.titleText}>{titleText}</Text>
+            <View style={statusStyles.badge}>
+              <Text style={statusStyles.text}>{statusText}</Text>
+            </View>
           </View>
           <View>
             <Text style={styles.mediumText}>{mediumText}</Text>
             {status === 3 ? null : (
               <TouchableOpacity
-                onPress={() => navigation.replace("CekRekening")}
+                onPress={() => navigation.replace("HasilCekRekening")}
               >
                 <Text style={[styles.mediumText, styles.linkText]}>
                   {linkText}
@@ -80,20 +141,21 @@ const ModalStatusCheck = ({
             </View>
           )}
 
-          <View style={{ marginTop: 10 }} >
-          {status === 3 ? (
-            <ButtonPrimary text={"Batalkan"} onPress={handleCloseButtonClick} />
-          ) : (
-            <ButtonNextClose
-              nextName={"Lanjutkan"}
-              handleNextButtonClick={handleNextButtonClick}
-              handleCloseButtonClick={handleCloseButtonClick}
-              closeName={"Batalkan"}
-            />
-          )}
+          <View style={{ marginTop: 10 }}>
+            {status === 3 ? (
+              <ButtonPrimary
+                text={"Batalkan"}
+                onPress={handleCloseButtonClick}
+              />
+            ) : (
+              <ButtonNextClose
+                nextName={"Lanjutkan"}
+                handleNextButtonClick={handleNextButtonClick}
+                handleCloseButtonClick={handleCloseButtonClick}
+                closeName={"Batalkan"}
+              />
+            )}
           </View>
-
-         
         </View>
       </View>
     </Modal>
@@ -129,7 +191,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   mediumText: {
-    fontFamily: "PlusJakartaSansMedium",
+    fontFamily: "PlusJakartaSansRegular",
     color: "#243757",
     marginBottom: 5,
   },
@@ -137,6 +199,52 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     color: "#F15922",
     fontFamily: "PlusJakartaSansMedium",
+  },
+  statusBadgeNormal: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    height: 26,
+    width: 59,
+    backgroundColor: "#E7F8EF",
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 5,
+  },
+  statusBadgeInvestigation: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    height: 26,
+    width: 79,
+    backgroundColor: "#FFF6E6",
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  statusBadgeBlocked: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    height: 26,
+    width: 50,
+    backgroundColor: "#FBE9ED",
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  statusTextNormal: {
+    color: "#10B55A",
+    fontSize: 12,
+    fontFamily: "PlusJakartaSansBold",
+  },
+  statusTextInvestigation: {
+    color: "#FFA500",
+    fontSize: 12,
+    fontFamily: "PlusJakartaSansBold",
+  },
+  statusTextBlocked: {
+    color: "#D6264F",
+    fontSize: 12,
+    fontFamily: "PlusJakartaSansBold",
   },
 });
 

@@ -118,7 +118,9 @@ const TransferBNI = () => {
               }}
             >
               <Text style={{ fontFamily: "PlusJakartaSansBold" }}>Saldo</Text>
-              <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+              <View
+                style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
+              >
                 <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
                   {showSaldo ? "Rp 300.478" : "Rp *******"}
                 </Text>
@@ -243,10 +245,7 @@ const TransferBNI = () => {
                 editable={false}
               /> */}
               <TextInput
-                style={[
-                  styles.NamaRekening,
-                  styles.disabledInput,
-                ]}
+                style={[styles.NamaRekening, styles.disabledInput]}
                 editable={false}
                 placeholder={"Nomor Rekening"}
                 placeholderTextColor={"#98A1B0"}
@@ -264,6 +263,7 @@ const TransferBNI = () => {
                 style={styles.textInput}
                 placeholder="Masukan Nomor Rekening"
                 placeholderTextColor={"#98A1B0"}
+                keyboardType="numeric"
               />
 
               <CheckboxCustom

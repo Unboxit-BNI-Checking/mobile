@@ -45,7 +45,7 @@ const TransferConfirm = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
         title="Validasi"
-        onLeftPress={() => navigation.goBack()}
+        onLeftPress={() => navigation.navigate("TransferBNI")}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />

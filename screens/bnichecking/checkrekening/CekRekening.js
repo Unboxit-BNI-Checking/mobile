@@ -15,9 +15,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/common/header/CustomAppBar";
 
 const CekRekening = () => {
-
   const navigation = useNavigation();
-  const [rekening, setRekening] = useState("")
+  const [rekening, setRekening] = useState("");
   return (
     <SafeAreaView style={styles.container}>
       <CustomAppBar
@@ -26,7 +25,7 @@ const CekRekening = () => {
         leftIcon={icons.icArrowForward}
         dimension={24}
       />
-      
+
       <View style={{ padding: 20 }}>
         <View style={{ gap: 8 }}>
           <Text
@@ -107,6 +106,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     marginLeft: 10,
+    fontFamily: "PlusJakartaSansRegular",
   },
 
   bottomButtonContainer: {

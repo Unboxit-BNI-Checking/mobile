@@ -80,6 +80,7 @@ const TransferSuccess = () => {
               subTitle={"100.000"}
             />
           </View>
+          <LabelValidasiPengirimComponent title={"Keterangan"} subTitle={""} />
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     gap: 10,
-    marginTop: 40,
+    marginTop: 20,
   },
   button: {
     flex: 1,

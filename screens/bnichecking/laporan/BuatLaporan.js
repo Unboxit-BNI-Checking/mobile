@@ -195,7 +195,7 @@ const BuatLaporan = () => {
   );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-       <CustomAppBar
+      <CustomAppBar
         title="Pelapor"
         onLeftPress={() => navigation.goBack()}
         leftIcon={icons.icArrowForward}
@@ -222,9 +222,10 @@ const BuatLaporan = () => {
               data={dataRekening}
               labelField="label"
               valueField="value"
-              placeholder={"Pilih Rekening"}
+              placeholder={null}
+              selectedTextStyle={{ color: "#5D6B82" }}
               searchPlaceholder="Search..."
-              value={null}
+              value={dataRekening[0].label}
               onChange={(item) => selectAccount(item.value)}
               renderItem={(item) => (
                 <View style={styles.item}>
@@ -239,13 +240,14 @@ const BuatLaporan = () => {
                 marginBottom: 8,
               }}
             >
-              Pilih Transaksi yang ingin di laporkan
+              Pilih Transaksi yang ingin dilaporkan
             </Text>
             <View style={styles.inputContainer}>
               <Image source={icons.icSearchCekRekening} />
               <TextInput
                 style={styles.input}
                 placeholder="Cari Transaksi"
+                placeholderTextColor={"#98A1B0"}
                 value={searchInput}
                 onChangeText={(text) => setSearchInput(text)}
                 keyboardType="number-pad"
