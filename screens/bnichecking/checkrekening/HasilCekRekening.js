@@ -9,13 +9,13 @@ import {
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
 
-import ButtonNextClose from "../../../component/common/button/ButtonNextClose";
+import ButtonNextClose from "../../../component/button/ButtonNextClose";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../../component/common/header/CustomAppBar";
-import ModalStatusInformation from "../../../component/common/modal/ModalStatusInformation";
-import LabelValidasiComponent from "../../../component/common/label/LabelValidasiComponent";
-import LabelStatusComponent from "../../../component/common/label/LabelStatusComponent";
+import CustomAppBar from "../../../component/header/CustomAppBar";
+import ModalStatusInformation from "../../../component/modal/ModalStatusInformation";
+import LabelValidasiComponent from "../../../component/label/LabelValidasiComponent";
+import LabelStatusComponent from "../../../component/label/LabelStatusComponent";
 
 const HasilCekRekening = () => {
   const [modalVisible, setModalVisible] = useState(false);

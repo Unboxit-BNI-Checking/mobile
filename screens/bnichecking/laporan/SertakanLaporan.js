@@ -12,13 +12,13 @@ import {
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
 
-import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
+import ButtonPrimary from "../../../component/button/ButtonPrimary";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../../component/common/header/CustomAppBar";
-import CardDataPelaporan from "../../../component/common/pelaporan/CardDataPelaporan";
+import CustomAppBar from "../../../component/header/CustomAppBar";
+import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 
 const SertakanLaporan = () => {
   const navigation = useNavigation();

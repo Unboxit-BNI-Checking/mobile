@@ -10,10 +10,10 @@ import {
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import icons from "../../../constants/icons";
-import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
+import ButtonPrimary from "../../../component/button/ButtonPrimary";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../../component/common/header/CustomAppBar";
+import CustomAppBar from "../../../component/header/CustomAppBar";
 
 // Impor dummy transaction data
 

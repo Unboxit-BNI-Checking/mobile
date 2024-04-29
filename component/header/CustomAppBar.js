@@ -1,7 +1,5 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Import Ionicons atau ikon lainnya sesuai kebutuhan
-import icons from "../../../constants/icons";
 
 const CustomAppBar = ({
   title,

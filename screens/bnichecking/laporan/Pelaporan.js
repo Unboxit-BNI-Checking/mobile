@@ -6,12 +6,12 @@ import {
   Pressable,
 } from "react-native";
 import React, { useState } from "react";
-import CardPelaporan from "../../../component/common/pelaporan/CardPelaporan";
-import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
+import CardPelaporan from "../../../component/pelaporan/CardPelaporan";
+import ButtonPrimary from "../../../component/button/ButtonPrimary";
 import icons from "../../../constants/icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../../component/common/header/CustomAppBar";
+import CustomAppBar from "../../../component/header/CustomAppBar";
 
 const dataLaporan = [
   { idlaporan: 1343232432, status: "Dilaporkan", tanggal: "10/10/2022" },

@@ -1,7 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import icons from "../../../constants/icons";
-
 const CardPelaporan = ({ titleIdLaporan, dateLaporan, status }) => {
   let backgroundColors = "blue";
   let fontColos = "red";

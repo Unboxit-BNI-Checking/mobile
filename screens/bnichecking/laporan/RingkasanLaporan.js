@@ -10,12 +10,12 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
-import ProgressBarComponent from "../../../component/common/progress/ProgressBarComponent";
+import ProgressBarComponent from "../../../component/progress/ProgressBarComponent";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import StatusRingkasanPelaporan from "../../../component/common/pelaporan/StatusRingkasanPelaporan";
+import StatusRingkasanPelaporan from "../../../component/pelaporan/StatusRingkasanPelaporan";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../../component/common/header/CustomAppBar";
-import CardDataPelaporan from "../../../component/common/pelaporan/CardDataPelaporan";
+import CustomAppBar from "../../../component/header/CustomAppBar";
+import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import { useNavigation } from "@react-navigation/native";
 
 const RingkasanLaporan = () => {

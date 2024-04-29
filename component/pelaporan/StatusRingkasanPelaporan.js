@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
-import icons from "../../../constants/icons";
 import { useNavigation } from "@react-navigation/native";
+import icons from "../../constants/icons";
 
 const StatusRingkasanPelaporan = ({ status }) => {
   const navigation = useNavigation();

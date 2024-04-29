@@ -9,16 +9,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 import icons from "../../constants/icons";
-import LabelValidasiComponent from "../../component/common/label/LabelValidasiComponent";
-import LabelValidasiPengirimComponent from "../../component/common/label/LabelValidasiPengirimComponent";
-import LabelStatusComponent from "../../component/common/label/LabelStatusComponent";
-import ButtonPrimary from "../../component/common/button/ButtonPrimary";
+import LabelValidasiComponent from "../../component/label/LabelValidasiComponent";
+import LabelValidasiPengirimComponent from "../../component/label/LabelValidasiPengirimComponent";
+import LabelStatusComponent from "../../component/label/LabelStatusComponent";
+import ButtonPrimary from "../../component/button/ButtonPrimary";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../component/common/header/CustomAppBar";
-import ModalStatusInformation from "../../component/common/modal/ModalStatusInformation";
+import CustomAppBar from "../../component/header/CustomAppBar";
+import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
 
 const TransferConfirm = () => {
   const [password, setPassword] = useState("");

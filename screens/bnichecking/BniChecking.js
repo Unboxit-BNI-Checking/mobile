@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import icons from "../../constants/icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../component/common/header/CustomAppBar";
+import CustomAppBar from "../../component/header/CustomAppBar";
 
 const data = [
   {

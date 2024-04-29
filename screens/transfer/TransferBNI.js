@@ -8,16 +8,16 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import ButtonPrimary from "../../component/common/button/ButtonPrimary";
+import ButtonPrimary from "../../component/button/ButtonPrimary";
 import { Dropdown } from "react-native-element-dropdown";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import CheckboxCustom from "../../component/common/checkbox/CheckboxCustom";
+import CheckboxCustom from "../../component/checkbox/CheckboxCustom";
 import icons from "../../constants/icons";
 
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../component/common/header/CustomAppBar";
-import ModalStatusCheck from "../../component/common/modal/ModalStatusCheck";
+import CustomAppBar from "../../component/header/CustomAppBar";
+import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
 
 const dataFavorite = [
   { label: "Tiansi Pratama", value: "1" },

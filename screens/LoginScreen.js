@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import images from "../constants/images";
 import icons from "../constants/icons";
-import ButtonPrimary from "../component/common/button/ButtonPrimary";
+import ButtonPrimary from "../component/button/ButtonPrimary";
 import { useNavigation } from "@react-navigation/native";
-import CheckboxCustom from "../component/common/checkbox/CheckboxCustom";
+import CheckboxCustom from "../component/checkbox/CheckboxCustom";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 

@@ -10,13 +10,13 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
-import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
-import CheckboxCustom from "../../../component/common/checkbox/CheckboxCustom";
+import ButtonPrimary from "../../../component/button/ButtonPrimary";
+import CheckboxCustom from "../../../component/checkbox/CheckboxCustom";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../../component/common/header/CustomAppBar";
-import CardDataPelaporan from "../../../component/common/pelaporan/CardDataPelaporan";
+import CustomAppBar from "../../../component/header/CustomAppBar";
+import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 
 const SertakanLaporanSummary = () => {
   const navigation = useNavigation();

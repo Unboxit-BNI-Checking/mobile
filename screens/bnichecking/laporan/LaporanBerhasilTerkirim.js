@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import icons from "../../../constants/icons";
-import ButtonNextClose from "../../../component/common/button/ButtonNextClose";
+import ButtonNextClose from "../../../component/button/ButtonNextClose";
 import { useNavigation } from "@react-navigation/native";
 
 const LaporanBerhasilTerkirim = () => {

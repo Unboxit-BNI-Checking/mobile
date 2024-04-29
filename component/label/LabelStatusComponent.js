@@ -1,5 +1,5 @@
 import { Text, View, Image, StyleSheet } from "react-native";
-import icons from "../../../constants/icons";
+import icons from "../../constants/icons";
 
 const StatusBadge = ({ status }) => {
   let badgeStyle, textStyle;
@@ -94,7 +94,6 @@ const LabelStatusComponent = ({ title, status }) => {
         <Text style={styles.titleText}>{title}</Text>
         <Image source={icons.icInfoValidasiPayment} style={styles.infoImage} />
       </View>
-
       <StatusBadge status={status} />
     </View>
   );

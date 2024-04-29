@@ -9,10 +9,10 @@ import {
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
 import { AntDesign } from "@expo/vector-icons";
-import ButtonPrimary from "../../../component/common/button/ButtonPrimary";
+import ButtonPrimary from "../../../component/button/ButtonPrimary";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../../component/common/header/CustomAppBar";
+import CustomAppBar from "../../../component/header/CustomAppBar";
 
 const CekRekening = () => {
   const navigation = useNavigation();

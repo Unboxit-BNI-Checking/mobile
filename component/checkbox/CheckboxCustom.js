@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import icons from "../../../constants/icons";
+import icons from "../../constants/icons";
 
 const CheckboxCustom = ({ value, onValueChange, label }) => {
   return (

@@ -10,7 +10,7 @@ import React from "react";
 import icons from "../../constants/icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../component/common/header/CustomAppBar";
+import CustomAppBar from "../../component/header/CustomAppBar";
 
 const data = [
   {
