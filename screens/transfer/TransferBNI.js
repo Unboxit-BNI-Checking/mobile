@@ -13,7 +13,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CheckboxCustom from "../../component/checkbox/CheckboxCustom";
 import icons from "../../constants/icons";
-
+import getFavouriteData from "../../services/FavouriteService";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
@@ -44,32 +44,14 @@ const TransferBNI = () => {
   const [selectedAccountNumber, setSelectedAccountNumber] = useState("");
 
   useEffect(() => {
-    fetchData();
+    async function getFavouriteDataHelper() {
+      formattedData = await getFavouriteData();
+      setDataRekening(formattedData)
+    }
+    getFavouriteDataHelper()
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        "https://unboxit.50soa.my.id/api/favourites", {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTQ0NDIwNTUsImV4cCI6MTc0NTk3ODA1NX0.o9osnraTWrCLzVE-UtN5wCrAO1OovDX5wsjM2gMt2OI`
-          }
-        }
-      );
-      const responseData = response.data.data;
-      const formattedData = responseData.map((item) => ({
-        label: item.favourite_name,
-        value: item.favourite_id.toString(),
-        accountNumber: item.favourite_account_number,
-      }));
-      setDataRekening(formattedData);
-      // setSelectedAccountId(formattedData[0].value);
-      console.log(formattedData);
-      console.log(responseData)
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+
 
   const handleDropdownChange = (item) => {
     setSelectedAccountId(item.value);
