@@ -13,9 +13,9 @@ const StatusBadge = ({ status }) => {
         backgroundColor: "#E7F8EF",
         borderRadius: 50,
         height: 26,
-        alignItems: "center",
-        justifyContent: "center",
-        alignSelf: "flex-start", // Added alignSelf
+        // alignItems: "center",
+        // justifyContent: "center",
+        // alignSelf: "flex-start", // Added alignSelf
       };
       textStyle = {
         color: "#10B55A",
@@ -31,9 +31,9 @@ const StatusBadge = ({ status }) => {
         backgroundColor: "#FFF6E6",
         borderRadius: 50,
         height: 26,
-        alignItems: "center",
-        justifyContent: "center",
-        alignSelf: "flex-start", // Added alignSelf
+        // alignItems: "center",
+        // justifyContent: "center",
+        // alignSelf: "flex-start", // Added alignSelf
       };
       textStyle = {
         color: "#FFA500",
@@ -49,9 +49,9 @@ const StatusBadge = ({ status }) => {
         backgroundColor: "#FBE9ED",
         borderRadius: 50,
         height: 26,
-        alignItems: "center",
-        justifyContent: "center",
-        alignSelf: "flex-start", // Added alignSelf
+        // alignItems: "center",
+        // justifyContent: "center",
+        // alignSelf: "flex-start", // Added alignSelf
       };
       textStyle = {
         color: "#D6264F",
@@ -81,7 +81,7 @@ const StatusBadge = ({ status }) => {
   return (
     <View style={badgeStyle}>
       <Text style={textStyle}>
-        {status === 1 ? "Normal" : status === 2 ? "Investigasi" : "Blokir"}
+        {status === 1 ? "Normal" : status === 2 ? "Investigasi" : "Peringatan"}
       </Text>
     </View>
   );
