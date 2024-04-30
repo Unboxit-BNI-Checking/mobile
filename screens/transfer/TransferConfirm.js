@@ -15,16 +15,16 @@ import LabelStatusComponent from "../../component/label/LabelStatusComponent";
 import ButtonPrimary from "../../component/button/ButtonPrimary";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
+import { createNewTransaction } from "../../services/TransactionService";
 
-const TransferConfirm = () => {
+const TransferConfirm = ({ route, navigation }) => {
+  const { accountNumberSource, accountNumberDestination, nominal } = route.params;
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
 
   const handlePasswordChange = (text) => {
     setPassword(text);
@@ -41,6 +41,13 @@ const TransferConfirm = () => {
   const closeModal = () => {
     setModalVisible(!modalVisible);
   };
+
+  const handleCreateTransaction = async () => {
+    let transactionSummary = await createNewTransaction(accountNumberSource, accountNumberDestination, nominal, null)
+    navigation.navigate("TransferSuccess", {
+      summary: transactionSummary
+    });
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
@@ -60,7 +67,7 @@ const TransferConfirm = () => {
         >
           <LabelValidasiComponent
             title={"Rekening Tujuan"}
-            subTitle={"1234567890"}
+            subTitle={accountNumberDestination}
           />
           <LabelValidasiComponent
             title={"Nama Penerima"}
@@ -79,11 +86,11 @@ const TransferConfirm = () => {
           />
           <LabelValidasiPengirimComponent
             title={"Rekening Pengirim"}
-            subTitle={"1818181818"}
+            subTitle={accountNumberSource}
           />
           <LabelValidasiPengirimComponent
             title={"Nominal"}
-            subTitle={"100.000"}
+            subTitle={nominal}
           />
           <LabelValidasiPengirimComponent title={"Fee"} subTitle={"0"} />
           <View
@@ -137,7 +144,7 @@ const TransferConfirm = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            navigation.navigate("TransferSuccess");
+            handleCreateTransaction()
           }}
           disable={!password}
         />

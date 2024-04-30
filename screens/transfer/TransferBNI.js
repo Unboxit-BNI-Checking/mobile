@@ -23,7 +23,7 @@ import axios from "axios";
 import { checkAccountNumberReport, checkAccountNumberReportStatus } from "../../services/ReportService";
 
 
-const TransferBNI = () => {
+const TransferBNI = ({ navigation }) => {
   const [showSaldo, setShowSaldo] = useState(false);
   const [activeButton, setActiveButton] = useState("Daftar Favorit");
   const [activeTabContent, setActiveTabContent] = useState("Daftar Favorit");
@@ -33,7 +33,6 @@ const TransferBNI = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(1);
   const [nominal, setNominal] = useState("");
-  const navigation = useNavigation();
   
   
   // HANDLE DROPDOWN API INTERGRATION
@@ -77,7 +76,11 @@ const TransferBNI = () => {
   };
 
   const handleNextButtonClick = () => {
-    navigation.replace("TransferConfirm");
+    navigation.navigate("TransferConfirm", {
+      accountNumberSource: accountNumberSource,
+      accountNumberDestination: accountNumberDestination,
+      nominal: nominal,
+    });
   };
 
   const handleCloseButtonClick = () => {
