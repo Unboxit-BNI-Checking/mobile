@@ -29,16 +29,16 @@ const ModalStatusInformation = ({ modalVisible, closeModal }) => {
                 <Text style={styles.statusTextInvestigation}>Investigasi</Text>
               </View>
               <Text style={styles.statusDescription}>
-                Nomor Rekening ini sedang dalam investigasi.
+                Nomor Rekening ini sedang dalam investigasi terkait dugaan
+                penipuan.
               </Text>
             </View>
             <View style={styles.statusItem}>
               <View style={styles.statusBadgeBlocked}>
-                <Text style={styles.statusTextBlocked}>Blokir</Text>
+                <Text style={styles.statusTextBlocked}>Peringatan</Text>
               </View>
               <Text style={styles.statusDescription}>
-                Nomor Rekening ini terindikasi Penipuan dan {"\n"}sudah
-                diblokir.
+                Nomor Rekening ini mempunyai riwayat laporan terkait penipuan.
               </Text>
             </View>
           </View>
@@ -88,8 +88,7 @@ const styles = StyleSheet.create({
     width: 59,
     backgroundColor: "#E7F8EF",
     borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
+
   },
   statusBadgeInvestigation: {
     paddingHorizontal: 8,
@@ -98,33 +97,37 @@ const styles = StyleSheet.create({
     width: 79,
     backgroundColor: "#FFF6E6",
     borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    
   },
   statusBadgeBlocked: {
     paddingHorizontal: 8,
     paddingVertical: 2,
     height: 26,
-    width: 50,
+    width: 80,
     backgroundColor: "#FBE9ED",
     borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    
   },
   statusTextNormal: {
     color: "#10B55A",
     fontSize: 12,
     fontFamily: "PlusJakartaSansBold",
+    alignItems: "center",
+    justifyContent: "center",
   },
   statusTextInvestigation: {
     color: "#FFA500",
     fontSize: 12,
     fontFamily: "PlusJakartaSansBold",
+    alignItems: "center",
+    justifyContent: "center",
   },
   statusTextBlocked: {
     color: "#D6264F",
     fontSize: 12,
     fontFamily: "PlusJakartaSansBold",
+    alignItems: "center",
+    justifyContent: "center",
   },
   statusDescription: {
     fontFamily: "PlusJakartaSansMedium",

@@ -21,10 +21,11 @@ const modalContent = {
     statusText: "Investigasi",
   },
   3: {
-    linkText: "Block Details",
-    mediumText: "Nomor Rekening ini terindikasi Penipuan dan sudah diblokir.",
+    linkText: "Apakah Anda yakin tetap ingin melanjutkan?",
+    mediumText:
+      "Nomor Rekening ini mempunyai riwayat laporan terkait penipuan.",
     titleText: "Status Rekening:",
-    statusText: "Blokir",
+    statusText: "Peringatan",
   },
 };
 
@@ -37,10 +38,9 @@ const getStatusStyles = (status) => {
           paddingVertical: 2,
           height: 26,
           width: 59,
+          marginTop:5,
           backgroundColor: "#E7F8EF",
           borderRadius: 50,
-          alignItems: "center",
-          justifyContent: "center",
           marginTop: 5,
         },
         text: {
@@ -55,11 +55,10 @@ const getStatusStyles = (status) => {
           paddingHorizontal: 8,
           paddingVertical: 2,
           height: 26,
+          marginTop:5,
           width: 79,
           backgroundColor: "#FFF6E6",
           borderRadius: 50,
-          alignItems: "center",
-          justifyContent: "center",
         },
         text: {
           color: "#FFA500",
@@ -73,11 +72,10 @@ const getStatusStyles = (status) => {
           paddingHorizontal: 8,
           paddingVertical: 2,
           height: 26,
-          width: 50,
+          marginTop:5,
+          width: 80,
           backgroundColor: "#FBE9ED",
           borderRadius: 50,
-          alignItems: "center",
-          justifyContent: "center",
         },
         text: {
           color: "#D6264F",
@@ -100,7 +98,7 @@ const ModalStatusCheck = ({
   handleCloseButtonClick,
   handleCheckboxChange,
   isChecked,
-  accountNumberDestination
+  accountNumberDestination,
 }) => {
   const navigation = useNavigation();
   const { linkText, mediumText, titleText, statusText } = modalContent[status];
@@ -109,7 +107,7 @@ const ModalStatusCheck = ({
   const handleCheckAccountNumber = async (accountNumberDestination) => {
     reportData = await checkAccountNumberReport(accountNumberDestination);
     navigation.navigate("HasilCekRekening", {
-      reportData: reportData.data
+      reportData: reportData.data,
     });
   };
 
@@ -130,9 +128,13 @@ const ModalStatusCheck = ({
           </View>
           <View>
             <Text style={styles.mediumText}>{mediumText}</Text>
-            {status === 3 ? null : (
+            {status === 3 ? (
+              <Text style={styles.redTextBold}>{linkText}</Text>
+            ) : (
               <TouchableOpacity
-                onPress={() => { handleCheckAccountNumber(accountNumberDestination) }}
+                onPress={() => {
+                  handleCheckAccountNumber(accountNumberDestination);
+                }}
               >
                 <Text style={[styles.mediumText, styles.linkText]}>
                   {linkText}
@@ -253,6 +255,13 @@ const styles = StyleSheet.create({
   statusTextBlocked: {
     color: "#D6264F",
     fontSize: 12,
+    fontFamily: "PlusJakartaSansBold",
+  },
+
+  redTextBold: {
+    color: "#D6264F",
+    marginTop: 10,
+    marginBottom: 10,
     fontFamily: "PlusJakartaSansBold",
   },
 });
