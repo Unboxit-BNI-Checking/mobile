@@ -8,7 +8,7 @@ export const checkAccountNumberReportStatus = async (accountNumber) => {
         Authorization: `Bearer ${process.env.API_TOKEN}`
       }
     });
-    return response.data.status;
+    return response.data.data.status;
   } catch (error) {
     console.error('Error fetching account data:', error);
     return null;
@@ -17,7 +17,6 @@ export const checkAccountNumberReportStatus = async (accountNumber) => {
 
 export const checkAccountNumberReport = async (accountNumber) => {
     try {
-  
       const response = await axios.get(`${process.env.API_URL}/reportedAcc/cekrekening/${accountNumber}`, {
         headers: {
           Authorization: `Bearer ${process.env.API_TOKEN}`
@@ -29,7 +28,3 @@ export const checkAccountNumberReport = async (accountNumber) => {
       return null;
     }
   };
-  
-
-
-export default getAccountData;

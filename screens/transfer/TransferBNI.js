@@ -13,23 +13,21 @@ import { Dropdown } from "react-native-element-dropdown";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CheckboxCustom from "../../component/checkbox/CheckboxCustom";
 import icons from "../../constants/icons";
+import { getAccountsData } from "../../services/AccountService";
 import getFavouriteData from "../../services/FavouriteService";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
 import axios from "axios";
+import { checkAccountNumberReport, checkAccountNumberReportStatus } from "../../services/ReportService";
 
-const dataNomorRekening = [
-  { label: "1818181818", value: "1" },
-  { label: "12839405948", value: "2" },
-];
 
 const TransferBNI = () => {
   const [showSaldo, setShowSaldo] = useState(false);
   const [activeButton, setActiveButton] = useState("Daftar Favorit");
   const [activeTabContent, setActiveTabContent] = useState("Daftar Favorit");
-  const [valueRekening, setValueRekening] = useState(null);
+  const [dataNomorRekening, setDataNomorRekening] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const [isCheckedModal, setIsCheckedModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -41,24 +39,25 @@ const TransferBNI = () => {
   // HANDLE DROPDOWN API INTERGRATION
   const [dataRekening, setDataRekening] = useState([]);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
-  const [selectedAccountNumber, setSelectedAccountNumber] = useState("");
+  const [accountNumberSource, setAccountNumberSource] = useState(null);
+  const [accountNumberDestination, setAccountNumberDestination] = useState(null);
+  const [selectedBalance, setSelectedBalance] = useState(null);
 
   useEffect(() => {
-    async function getFavouriteDataHelper() {
-      formattedData = await getFavouriteData();
-      setDataRekening(formattedData)
+    async function getData() {
+      setDataRekening(await getFavouriteData());
+      setDataNomorRekening(await getAccountsData());
     }
-    getFavouriteDataHelper()
+    getData()
   }, []);
-
-
 
   const handleDropdownChange = (item) => {
     setSelectedAccountId(item.value);
-    setSelectedAccountNumber(item.accountNumber);
-    console.log(item.accountNumber);
-    console.log(item.value);
+    setAccountNumberDestination(item.accountNumber);
+    setSelectedBalance(item.balance)
   };
+
+
 
   const renderItem = (item) => (
     <View style={styles.item}>
@@ -67,8 +66,9 @@ const TransferBNI = () => {
   );
  
   
-  const openModal = (newStatus) => {
-    setStatus(newStatus);
+  const openModal = async (newStatus) => {
+    let accountReportStatus = await checkAccountNumberReportStatus(accountNumberDestination)
+    setStatus(accountReportStatus ?? 1);
     setModalVisible(true);
   };
 
@@ -119,8 +119,8 @@ const TransferBNI = () => {
               valueField="value"
               placeholder={"Pilih Rekening"}
               searchPlaceholder="Search..."
-              value={valueRekening}
-              onChange={(item) => setValueRekening(item.value)}
+              value={accountNumberSource}
+              onChange={(item) => setAccountNumberSource(item.value)}
               placeholderStyle={{
                 fontFamily: "PlusJakartaSansMedium",
                 color: "#98A1B0",
@@ -140,7 +140,7 @@ const TransferBNI = () => {
                 style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
               >
                 <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-                  {showSaldo ? "Rp 300.478" : "Rp *******"}
+                  {showSaldo ? selectedBalance ?? "Rp 300.478" : "Rp *******"}
                 </Text>
                 <TouchableOpacity onPress={() => setShowSaldo(!showSaldo)}>
                   {showSaldo ? (
@@ -261,8 +261,8 @@ const TransferBNI = () => {
                 editable={false}
                 placeholder="Nomor Rekening"
                 placeholderTextColor="#98A1B0"
-                value={selectedAccountNumber} // Gunakan selectedAccountNumber sebagai value
-                onChangeText={setSelectedAccountNumber} // Jika ingin dapat diedit, ganti dengan onChangeText
+                value={accountNumberDestination} // Gunakan accountNumberDestination sebagai value
+                onChangeText={setAccountNumberDestination} // Jika ingin dapat diedit, ganti dengan onChangeText
               />
             </View>
           </View>
