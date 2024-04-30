@@ -1,12 +1,33 @@
-import { View, ScrollView, Image, StatusBar, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  ScrollView,
+  Image,
+  StatusBar,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import icons from "../../constants/icons";
 import Octicons from "@expo/vector-icons/Octicons";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import getAccountData from "../../services/AccountService";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import images from "../../constants/images";
 
 const RekeningComponent = () => {
- 
+  const [accountData, setAccountData] = useState(null);
+  const [showBalance, setShowBalance] = useState(false);
+  useEffect(() => {
+    const getAccount = async () => {
+      const data = await getAccountData();
+      setAccountData(data);
+    };
+
+    getAccount();
+
+    // console.log(accountData);
+  }, []);
   return (
     <View style={{ height: 260 }}>
       <View
@@ -34,7 +55,7 @@ const RekeningComponent = () => {
               fontSize: 16,
             }}
           >
-           Amelia Qatrunnada 
+            {accountData && accountData.data.customer_name}
           </Text>
         </View>
       </View>
@@ -120,7 +141,7 @@ const RekeningComponent = () => {
                 fontFamily: "PlusJakartaSansRegular",
               }}
             >
-              1818181818
+              {accountData && accountData.data.account_number}
             </Text>
             <Octicons name="copy" size={16} color="#98A1B0" />
           </View>
@@ -132,16 +153,39 @@ const RekeningComponent = () => {
               marginTop: 14,
             }}
           >
-            <Text
-              style={{
-                fontFamily: "PlusJakartaSansBold",
-                fontSize: 16,
-                color: "#5D6B82",
-              }}
+            {showBalance ? (
+              <Text
+                style={{
+                  fontFamily: "PlusJakartaSansBold",
+                  fontSize: 16,
+                  color: "#5D6B82",
+                }}
+              >
+                Rp.{accountData && accountData.data.balance}
+              </Text>
+            ) : (
+              <TouchableOpacity onPress={() => setShowBalance(true)}>
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansBold",
+                    fontSize: 16,
+                    color: "#5D6B82",
+                  }}
+                >
+                  Rp.******
+                </Text>
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              onPress={() => setShowBalance(!showBalance)}
+              style={{ marginTop: 4 }}
             >
-              Rp. ******
-            </Text>
-            <Ionicons name="eye-off-outline" size={18} color="#5D6B82" />
+              <Ionicons
+                name={showBalance ? "eye-outline" : "eye-off-outline"}
+                size={18}
+                color="#5D6B82"
+              />
+            </TouchableOpacity>
           </View>
 
           <View
@@ -173,7 +217,6 @@ const RekeningComponent = () => {
     </View>
   );
 };
-
 
 const data = [
   {
@@ -234,6 +277,7 @@ const MenuComponent = () => {
         <View style={styles.contentMenu} key={item.id}>
           <TouchableOpacity
             key={item.id}
+            // onPress={() => sampleCallback(item.name)}\
             onPress={() => navigation.navigate(item.route)}
           >
             <View>
@@ -276,7 +320,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 const PromotionComponent = () => {
   return (
     <View style={{ paddingHorizontal: 20, marginTop: 30, marginBottom: 140 }}>
@@ -302,8 +345,6 @@ const PromotionComponent = () => {
   );
 };
 
-
-
 export default function Home() {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -317,4 +358,3 @@ export default function Home() {
     </View>
   );
 }
-
