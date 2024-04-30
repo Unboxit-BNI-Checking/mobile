@@ -10,16 +10,15 @@ import React, { useState } from "react";
 import icons from "../../../constants/icons";
 
 import ButtonNextClose from "../../../component/button/ButtonNextClose";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import ModalStatusInformation from "../../../component/modal/ModalStatusInformation";
 import LabelValidasiComponent from "../../../component/label/LabelValidasiComponent";
 import LabelStatusComponent from "../../../component/label/LabelStatusComponent";
 
-const HasilCekRekening = () => {
+const HasilCekRekening = ({ route, navigation }) => {
+  const { reportData } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
 
   const openModal = () => {
     setModalVisible(!modalVisible);
@@ -47,19 +46,19 @@ const HasilCekRekening = () => {
       <View style={styles.container}>
         <View style={styles.rekeningInfoContainer}>
           <View style={styles.rekeningInfo}>
-            <Text style={styles.name}>Jeon Wonwoo</Text>
+            <Text style={styles.name}>{reportData.account_owner_name}</Text>
             <Text style={styles.bank}>Bank Negara Indonesia</Text>
-            <Text style={styles.accountNumber}>1234567890</Text>
+            <Text style={styles.accountNumber}>{reportData.account_number}</Text>
           </View>
           <View style={styles.divider}></View>
 
           <TouchableOpacity onPress={openModal} style={styles.statusContainer}>
-            <LabelStatusComponent title="Status Rekening" status={3} />
+            <LabelStatusComponent title="Status Rekening" status={reportData.status ?? 1} />
           </TouchableOpacity>
         </View>
         <View style={styles.reportContainer}>
           <View style={styles.report}>
-            <Text style={styles.reportNumber}>3</Text>
+            <Text style={styles.reportNumber}>{reportData.reports_count}</Text>
             <Text style={styles.reportText}>Laporan Nasabah</Text>
           </View>
           <View style={styles.report}>

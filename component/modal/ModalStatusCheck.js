@@ -4,6 +4,7 @@ import ButtonNextClose from "../button/ButtonNextClose";
 import CheckboxCustom from "../checkbox/CheckboxCustom";
 import ButtonPrimary from "../button/ButtonPrimary";
 import { useNavigation } from "@react-navigation/native";
+import { checkAccountNumberReport } from "../../services/ReportService";
 const modalContent = {
   1: {
     linkText: "Cek No Rek Disini",
@@ -99,10 +100,18 @@ const ModalStatusCheck = ({
   handleCloseButtonClick,
   handleCheckboxChange,
   isChecked,
+  accountNumberDestination
 }) => {
   const navigation = useNavigation();
   const { linkText, mediumText, titleText, statusText } = modalContent[status];
   const statusStyles = getStatusStyles(status);
+
+  const handleCheckAccountNumber = async (accountNumberDestination) => {
+    reportData = await checkAccountNumberReport(accountNumberDestination);
+    navigation.navigate("HasilCekRekening", {
+      reportData: reportData.data
+    });
+  };
 
   return (
     <Modal
@@ -123,7 +132,7 @@ const ModalStatusCheck = ({
             <Text style={styles.mediumText}>{mediumText}</Text>
             {status === 3 ? null : (
               <TouchableOpacity
-                onPress={() => navigation.replace("HasilCekRekening")}
+                onPress={() => { handleCheckAccountNumber(accountNumberDestination) }}
               >
                 <Text style={[styles.mediumText, styles.linkText]}>
                   {linkText}

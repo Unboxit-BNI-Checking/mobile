@@ -45,7 +45,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TransferBNI" onLayout={onLayoutRootView}>
+      <Stack.Navigator initialRouteName="Tabs" onLayout={onLayoutRootView}>
         {/* HOME SCREEN ROOT */}
 
         <Stack.Screen

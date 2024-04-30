@@ -10,7 +10,7 @@ import {
 import icons from "../../constants/icons";
 import Octicons from "@expo/vector-icons/Octicons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import getAccountData from "../../services/AccountService";
+import { getAccountData } from "../../services/AccountService";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import images from "../../constants/images";
@@ -20,13 +20,11 @@ const RekeningComponent = () => {
   const [showBalance, setShowBalance] = useState(false);
   useEffect(() => {
     const getAccount = async () => {
-      const data = await getAccountData();
-      setAccountData(data);
+      setAccountData(await getAccountData());
     };
 
     getAccount();
 
-    // console.log(accountData);
   }, []);
   return (
     <View style={{ height: 260 }}>
