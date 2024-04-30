@@ -157,13 +157,12 @@ export default function Home() {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+    const getAccount = async () => {
+      setAccountData(await getAccountData());
+    };
+    getAccount();
     setTimeout(() => {
       setRefreshing(false);
-      // const getAccount = async () => {
-      //   setAccountData(await getAccountData());
-      // };
-
-      // getAccount();
     }, 500);
   }, []);
 
@@ -310,7 +309,7 @@ export default function Home() {
                         color: "#5D6B82",
                       }}
                     >
-                      Rp.{accountData && accountData.data.balance}
+                      Rp{accountData && accountData.data.balance}
                     </Text>
                   ) : (
                     <TouchableOpacity onPress={() => setShowBalance(true)}>
@@ -321,7 +320,7 @@ export default function Home() {
                           color: "#5D6B82",
                         }}
                       >
-                        Rp.******
+                        Rp******
                       </Text>
                     </TouchableOpacity>
                   )}

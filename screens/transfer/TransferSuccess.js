@@ -109,7 +109,7 @@ const TransferSuccess = ({ route, navigation }) => {
         <ButtonPrimary
           text="Kembali Ke Home"
           onPress={() => {
-            navigation.navigate("Tabs");
+            navigation.replace("Tabs");
           }}
         />
       </View>

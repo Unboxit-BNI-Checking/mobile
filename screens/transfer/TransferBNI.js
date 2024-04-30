@@ -76,7 +76,7 @@ const TransferBNI = ({ navigation }) => {
   };
 
   const handleNextButtonClick = () => {
-    navigation.navigate("TransferConfirm", {
+    navigation.replace("TransferConfirm", {
       accountNumberSource: accountNumberSource,
       accountNumberDestination: accountNumberDestination,
       nominal: nominal,
