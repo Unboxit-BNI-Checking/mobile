@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
@@ -13,10 +14,24 @@ import ButtonPrimary from "../../../component/button/ButtonPrimary";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
+import { checkAccountNumberReport } from "../../../services/ReportService";
 
 const CekRekening = () => {
   const navigation = useNavigation();
   const [rekening, setRekening] = useState("");
+
+  const handleCheckAccountNumber = async (rekening) => {
+
+    checkAccountNumberReport(rekening).then((response) => {
+      navigation.navigate("HasilCekRekening", {
+        reportData: response.data
+      });
+    }).catch((error) => {
+      Alert.alert("Cek Rekening", "No rekening tidak ditemukan");
+    })
+
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomAppBar
@@ -81,7 +96,7 @@ const CekRekening = () => {
         <ButtonPrimary
           text="Cek Rekening"
           onPress={() => {
-            navigation.navigate("HasilCekRekening");
+            handleCheckAccountNumber(rekening)
           }}
           disable={!rekening}
         />
