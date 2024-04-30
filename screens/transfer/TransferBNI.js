@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,13 +18,9 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
+import axios from "axios";
 
-const dataFavorite = [
-  { label: "Tiansi Pratama", value: "1" },
-  { label: "Sdr Jeon Wonwoo", value: "2" },
-];
-
-const dataRekening = [
+const dataNomorRekening = [
   { label: "1818181818", value: "1" },
   { label: "12839405948", value: "2" },
 ];
@@ -34,15 +30,61 @@ const TransferBNI = () => {
   const [activeButton, setActiveButton] = useState("Daftar Favorit");
   const [activeTabContent, setActiveTabContent] = useState("Daftar Favorit");
   const [valueRekening, setValueRekening] = useState(null);
-  const [valueFavorite, setValueFavorite] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [isCheckedModal, setIsCheckedModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(1);
   const [nominal, setNominal] = useState("");
-
   const navigation = useNavigation();
+  
+  
+  // HANDLE DROPDOWN API INTERGRATION
+  const [dataRekening, setDataRekening] = useState([]);
+  const [selectedAccountId, setSelectedAccountId] = useState(null);
+  const [selectedAccountNumber, setSelectedAccountNumber] = useState("");
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "https://unboxit.50soa.my.id/api/favourites", {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTQ0NDIwNTUsImV4cCI6MTc0NTk3ODA1NX0.o9osnraTWrCLzVE-UtN5wCrAO1OovDX5wsjM2gMt2OI`
+          }
+        }
+      );
+      const responseData = response.data.data;
+      const formattedData = responseData.map((item) => ({
+        label: item.favourite_name,
+        value: item.favourite_id.toString(),
+        accountNumber: item.favourite_account_number,
+      }));
+      setDataRekening(formattedData);
+      // setSelectedAccountId(formattedData[0].value);
+      console.log(formattedData);
+      console.log(responseData)
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleDropdownChange = (item) => {
+    setSelectedAccountId(item.value);
+    setSelectedAccountNumber(item.accountNumber);
+    console.log(item.accountNumber);
+    console.log(item.value);
+  };
+
+  const renderItem = (item) => (
+    <View style={styles.item}>
+      <Text style={styles.textItem}>{item.label}</Text>
+    </View>
+  );
+ 
+  
   const openModal = (newStatus) => {
     setStatus(newStatus);
     setModalVisible(true);
@@ -68,12 +110,6 @@ const TransferBNI = () => {
     setNominal(text); // Perbarui state nominal dengan nilai input
   };
 
-  const renderItem = (item) => (
-    <View style={styles.item}>
-      <Text style={styles.textItem}>{item.label}</Text>
-    </View>
-  );
-
   const handleTabPress = (tab) => {
     setActiveButton(tab);
     setActiveTabContent(tab);
@@ -96,7 +132,7 @@ const TransferBNI = () => {
             </Text>
             <Dropdown
               style={styles.dropdown}
-              data={dataRekening}
+              data={dataNomorRekening}
               labelField="label"
               valueField="value"
               placeholder={"Pilih Rekening"}
@@ -218,7 +254,7 @@ const TransferBNI = () => {
               <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>Nama</Text>
               <Dropdown
                 style={styles.dropdown}
-                data={dataFavorite}
+                data={dataRekening}
                 search
                 maxHeight={300}
                 labelField="label"
@@ -230,25 +266,21 @@ const TransferBNI = () => {
                   fontSize: 14,
                 }}
                 searchPlaceholder="Search..."
-                value={valueFavorite}
-                onChange={(item) => setValueFavorite(item.value)}
+                value={selectedAccountId} // Gunakan selectedAccountId sebagai value
+                onChange={handleDropdownChange}
                 renderItem={renderItem}
               />
 
               <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
                 Rekening Tujuan
               </Text>
-              {/* <TextInput
-                style={styles.disabledInput}
-                placeholder="Masukan Nomor Rekening"
-                placeholderTextColor={"#98A1B0"}
-                editable={false}
-              /> */}
               <TextInput
                 style={[styles.NamaRekening, styles.disabledInput]}
                 editable={false}
-                placeholder={"Nomor Rekening"}
-                placeholderTextColor={"#98A1B0"}
+                placeholder="Nomor Rekening"
+                placeholderTextColor="#98A1B0"
+                value={selectedAccountNumber} // Gunakan selectedAccountNumber sebagai value
+                onChangeText={setSelectedAccountNumber} // Jika ingin dapat diedit, ganti dengan onChangeText
               />
             </View>
           </View>
