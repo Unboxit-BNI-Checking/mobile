@@ -14,6 +14,27 @@ export const getAccountData = async () => {
   }
 };
 
+// export const getAccountsData = async () => {
+//   try {
+//     const response = await axios.get(`${process.env.API_URL}/accounts`, {
+//       headers: {
+//         Authorization: `Bearer ${process.env.API_TOKEN}`
+//       }
+//     });
+    
+//     const formattedData = response.data.data.map((item) => ({
+//       label: item.account_number,
+//       value: item.account_number,
+//       balance: item.balance
+//     }));
+    
+//     return formattedData;
+//   } catch (error) {
+//     console.error('Error fetching account data:', error);
+//     return null;
+//   }
+// };
+
 export const getAccountsData = async () => {
   try {
     const response = await axios.get(`${process.env.API_URL}/accounts`, {
@@ -31,7 +52,6 @@ export const getAccountsData = async () => {
     return formattedData;
   } catch (error) {
     console.error('Error fetching account data:', error);
-    return null;
+    return []; // or handle the error in another way
   }
 };
-
