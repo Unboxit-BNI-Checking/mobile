@@ -21,7 +21,8 @@ import ModalStatusInformation from "../../component/modal/ModalStatusInformation
 import { createNewTransaction } from "../../services/TransactionService";
 
 const TransferConfirm = ({ route, navigation }) => {
-  const { accountNumberSource, accountNumberDestination, nominal } = route.params;
+  const { accountNumberSource, accountNumberDestination, nominal, note } =
+    route.params;
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,11 +44,16 @@ const TransferConfirm = ({ route, navigation }) => {
   };
 
   const handleCreateTransaction = async () => {
-    let transactionSummary = await createNewTransaction(accountNumberSource, accountNumberDestination, nominal, null)
+    let transactionSummary = await createNewTransaction(
+      accountNumberSource,
+      accountNumberDestination,
+      nominal,
+      null
+    );
     navigation.navigate("TransferSuccess", {
-      summary: transactionSummary
+      summary: transactionSummary,
     });
-  }
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
@@ -76,7 +82,7 @@ const TransferConfirm = ({ route, navigation }) => {
 
           <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
           <TouchableOpacity onPress={openModal}>
-            <LabelStatusComponent title={"Status Rekening"} status={3} />
+            <LabelStatusComponent title={"Status Rekening"} status={1} />
           </TouchableOpacity>
 
           <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
@@ -89,9 +95,14 @@ const TransferConfirm = ({ route, navigation }) => {
             subTitle={accountNumberSource}
           />
           <LabelValidasiPengirimComponent
+            title={"Keterangan"}
+            subTitle={note ? note : "-"}
+          />
+          <LabelValidasiPengirimComponent
             title={"Nominal"}
             subTitle={nominal}
           />
+
           <LabelValidasiPengirimComponent title={"Fee"} subTitle={"0"} />
           <View
             style={{
@@ -144,7 +155,7 @@ const TransferConfirm = ({ route, navigation }) => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            handleCreateTransaction()
+            handleCreateTransaction();
           }}
           disable={!password}
         />

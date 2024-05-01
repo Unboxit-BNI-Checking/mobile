@@ -33,6 +33,7 @@ const TransferBNI = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(1);
   const [nominal, setNominal] = useState("");
+  const [note, setNote] = useState("");
   
   
   // HANDLE DROPDOWN API INTERGRATION
@@ -80,6 +81,7 @@ const TransferBNI = ({ navigation }) => {
       accountNumberSource: accountNumberSource,
       accountNumberDestination: accountNumberDestination,
       nominal: nominal,
+      note: note
     });
   };
 
@@ -94,6 +96,11 @@ const TransferBNI = ({ navigation }) => {
   const handleNominalChange = (text) => {
     setNominal(text); // Perbarui state nominal dengan nilai input
   };
+
+  const handleNoteChange = (text) => {
+    setNote(text); // Perbarui state nominal dengan nilai input
+  };
+
 
   const handleTabPress = (tab) => {
     setActiveButton(tab);
@@ -324,6 +331,7 @@ const TransferBNI = ({ navigation }) => {
               style={styles.textInput}
               placeholder="Tulis Keterangan Transaksi (Optional)"
               placeholderTextColor={"#98A1B0"}
+              onChangeText={handleNoteChange}
             />
           </View>
         </View>

@@ -53,11 +53,21 @@ const TransferSuccess = ({ route, navigation }) => {
           />
           <LabelValidasiComponent
             title={"Waktu Transaksi"}
-            subTitle={new Date(summary.transaction_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }) + " WIB"}
+            subTitle={
+              new Date(summary.transaction_time).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+              }) + " WIB"
+            }
           />
           <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
           <TouchableOpacity onPress={openModal}>
-            <LabelStatusComponent title={"Status Rekening"} status={Math.max(1, summary.account_number_destination_status)} />
+            <LabelStatusComponent
+              title={"Status Rekening"}
+              status={Math.max(1, summary.account_number_destination_status)}
+            />
           </TouchableOpacity>
           <View style={styles.separator}></View>
           <LabelValidasiPengirimComponent
@@ -67,6 +77,11 @@ const TransferSuccess = ({ route, navigation }) => {
           <LabelValidasiPengirimComponent
             title={"Rekening Pengirim"}
             subTitle={summary.account_number_source}
+          />
+
+          <LabelValidasiPengirimComponent
+            title={"Keterangan"}
+            subTitle={summary.note ? summary.note : "-"}
           />
           <LabelValidasiPengirimComponent
             title={"Nominal"}
