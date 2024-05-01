@@ -62,7 +62,7 @@ const Transfer = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
         title="Transfer"
-        onLeftPress={() => navigation.goBack()}
+        onLeftPress={() => navigation.reset({ routes: [{ name: "Tabs" }] })}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />
