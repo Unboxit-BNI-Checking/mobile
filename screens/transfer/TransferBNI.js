@@ -20,8 +20,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
 import axios from "axios";
-import { checkAccountNumberReport, checkAccountNumberReportStatus } from "../../services/ReportService";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  checkAccountNumberReport,
+  checkAccountNumberReportStatus,
+} from "../../services/ReportService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { validateTransaction } from "../../services/TransactionService";
 
 const TransferBNI = ({ navigation }) => {
@@ -35,13 +38,13 @@ const TransferBNI = ({ navigation }) => {
   const [status, setStatus] = useState(1);
   const [nominal, setNominal] = useState("");
   const [note, setNote] = useState("");
-  
-  
+
   // HANDLE DROPDOWN API INTERGRATION
   const [dataRekening, setDataRekening] = useState([]);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [accountNumberSource, setAccountNumberSource] = useState(null);
-  const [accountNumberDestination, setAccountNumberDestination] = useState(null);
+  const [accountNumberDestination, setAccountNumberDestination] =
+    useState(null);
   const [selectedBalance, setSelectedBalance] = useState(null);
 
   useEffect(() => {
@@ -49,26 +52,24 @@ const TransferBNI = ({ navigation }) => {
       setDataRekening(await getFavouriteData());
       setDataNomorRekening(await getUserAccountNumbersData());
     }
-    getData()
+    getData();
   }, []);
 
   const handleDropdownChange = (item) => {
     setSelectedAccountId(item.value);
     setAccountNumberDestination(item.accountNumber);
-    setSelectedBalance(item.balance)
   };
-
-
 
   const renderItem = (item) => (
     <View style={styles.item}>
       <Text style={styles.textItem}>{item.label}</Text>
     </View>
   );
- 
-  
+
   const openModal = async (newStatus) => {
-    let accountReportStatus = await checkAccountNumberReportStatus(accountNumberDestination)
+    let accountReportStatus = await checkAccountNumberReportStatus(
+      accountNumberDestination
+    );
     setStatus(accountReportStatus ?? 1);
     setModalVisible(true);
   };
@@ -77,8 +78,6 @@ const TransferBNI = ({ navigation }) => {
     setModalVisible(false);
   };
 
-
-
   const handleNextButtonClick = async () => {
     let transactionSummary = await validateTransaction(
       accountNumberSource,
@@ -86,10 +85,9 @@ const TransferBNI = ({ navigation }) => {
       nominal,
       null
     );
-    navigation.navigate("TransferConfirm", {
+    navigation.replace("TransferConfirm", {
       summary: transactionSummary,
     });
-
   };
 
   const handleCloseButtonClick = () => {
@@ -115,27 +113,26 @@ const TransferBNI = ({ navigation }) => {
     setNote(text); // Perbarui state nominal dengan nilai input
   };
 
-
   const handleTabPress = (tab) => {
     setActiveButton(tab);
     setActiveTabContent(tab);
   };
 
   const handleNextButtonPrimary = async () => {
-    AsyncStorage.getItem("isWarningOn").then(async isWarningOn => {
+    AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
       if (isWarningOn === "1") {
         openModal(1);
       } else {
         await handleNextButtonClick();
       }
-    })
-  }
+    });
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
         title="Transfer Antar BNI"
-        onLeftPress={() => navigation.goBack()}
+        onLeftPress={() => navigation.replace("Transfer")}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />
@@ -154,7 +151,10 @@ const TransferBNI = ({ navigation }) => {
               placeholder={"Pilih Rekening"}
               searchPlaceholder="Search..."
               value={accountNumberSource}
-              onChange={(item) => setAccountNumberSource(item.value)}
+              onChange={(item) => {
+                setAccountNumberSource(item.value);
+                setSelectedBalance(item.balance);
+              }}
               placeholderStyle={{
                 fontFamily: "PlusJakartaSansMedium",
                 color: "#98A1B0",
@@ -174,7 +174,11 @@ const TransferBNI = ({ navigation }) => {
                 style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
               >
                 <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-                  {showSaldo ? selectedBalance ?? "Rp 300.478" : "Rp *******"}
+                  {showSaldo
+                    ? `Rp${new Intl.NumberFormat("id-ID").format(
+                        selectedBalance
+                      )}`
+                    : "Rp *******"}
                 </Text>
                 <TouchableOpacity onPress={() => setShowSaldo(!showSaldo)}>
                   {showSaldo ? (
