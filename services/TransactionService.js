@@ -1,8 +1,9 @@
 import axios from 'axios';
+import {API_URL, API_TOKEN} from "@env"
 
 export const createNewTransaction = async ( accountNumberSource, accountNumberDestination, amount, note) => {
   try {
-    const response = await axios.post(`${process.env.API_URL}/transaction`, 
+    const response = await axios.post(`${API_URL}/transaction`, 
     {
         account_number_source: accountNumberSource,
         account_number_destination: accountNumberDestination,
@@ -11,7 +12,7 @@ export const createNewTransaction = async ( accountNumberSource, accountNumberDe
     },
     {
       headers: {
-        Authorization: `Bearer ${process.env.API_TOKEN}`
+        Authorization: `Bearer ${API_TOKEN}`
       }
     });
     return response.data.data;

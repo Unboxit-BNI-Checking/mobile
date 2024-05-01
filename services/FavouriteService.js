@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {API_URL, API_TOKEN} from "@env"
 
 // const getFavouriteData = async () => {
 //     try {
@@ -25,9 +26,9 @@ import axios from 'axios';
 
 const getFavouriteData = async () => {
   try {
-    const response = await axios.get(`${process.env.API_URL}/favourites`, {
+    const response = await axios.get(`${API_URL}/favourites`, {
       headers: {
-        Authorization: `Bearer ${process.env.API_TOKEN}`
+        Authorization: `Bearer ${API_TOKEN}`
       }
     });
     const responseData = response.data.data;

@@ -1,10 +1,11 @@
 import axios from 'axios';
+import {API_URL, API_TOKEN} from "@env"
 
 export const getAccountData = async () => {
   try {
-    const response = await axios.get(`${process.env.API_URL}/accounts/me`, {
+    const response = await axios.get(`${API_URL}/accounts/me`, {
       headers: {
-        Authorization: `Bearer ${process.env.API_TOKEN}`
+        Authorization: `Bearer ${API_TOKEN}`
       }
     });
     return response.data;
@@ -37,9 +38,9 @@ export const getAccountData = async () => {
 
 export const getAccountsData = async () => {
   try {
-    const response = await axios.get(`${process.env.API_URL}/accounts`, {
+    const response = await axios.get(`${API_URL}/accounts`, {
       headers: {
-        Authorization: `Bearer ${process.env.API_TOKEN}`
+        Authorization: `Bearer ${API_TOKEN}`
       }
     });
     
