@@ -33,6 +33,11 @@ const SertakanLaporanSummary = ({route}) => {
     setSelectedImage(image);
     setModalVisible(true);
   };
+
+  const handleSendReport = async () => {
+    navigation.navigate("LaporanBerhasilTerkirim");
+  }
+
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
       <CustomAppBar
