@@ -44,13 +44,15 @@ const LoginScreen = () => {
   };
 
   const handleLogin = async () => {
-    userLogin(userId, mpin).then((response) => {
-      AsyncStorage.setItem("token", response.token);
-      navigation.replace("Tabs")
-    }).catch((error) => {
-      Alert.alert("Error", "Invalid username or mpin");
-    })
-  }
+    userLogin(userId, mpin)
+      .then((response) => {
+        AsyncStorage.setItem("token", response.token);
+        navigation.replace("Tabs");
+      })
+      .catch((error) => {
+        Alert.alert("Error", "Invalid username or mpin");
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -257,8 +259,7 @@ const styles = StyleSheet.create({
     borderColor: "#C2C7D0",
     borderRadius: 8,
     height: 48,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    padding: 14,
   },
   input: {
     flex: 1,
