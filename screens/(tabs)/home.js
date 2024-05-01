@@ -157,12 +157,12 @@ export default function Home() {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    const getAccount = async () => {
-      setAccountData(await getAccountData());
-    };
-    getAccount();
-    setTimeout(() => {
-      setRefreshing(false);
+    setTimeout(async () => {
+      const getAccount = async () => {
+        setAccountData(await getAccountData());
+        setRefreshing(false);
+      };
+      getAccount();
     }, 500);
   }, []);
 
