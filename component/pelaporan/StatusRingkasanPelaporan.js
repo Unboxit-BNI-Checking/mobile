@@ -18,21 +18,13 @@ const StatusRingkasanPelaporan = ({ status }) => {
       return (
         <View>
           <Text style={styles.normalText}>Laporan telah selesai diproses.</Text>
-          <Text style={styles.normalText}>
-            Status rekening yang dilaporkan adalah:
-          </Text>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.redText}>Terblokir </Text>
-            <Text style={styles.boldText}>atau sudah diblokir oleh tim.</Text>
+            <Text style={styles.boldText}>Rekening yang Anda laporkan</Text>
+            <Text style={styles.redText}> saldonya </Text>
           </View>
-          <View style={{ marginTop: 10 }}>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.orangeText}>Klik disini </Text>
-              <Text style={styles.normalText}>
-                untuk memproses kerugian yang
-              </Text>
-            </View>
-            <Text style={styles.normalText}>diterima</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.redText}>telah terblokir </Text>
+            <Text style={styles.boldText}>atau dibekukan</Text>
           </View>
         </View>
       );
@@ -40,15 +32,14 @@ const StatusRingkasanPelaporan = ({ status }) => {
       return (
         <View>
           <Text style={styles.normalText}>Laporan telah selesai diproses.</Text>
-          <Text style={styles.normalText}>
-            Status rekening yang dilaporkan adalah:
-          </Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.greenText}>Bebas Aduan </Text>
-            <Text style={styles.boldText}>atau tidak terindikasi </Text>
-          </View>
           <View>
-            <Text style={styles.boldText}>penipuan.</Text>
+            <Text style={styles.boldText}>
+              Rekening yang Anda laporkan tidak
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.boldText}>terindikasi penipuan atau</Text>
+              <Text style={styles.greenText}> di bebas adukan</Text>
+            </View>
           </View>
         </View>
       );
