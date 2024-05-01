@@ -1,6 +1,6 @@
 import axios from "axios";
-import {API_URL} from "@env"
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const checkAccountNumberReportStatus = async (accountNumber) => {
   try {
@@ -37,20 +37,15 @@ export const checkAccountNumberReport = async (accountNumber) => {
 };
 
 export const createNewReport = async (accountNumber) => {
-
   const formData = new FormData();
-  formData.append('accountNumber', accountNumber);
+  formData.append("accountNumber", accountNumber);
 
   try {
-    const response = await axios.post(
-      `${API_URL}/reports`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
-        },
-      }
-    );
+    const response = await axios.post(`${API_URL}/reports`, formData, {
+      headers: {
+        Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching account data:", error);
