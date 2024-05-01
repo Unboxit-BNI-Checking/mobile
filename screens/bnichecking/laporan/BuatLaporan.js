@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import { getUserAccountNumbersData } from "../../../services/UserService";
-import { getTransactionHistory } from "../../../services/TransactionService";
+import { getTransactionById, getTransactionHistory } from "../../../services/TransactionService";
 
 
 const BuatLaporan = () => {
@@ -50,6 +50,12 @@ const BuatLaporan = () => {
       console.error("Error fetching transaction history:", error);
     })
   };
+
+  const handleMakeReport = async () => {
+    navigation.navigate("SertakanLaporan", {
+      transactionSummary: await getTransactionById(selectedTransaction.transaction_id)
+    });
+  }
 
   transactionComponentColor = (transactionId) => {
     return selectedTransaction && selectedTransaction.transaction_id === transactionId ? "#F15922":"#6B788E"
@@ -241,7 +247,7 @@ const BuatLaporan = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            navigation.navigate("SertakanLaporan");
+            handleMakeReport();
           }}
           disable={!selectedTransaction}
         />

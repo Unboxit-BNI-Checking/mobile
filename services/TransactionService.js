@@ -58,3 +58,18 @@ export const getTransactionHistory = async ( accountNumber ) => {
     return null;
   }
 };
+
+export const getTransactionById = async ( transactionId ) => {
+  try {
+    const response = await axios.get(`${API_URL}/transaction/${transactionId}`, 
+    {
+      headers: {
+        Authorization: `Bearer ${await AsyncStorage.getItem("token")}`
+      }
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error('Error fetching transaction data:', error);
+    return null;
+  }
+};

@@ -35,3 +35,25 @@ export const checkAccountNumberReport = async (accountNumber) => {
     return null;
   }
 };
+
+export const createNewReport = async (accountNumber) => {
+
+  const formData = new FormData();
+  formData.append('accountNumber', accountNumber);
+
+  try {
+    const response = await axios.post(
+      `${API_URL}/reports`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching account data:", error);
+    return null;
+  }
+};
