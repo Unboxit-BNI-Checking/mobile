@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {API_URL, API_TOKEN} from "@env"
+import {API_URL} from "@env"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const createNewTransaction = async ( accountNumberSource, accountNumberDestination, amount, note) => {
   try {
@@ -12,7 +13,7 @@ export const createNewTransaction = async ( accountNumberSource, accountNumberDe
     },
     {
       headers: {
-        Authorization: `Bearer ${API_TOKEN}`
+        Authorization: `Bearer ${await AsyncStorage.getItem("token")}`
       }
     });
     return response.data.data;
@@ -33,7 +34,7 @@ export const validateTransaction = async ( accountNumberSource, accountNumberDes
     },
     {
       headers: {
-        Authorization: `Bearer ${API_TOKEN}`
+        Authorization: `Bearer ${await AsyncStorage.getItem("token")}`
       }
     });
     return response.data.data;

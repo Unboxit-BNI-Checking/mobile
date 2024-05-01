@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {API_URL, API_TOKEN} from "@env"
+import {API_URL} from "@env"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // const getFavouriteData = async () => {
 //     try {
@@ -28,7 +29,7 @@ const getFavouriteData = async () => {
   try {
     const response = await axios.get(`${API_URL}/favourites`, {
       headers: {
-        Authorization: `Bearer ${API_TOKEN}`
+        Authorization: `Bearer ${await AsyncStorage.getItem("token")}`
       }
     });
     const responseData = response.data.data;

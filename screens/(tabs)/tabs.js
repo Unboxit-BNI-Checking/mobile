@@ -19,6 +19,7 @@ import { Octicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import icons from "../../constants/icons";
 import { FontAwesome6 } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tabs = () => {
   const Tab = createBottomTabNavigator();

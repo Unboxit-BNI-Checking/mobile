@@ -1,12 +1,14 @@
 import axios from "axios";
-import {API_URL, API_TOKEN} from "@env"
+import {API_URL} from "@env"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export const checkAccountNumberReportStatus = async (accountNumber) => {
   try {
     const response = await axios.get(
       `${API_URL}/reportedAcc/cekrekening/${accountNumber}`,
       {
         headers: {
-          Authorization: `Bearer ${API_TOKEN}`,
+          Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
         },
       }
     );
@@ -23,7 +25,7 @@ export const checkAccountNumberReport = async (accountNumber) => {
       `${API_URL}/reportedAcc/cekrekening/${accountNumber}`,
       {
         headers: {
-          Authorization: `Bearer ${API_TOKEN}`,
+          Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
         },
       }
     );

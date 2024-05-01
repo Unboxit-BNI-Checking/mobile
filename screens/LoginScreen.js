@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Modal,
   TextInput,
+  Alert,
 } from "react-native";
 import images from "../constants/images";
 import icons from "../constants/icons";
@@ -15,6 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import CheckboxCustom from "../component/checkbox/CheckboxCustom";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { userLogin } from "../services/UserService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -39,6 +42,15 @@ const LoginScreen = () => {
   const toggleShowMpin = () => {
     setShowMpin(!showMpin);
   };
+
+  const handleLogin = async () => {
+    userLogin(userId, mpin).then((response) => {
+      AsyncStorage.setItem("token", response.token);
+      navigation.replace("Tabs")
+    }).catch((error) => {
+      Alert.alert("Error", "Invalid username or mpin");
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -143,7 +155,7 @@ const LoginScreen = () => {
                 <ButtonPrimary
                   text={"Login"}
                   disable={!userId || !mpin}
-                  onPress={() => navigation.replace("Tabs")}
+                  onPress={() => handleLogin()}
                 />
               </View>
               <View>

@@ -1,11 +1,12 @@
 import axios from 'axios';
-import {API_URL, API_TOKEN} from "@env"
+import {API_URL} from "@env"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const getAccountData = async () => {
   try {
     const response = await axios.get(`${API_URL}/accounts/me`, {
       headers: {
-        Authorization: `Bearer ${API_TOKEN}`
+        Authorization: `Bearer ${await AsyncStorage.getItem("token")}`
       }
     });
     return response.data;
@@ -19,7 +20,7 @@ export const getAccountData = async () => {
 //   try {
 //     const response = await axios.get(`${process.env.API_URL}/accounts`, {
 //       headers: {
-//         Authorization: `Bearer ${process.env.API_TOKEN}`
+//         Authorization: `Bearer ${process.env.await AsyncStorage.getItem("token")}`
 //       }
 //     });
     
@@ -40,7 +41,7 @@ export const getAccountsData = async () => {
   try {
     const response = await axios.get(`${API_URL}/accounts`, {
       headers: {
-        Authorization: `Bearer ${API_TOKEN}`
+        Authorization: `Bearer ${await AsyncStorage.getItem("token")}`
       }
     });
     
