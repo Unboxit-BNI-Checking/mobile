@@ -20,7 +20,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import icons from "../../constants/icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 
-
 const Tabs = () => {
   const Tab = createBottomTabNavigator();
   return (
@@ -67,35 +66,7 @@ const Tabs = () => {
               </View>
             );
           },
-          headerStyle: { backgroundColor: "#F37548" },
-          headerShadowVisible: false,
-
-          headerLeft: () => (
-            <View style={{ flexDirection: "row", marginHorizontal: 15 }}>
-              <Image
-                source={icons.icBni}
-                style={{ width: 80, height: 50 }}
-                resizeMode="contain"
-              />
-            </View>
-          ),
-
-          headerRight: () => (
-            <View
-              style={{ flexDirection: "row", gap: 10, paddingHorizontal: 18 }}
-            >
-              <Image
-                source={icons.icNotification}
-                style={{ width: 24, height: 24 }}
-              />
-              <Image
-                source={icons.icListen}
-                style={{ width: 24, height: 24 }}
-              />
-            </View>
-          ),
-
-          headerTitle: "",
+          headerShown: false,
         }}
       />
       <Tab.Screen
