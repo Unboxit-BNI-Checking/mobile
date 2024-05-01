@@ -21,7 +21,8 @@ import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
 import axios from "axios";
 import { checkAccountNumberReport, checkAccountNumberReportStatus } from "../../services/ReportService";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { validateTransaction } from "../../services/TransactionService";
 
 const TransferBNI = ({ navigation }) => {
   const [showSaldo, setShowSaldo] = useState(false);
@@ -76,21 +77,34 @@ const TransferBNI = ({ navigation }) => {
     setModalVisible(false);
   };
 
-  const handleNextButtonClick = () => {
-    navigation.replace("TransferConfirm", {
-      accountNumberSource: accountNumberSource,
-      accountNumberDestination: accountNumberDestination,
-      nominal: nominal,
-      note: note
+
+
+  const handleNextButtonClick = async () => {
+    let transactionSummary = await validateTransaction(
+      accountNumberSource,
+      accountNumberDestination,
+      nominal,
+      null
+    );
+    navigation.navigate("TransferConfirm", {
+      summary: transactionSummary,
     });
+
   };
 
   const handleCloseButtonClick = () => {
     setModalVisible(!modalVisible);
+    AsyncStorage.setItem("isWarningOn", "1");
+    setIsCheckedModal(false);
   };
 
   const handleCheckboxChange = () => {
     setIsCheckedModal(!isCheckedModal);
+    if (!isCheckedModal) {
+      AsyncStorage.setItem("isWarningOn", "0");
+    } else {
+      AsyncStorage.setItem("isWarningOn", "1");
+    }
   };
 
   const handleNominalChange = (text) => {
@@ -106,6 +120,16 @@ const TransferBNI = ({ navigation }) => {
     setActiveButton(tab);
     setActiveTabContent(tab);
   };
+
+  const handleNextButtonPrimary = async () => {
+    AsyncStorage.getItem("isWarningOn").then(async isWarningOn => {
+      if (isWarningOn === "1") {
+        openModal(1);
+      } else {
+        await handleNextButtonClick();
+      }
+    })
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -352,7 +376,7 @@ const TransferBNI = ({ navigation }) => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            openModal(1);
+            handleNextButtonPrimary();
           }}
           disable={!nominal}
         />

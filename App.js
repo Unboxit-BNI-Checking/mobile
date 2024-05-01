@@ -19,8 +19,11 @@ import SertakanLaporanSummary from "./screens/bnichecking/laporan/SertakanLapora
 import SplashScreenCustom from "./screens/SplashScreen";
 import LoginScreen from "./screens/LoginScreen";
 import BniChecking from "./screens/bnichecking/BniChecking";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import * as SplashScreen from "expo-splash-screen";
+
+AsyncStorage.setItem("isWarningOn", JSON.stringify(1));
 
 // SplashScreen.preventAutoHideAsync();
 export default function App() {

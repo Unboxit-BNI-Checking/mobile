@@ -21,8 +21,7 @@ import ModalStatusInformation from "../../component/modal/ModalStatusInformation
 import { createNewTransaction } from "../../services/TransactionService";
 
 const TransferConfirm = ({ route, navigation }) => {
-  const { accountNumberSource, accountNumberDestination, nominal, note } =
-    route.params;
+  const { summary } = route.params;
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -45,9 +44,9 @@ const TransferConfirm = ({ route, navigation }) => {
 
   const handleCreateTransaction = async () => {
     let transactionSummary = await createNewTransaction(
-      accountNumberSource,
-      accountNumberDestination,
-      nominal,
+      summary.account_number_source,
+      summary.account_number_destination,
+      summary.amount,
       null
     );
     navigation.navigate("TransferSuccess", {
@@ -73,37 +72,37 @@ const TransferConfirm = ({ route, navigation }) => {
         >
           <LabelValidasiComponent
             title={"Rekening Tujuan"}
-            subTitle={accountNumberDestination}
+            subTitle={summary.account_number_destination}
           />
           <LabelValidasiComponent
             title={"Nama Penerima"}
-            subTitle={"Sdr Jeon Wonwoo"}
+            subTitle={summary.account_name_destination}
           />
 
-          <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
+          <LabelValidasiComponent title={"Bank Tujuan"} subTitle={summary.bank_destination} />
           <TouchableOpacity onPress={openModal}>
-            <LabelStatusComponent title={"Status Rekening"} status={1} />
+            <LabelStatusComponent title={"Status Rekening"} status={summary.account_number_destination_status} />
           </TouchableOpacity>
 
           <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
           <LabelValidasiPengirimComponent
             title={"Nama Pengirim"}
-            subTitle={"Amelia Qatrunnada"}
+            subTitle={summary.account_name_source}
           />
           <LabelValidasiPengirimComponent
             title={"Rekening Pengirim"}
-            subTitle={accountNumberSource}
+            subTitle={summary.account_number_source}
           />
           <LabelValidasiPengirimComponent
             title={"Keterangan"}
-            subTitle={note ? note : "-"}
+            subTitle={summary.note ? summary.note : "-"}
           />
           <LabelValidasiPengirimComponent
             title={"Nominal"}
-            subTitle={nominal}
+            subTitle={summary.amount}
           />
 
-          <LabelValidasiPengirimComponent title={"Fee"} subTitle={"0"} />
+          <LabelValidasiPengirimComponent title={"Fee"} subTitle={summary.fee} />
           <View
             style={{
               backgroundColor: "#F5F6F7",
@@ -116,7 +115,7 @@ const TransferConfirm = ({ route, navigation }) => {
           >
             <LabelValidasiPengirimComponent
               title={"Total"}
-              subTitle={"100.000"}
+              subTitle={summary.total_amount}
             />
           </View>
           <View style={{ height: 48, gap: 6, marginTop: 10 }}>
