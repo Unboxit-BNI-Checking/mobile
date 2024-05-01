@@ -309,7 +309,10 @@ export default function Home() {
                         color: "#5D6B82",
                       }}
                     >
-                      Rp{accountData && accountData.data.balance}
+                      {accountData &&
+                        `Rp${new Intl.NumberFormat("id-ID").format(
+                          accountData.data.balance
+                        )}`}
                     </Text>
                   ) : (
                     <TouchableOpacity onPress={() => setShowBalance(true)}>
