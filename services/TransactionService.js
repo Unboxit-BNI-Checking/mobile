@@ -43,3 +43,18 @@ export const validateTransaction = async ( accountNumberSource, accountNumberDes
     return null;
   }
 };
+
+export const getTransactionHistory = async ( accountNumber ) => {
+  try {
+    const response = await axios.get(`${API_URL}/transaction/account/${accountNumber}`, 
+    {
+      headers: {
+        Authorization: `Bearer ${await AsyncStorage.getItem("token")}`
+      }
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error('Error fetching transaction data:', error);
+    return null;
+  }
+};

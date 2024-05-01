@@ -13,7 +13,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CheckboxCustom from "../../component/checkbox/CheckboxCustom";
 import icons from "../../constants/icons";
-import { getAccountsData } from "../../services/AccountService";
+import { getUserAccountNumbersData } from "../../services/UserService";
 import getFavouriteData from "../../services/FavouriteService";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -47,7 +47,7 @@ const TransferBNI = ({ navigation }) => {
   useEffect(() => {
     async function getData() {
       setDataRekening(await getFavouriteData());
-      setDataNomorRekening(await getAccountsData());
+      setDataNomorRekening(await getUserAccountNumbersData());
     }
     getData()
   }, []);
