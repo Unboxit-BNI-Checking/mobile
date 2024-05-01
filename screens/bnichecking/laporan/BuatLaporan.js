@@ -18,8 +18,8 @@ import CustomAppBar from "../../../component/header/CustomAppBar";
 // Impor dummy transaction data
 
 const dataRekening = [
-  { label: "123144142", value: "123144142" },
-  { label: "12839405948", value: "12839405948" },
+  { label: "1231441420", value: "1231441420" },
+  { label: "1234567890", value: "1234567890" },
 ];
 
 const dummyTransactionHistory = [
@@ -27,7 +27,7 @@ const dummyTransactionHistory = [
     date: "19/04/2024_1",
     time: "18:23:28",
     type: "Bank Negara Indonesia",
-    accountNumber: "123144142",
+    accountNumber: "1231441420",
     accountNumberDestination: "12839405948",
     accountOwner: "Nama Pemilik Rekening",
     amount: -10000,
@@ -36,7 +36,27 @@ const dummyTransactionHistory = [
     date: "20/04/2024",
     time: "18:23:28",
     type: "Bank Negara Indonesia",
-    accountNumber: "123144142",
+    accountNumber: "1231441420",
+    accountNumberDestination: "9999999999",
+    accountOwner: "Nama Pemilik Rekening",
+    amount: -15000,
+  },
+
+  {
+    date: "20/04/2024",
+    time: "18:23:28",
+    type: "Bank Negara Indonesia",
+    accountNumber: "1234567890",
+    accountNumberDestination: "9999999999",
+    accountOwner: "Nama Pemilik Rekening",
+    amount: -15000,
+  },
+
+  {
+    date: "20/04/2024_3",
+    time: "18:23:28",
+    type: "Bank Negara Indonesia",
+    accountNumber: "1234567890",
     accountNumberDestination: "9999999999",
     accountOwner: "Nama Pemilik Rekening",
     amount: -15000,
@@ -46,10 +66,11 @@ const dummyTransactionHistory = [
 const BuatLaporan = () => {
   const navigation = useNavigation();
   const [selectedTransaction, setSelectedTransaction] = useState(null); // State untuk menyimpan transaksi yang dipilih
-  const [selectedAccount, setSelectedAccount] = useState(dataRekening[0]);
+  const [selectedAccount, setSelectedAccount] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const selectTransaction = (transaction) => {
     setSelectedTransaction(transaction); // Memilih transaksi yang dipilih
+    console.log(selectedTransaction);
   };
 
   const selectAccount = (account) => {
@@ -170,29 +191,6 @@ const BuatLaporan = () => {
     </TouchableOpacity>
   );
 
-  useEffect(() => {
-    setSelectedAccount(dataRekening[0]);
-  }, []);
-
-  const filteredTransactionsByAccount = dummyTransactionHistory.filter(
-    (transaction) => {
-      return selectedAccount
-        ? transaction.accountNumber === selectedAccount.value
-        : true;
-    }
-  );
-
-  {
-    /* Filter transaksi berdasarkan pencarian jika akun sudah dipilih */
-  }
-  const filteredTransactionsBySearch = filteredTransactionsByAccount.filter(
-    (transaction) => {
-      return (
-        searchInput === "" ||
-        transaction.accountNumberDestination.includes(searchInput)
-      );
-    }
-  );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
@@ -222,10 +220,10 @@ const BuatLaporan = () => {
               data={dataRekening}
               labelField="label"
               valueField="value"
-              placeholder={null}
+              placeholder={"Pilih Rekening"}
               selectedTextStyle={{ color: "#5D6B82" }}
               searchPlaceholder="Search..."
-              value={dataRekening[0].label}
+              value={selectedAccount}
               onChange={(item) => selectAccount(item.value)}
               renderItem={(item) => (
                 <View style={styles.item}>
@@ -233,38 +231,42 @@ const BuatLaporan = () => {
                 </View>
               )}
             />
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: "PlusJakartaSansBold",
-                marginBottom: 8,
-              }}
-            >
-              Pilih Transaksi yang ingin dilaporkan
-            </Text>
-            <View style={styles.inputContainer}>
-              <Image source={icons.icSearchCekRekening} />
-              <TextInput
-                style={styles.input}
-                placeholder="Cari Transaksi"
-                placeholderTextColor={"#98A1B0"}
-                value={searchInput}
-                onChangeText={(text) => setSearchInput(text)}
-                keyboardType="number-pad"
-              />
-            </View>
+            {selectedAccount ? (
+              <View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontFamily: "PlusJakartaSansBold",
+                    marginBottom: 10,
+                    marginTop: 5,
+                  }}
+                >
+                  Pilih Transaksi yang ingin dilaporkan
+                </Text>
+                <View style={styles.inputContainer}>
+                  <Image source={icons.icSearchCekRekening} />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Cari Transaksi"
+                    placeholderTextColor={"#98A1B0"}
+                    value={searchInput}
+                    onChangeText={(text) => setSearchInput(text)}
+                    keyboardType="number-pad"
+                  />
+                </View>
+              </View>
+            ) : null}
 
             {dummyTransactionHistory
               .filter((transaction) => {
-                return selectedAccount
-                  ? transaction.accountNumber === selectedAccount
-                  : true;
+                return (
+                  (selectedAccount
+                    ? transaction.accountNumber === selectedAccount
+                    : false) &&
+                  transaction.accountNumberDestination.includes(searchInput)
+                );
               })
               .map((transaction) => renderItem(transaction))}
-
-            {/* {filteredTransactionsBySearch.map((transaction) => 
-              renderItem(transaction)
-            )} */}
           </View>
         </View>
       </ScrollView>
@@ -274,6 +276,7 @@ const BuatLaporan = () => {
           onPress={() => {
             navigation.navigate("SertakanLaporan");
           }}
+          disable={!selectedTransaction}
         />
       </View>
     </SafeAreaView>
