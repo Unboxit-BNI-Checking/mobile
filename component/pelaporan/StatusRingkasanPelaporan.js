@@ -9,11 +9,11 @@ const StatusRingkasanPelaporan = ({ status }) => {
     if (status === 1) {
       return (
         <Text style={styles.normalText}>
-          Laporan sudah terkirim dan akan segera {"\n"}ditindaklanjuti oleh tim
+          Laporan sudah terkirim dan akan segera {"\n"}diproses oleh tim
         </Text>
       );
     } else if (status === 2) {
-      return <Text style={styles.normalText}>Laporan sedang diproses</Text>;
+      return <Text style={styles.normalText}>Laporan sedang diproses oleh tim.</Text>;
     } else if (status === 3) {
       return (
         <View>
@@ -23,8 +23,8 @@ const StatusRingkasanPelaporan = ({ status }) => {
             <Text style={styles.redText}> saldonya </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.redText}>telah terblokir </Text>
-            <Text style={styles.boldText}>atau dibekukan</Text>
+            <Text style={styles.redText}>telah diblokir </Text>
+            <Text style={styles.boldText}>atau dibekukan.</Text>
           </View>
         </View>
       );
@@ -38,7 +38,8 @@ const StatusRingkasanPelaporan = ({ status }) => {
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.boldText}>terindikasi penipuan atau</Text>
-              <Text style={styles.greenText}> di bebas adukan</Text>
+              <Text style={styles.greenText}> dibebas adukan</Text>
+              <Text style={styles.normalText}>.</Text>
             </View>
           </View>
         </View>
