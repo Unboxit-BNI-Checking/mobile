@@ -69,8 +69,16 @@ const data = [
     image: icons.icLainnya,
   },
 ];
+
 const MenuComponent = () => {
   const navigation = useNavigation();
+  const handleButtonMenu = (item) => {
+    if (item.route === "Transfer") {
+      navigation.navigate("Transfer");
+    } else if (item.route === "BNIChecking") {
+      navigation.navigate("BNIChecking");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -78,8 +86,7 @@ const MenuComponent = () => {
         <View style={styles.contentMenu} key={item.id}>
           <TouchableOpacity
             key={item.id}
-            // onPress={() => sampleCallback(item.name)}\
-            onPress={() => navigation.navigate(item.route)}
+            onPress={() => handleButtonMenu(item)}
           >
             <View>
               <Image source={item.image} style={styles.imageMenu} />
@@ -146,75 +153,38 @@ const PromotionComponent = () => {
   );
 };
 
-
-const dummyData = {
-  success: true,
-  data: [
-    {
-      account_id: 2,
-      account_number: "2234567890",
-      user_id: 2,
-      customer_name: "Renata Rizki Rafi Athallah",
-      balance: 12300,
-      blocked: false,
-      created_at: "2024-05-01T13:19:00.434435",
-      updated_at: "2024-05-01T13:19:00.434435",
-      deleted_at: null,
-    },
-    {
-      account_id: 3,
-      account_number: "3234567890",
-      user_id: 2,
-      customer_name: "Renata Rizki Rafi Athallah",
-      balance: 12300,
-      blocked: false,
-      created_at: "2024-05-01T13:19:00.443433",
-      updated_at: "2024-05-01T13:19:00.443433",
-      deleted_at: null,
-    },
-  ],
-  error: null,
-};
-
 export default function Home() {
   const [accountData, setAccountData] = useState(null);
   const [showBalance, setShowBalance] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-
   // MODAL
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState(null);
 
-  useEffect(() => {
-    // Set selected account to the first account in the array when component mounts
-    if (dummyData.data.length > 0) {
-      setSelectedAccount(dummyData.data[0]);
-    }
-  }, []);
-
   const handleAccountSelect = (account) => {
-    setSelectedAccount(account);
+    setSelectedAccount(account.account_number);
     setModalVisible(false); // Close the modal after selecting an account
   };
 
-  useEffect(() => {
-    const getAccount = async () => {
-      setAccountData(await getAccountData());
-    };
-
-    getAccount();
-  }, []);
+  const getAccount = async () => {
+    const data = await getAccountData();
+    setAccountData(data);
+    if (data && data.account.length > 0) {
+      setSelectedAccount(data.account[0].account_number);
+    }
+  };
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(async () => {
-      const getAccount = async () => {
-        setAccountData(await getAccountData());
-        setRefreshing(false);
-      };
       getAccount();
+      setRefreshing(false);
     }, 500);
+  }, []);
+
+  useEffect(() => {
+    getAccount();
   }, []);
 
   return (
@@ -275,7 +245,12 @@ export default function Home() {
                       fontSize: 16,
                     }}
                   >
-                    {accountData && accountData.data.customer_name}
+                    {accountData && selectedAccount === "0"
+                      ? "No account selected"
+                      : accountData &&
+                        accountData.account.find(
+                          (acc) => acc.account_number === selectedAccount
+                        )?.customer_name}
                   </Text>
                 </View>
               </View>
@@ -367,7 +342,12 @@ export default function Home() {
                         fontFamily: "PlusJakartaSansRegular",
                       }}
                     >
-                      {accountData && accountData.data.account_number}
+                      {accountData && selectedAccount === "0"
+                        ? "No account selected"
+                        : accountData &&
+                          accountData.account.find(
+                            (acc) => acc.account_number === selectedAccount
+                          )?.account_number}
                     </Text>
                     <Octicons name="copy" size={16} color="#98A1B0" />
                   </View>
@@ -387,10 +367,14 @@ export default function Home() {
                           color: "#5D6B82",
                         }}
                       >
-                        {accountData &&
-                          `Rp${new Intl.NumberFormat("id-ID").format(
-                            accountData.data.balance
-                          )}`}
+                        {accountData && selectedAccount === "0"
+                          ? "No Balance"
+                          : accountData &&
+                            `Rp${new Intl.NumberFormat("id-ID").format(
+                              accountData.account.find(
+                                (acc) => acc.account_number === selectedAccount
+                              )?.balance
+                            )}`}
                       </Text>
                     ) : (
                       <TouchableOpacity onPress={() => setShowBalance(true)}>
@@ -424,24 +408,24 @@ export default function Home() {
                       marginTop: 14,
                     }}
                   />
-                  <TouchableOpacity onPress={() => setModalVisible(true)}>                 
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginTop: 14,
-                    }}
-                  >
-                    <Text
+                  <TouchableOpacity onPress={() => setModalVisible(true)}>
+                    <View
                       style={{
-                        fontFamily: "PlusJakartaSansRegular",
-                        color: "#5D6B82",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginTop: 14,
                       }}
                     >
-                      Semua Rekeningmu
-                    </Text>
-                    <Ionicons name="chevron-down" size={18} color="#5D6B82" />
-                  </View>
+                      <Text
+                        style={{
+                          fontFamily: "PlusJakartaSansRegular",
+                          color: "#5D6B82",
+                        }}
+                      >
+                        Semua Rekeningmu
+                      </Text>
+                      <Ionicons name="chevron-down" size={18} color="#5D6B82" />
+                    </View>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -482,7 +466,7 @@ export default function Home() {
               Pilih Rekening
             </Text>
             <FlatList
-              data={dummyData.data}
+              data={accountData && accountData.account}
               keyExtractor={(item) => item.account_id.toString()}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => handleAccountSelect(item)}>
@@ -499,7 +483,7 @@ export default function Home() {
                     </Text>
                     <Image
                       source={
-                        item === selectedAccount
+                        item.account_number === selectedAccount
                           ? icons.icRadioActive
                           : icons.icRadioInactive
                       }
