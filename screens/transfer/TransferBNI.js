@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  Alert,
 } from "react-native";
 import ButtonPrimary from "../../component/button/ButtonPrimary";
 import { Dropdown } from "react-native-element-dropdown";
@@ -38,6 +39,8 @@ const TransferBNI = ({ navigation }) => {
   const [status, setStatus] = useState(1);
   const [nominal, setNominal] = useState("");
   const [note, setNote] = useState("");
+  // const [accountNumberDestinationText, setAccountNumberDestinationText] =
+  //   useState("");
 
   // HANDLE DROPDOWN API INTERGRATION
   const [dataRekening, setDataRekening] = useState([]);
@@ -83,7 +86,7 @@ const TransferBNI = ({ navigation }) => {
       accountNumberSource,
       accountNumberDestination,
       nominal,
-      null
+      note
     );
     navigation.replace("TransferConfirm", {
       summary: transactionSummary,
@@ -106,8 +109,18 @@ const TransferBNI = ({ navigation }) => {
   };
 
   const handleNominalChange = (text) => {
-    setNominal(text); // Perbarui state nominal dengan nilai input
+    // Menghapus karakter non-digit
+    let filteredText = text.replace(/\D/g, "");
+
+    // Menghapus awalan nol jika ada
+    filteredText = filteredText.replace(/^0+/, "");
+
+    // Update the state with the filtered text
+    setNominal(filteredText);
   };
+  // const handleAccountNumberDestinationTextChange = (text) => {
+  //   setAccountNumberDestinationText(text);
+  // };
 
   const handleNoteChange = (text) => {
     setNote(text); // Perbarui state nominal dengan nilai input
@@ -116,16 +129,36 @@ const TransferBNI = ({ navigation }) => {
   const handleTabPress = (tab) => {
     setActiveButton(tab);
     setActiveTabContent(tab);
+    resetValues();
   };
 
   const handleNextButtonPrimary = async () => {
     AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
       if (isWarningOn === "1") {
-        openModal(1);
+        if (parseInt(nominal) < 1) {
+          Alert.alert(
+            "Alert",
+            "Silahkan isi nominal dengan benar untuk melanjutkan transaksi."
+          );
+        } else if (accountNumberDestination !== "2234567890") {
+          Alert.alert("Alert", "Nomor rekening tidak terdaftar");
+        } else if (accountNumberDestination.length !== 10) {
+          Alert.alert("Error", "Nomor rekening tujuan harus 10 digit");
+        } else {
+          openModal(2);
+        }
       } else {
         await handleNextButtonClick();
       }
     });
+  };
+
+  const resetValues = () => {
+    setSelectedAccountId(null);
+    setAccountNumberDestination(null);
+    setNominal(null);
+    setNote(null);
+    setIsChecked(false);
   };
 
   return (
@@ -300,7 +333,7 @@ const TransferBNI = ({ navigation }) => {
                 placeholder="Nomor Rekening"
                 placeholderTextColor="#98A1B0"
                 value={accountNumberDestination} // Gunakan accountNumberDestination sebagai value
-                onChangeText={setAccountNumberDestination} // Jika ingin dapat diedit, ganti dengan onChangeText
+                onChangeText={setAccountNumberDestination}
               />
             </View>
           </View>
@@ -316,6 +349,8 @@ const TransferBNI = ({ navigation }) => {
                 placeholder="Masukan Nomor Rekening"
                 placeholderTextColor={"#98A1B0"}
                 keyboardType="numeric"
+                value={null}
+                onChangeText={setAccountNumberDestination}
               />
 
               <CheckboxCustom
@@ -382,7 +417,9 @@ const TransferBNI = ({ navigation }) => {
           onPress={() => {
             handleNextButtonPrimary();
           }}
-          disable={!nominal}
+          disable={
+            !nominal || !accountNumberDestination || !accountNumberSource
+          }
         />
       </View>
     </SafeAreaView>
