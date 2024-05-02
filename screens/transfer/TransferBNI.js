@@ -20,11 +20,6 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
-import axios from "axios";
-import {
-  checkAccountNumberReport,
-  checkAccountNumberReportStatus,
-} from "../../services/ReportService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { validateTransaction } from "../../services/TransactionService";
 
@@ -39,8 +34,6 @@ const TransferBNI = ({ navigation }) => {
   const [status, setStatus] = useState(1);
   const [nominal, setNominal] = useState("");
   const [note, setNote] = useState("");
-  // const [accountNumberDestinationText, setAccountNumberDestinationText] =
-  //   useState("");
 
   // HANDLE DROPDOWN API INTERGRATION
   const [dataRekening, setDataRekening] = useState([]);
@@ -78,7 +71,6 @@ const TransferBNI = ({ navigation }) => {
     )
       .then((transactionSummary) => {
         setStatus(transactionSummary.account_number_destination_status ?? 1);
-
         if (
           transactionSummary.account_number_destination_status == 1 &&
           transactionSummary.is_favourite
@@ -90,7 +82,7 @@ const TransferBNI = ({ navigation }) => {
         setModalVisible(true);
       })
       .catch((error) => {
-        Alert.alert("Error", error.message);
+        Alert.alert("Alert", "Nomor rekening tujuan tidak ditemukan");
       });
   };
 
@@ -135,10 +127,6 @@ const TransferBNI = ({ navigation }) => {
     // Update the state with the filtered text
     setNominal(filteredText);
   };
-  // const handleAccountNumberDestinationTextChange = (text) => {
-  //   setAccountNumberDestinationText(text);
-  // };
-
   const handleNoteChange = (text) => {
     setNote(text); // Perbarui state nominal dengan nilai input
   };
@@ -152,17 +140,21 @@ const TransferBNI = ({ navigation }) => {
   const handleNextButtonPrimary = async () => {
     AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
       if (isWarningOn === "1") {
-        openModal();
-        // if (parseInt(nominal) < 1) {
-        //   Alert.alert(
-        //     "Alert",
-        //     "Silahkan isi nominal dengan benar untuk melanjutkan transaksi."
-        //   );
-        // } else if (accountNumberDestination.length !== 10) {
-        //   Alert.alert("Error", "Nomor rekening tujuan harus 10 digit");
-        // } else {
-        //   openModal();
-        // }
+        if (parseInt(nominal) < 1) {
+          Alert.alert(
+            "Alert",
+            "Silahkan isi nominal dengan benar untuk melanjutkan transaksi."
+          );
+        } else if (selectedBalance < nominal) {
+          Alert.alert(
+            "Alert",
+            "Saldo pada rekening Anda tidak cukup. Pastikan saldo Anda tersedia dan silahakan ulangi transaksi Anda."
+          );
+        } else if (accountNumberDestination.length !== 10) {
+          Alert.alert("Error", "Nomor rekening tujuan harus 10 digit");
+        } else {
+          openModal();
+        }
       } else {
         await handleNextButtonClick();
       }
@@ -198,6 +190,10 @@ const TransferBNI = ({ navigation }) => {
               labelField="label"
               valueField="value"
               placeholder={"Pilih Rekening"}
+              selectedTextStyle={{
+                fontFamily: "PlusJakartaSansMedium",
+                fontSize: 14,
+              }}
               searchPlaceholder="Search..."
               value={accountNumberSource}
               onChange={(item) => {
@@ -327,6 +323,10 @@ const TransferBNI = ({ navigation }) => {
                 search
                 maxHeight={300}
                 labelField="label"
+                selectedTextStyle={{
+                  fontFamily: "PlusJakartaSansMedium",
+                  fontSize: 14,
+                }}
                 valueField="value"
                 placeholder="Pilih Nama"
                 placeholderStyle={{
@@ -516,7 +516,7 @@ const styles = StyleSheet.create({
   },
   textItem: {
     flex: 1,
-    fontSize: 16,
+    fontFamily: "PlusJakartaSansMedium",
   },
   NamaRekening: {
     height: 48,
