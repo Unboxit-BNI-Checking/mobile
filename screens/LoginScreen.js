@@ -160,7 +160,7 @@ const LoginScreen = () => {
                   onPress={() => handleLogin()}
                 />
               </View>
-              <View>
+              <View  >
                 <Image
                   source={icons.icBiometricLoginForm}
                   style={styles.biometricIcon}
@@ -228,15 +228,15 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   bottomSheet: {
     backgroundColor: "white",
-    width: "100%",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+
+    marginHorizontal: 20,
+    borderRadius: 20,
     padding: 20,
   },
   row: {
@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 24,
+    gap: 10,
   },
   biometricIcon: {
     width: 48,
