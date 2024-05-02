@@ -16,12 +16,12 @@ const modalContent = {
   2: {
     linkText: "Cek No Rek Disini",
     mediumText:
-      "Nomor Rekening ini pernah menerima laporan dari orang lain dan sedang dalam investigasi. ",
+      "Nomor Rekening ini sedang dalam investigasi terkait dugaan penipuan. ",
     titleText: "Status Rekening:",
     statusText: "Investigasi",
   },
   3: {
-    linkText: "Apakah Anda yakin tetap ingin melanjutkan?",
+    linkText: "Cek No Rek Disini",
     mediumText:
       "Nomor Rekening ini mempunyai riwayat laporan terkait penipuan.",
     titleText: "Status Rekening:",
@@ -103,7 +103,7 @@ const ModalStatusCheck = ({
 
   const handleCheckAccountNumber = async (accountNumberDestination) => {
     reportData = await checkAccountNumberReport(accountNumberDestination);
-    navigation.navigate("HasilCekRekening", {
+    navigation.navigate("TransferHasilCekRekening", {
       reportData: reportData.data,
     });
   };
@@ -125,19 +125,20 @@ const ModalStatusCheck = ({
           </View>
           <View>
             <Text style={styles.mediumText}>{mediumText}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                handleCheckAccountNumber(accountNumberDestination);
+              }}
+            >
+              <Text style={[styles.mediumText, styles.linkText]}>
+                {linkText}
+              </Text>
+            </TouchableOpacity>
             {status === 3 ? (
-              <Text style={styles.redTextBold}>{linkText}</Text>
-            ) : (
-              <TouchableOpacity
-                onPress={() => {
-                  handleCheckAccountNumber(accountNumberDestination);
-                }}
-              >
-                <Text style={[styles.mediumText, styles.linkText]}>
-                  {linkText}
-                </Text>
-              </TouchableOpacity>
-            )}
+              <Text style={styles.redTextBold}>
+                Apakah Anda yakin tetap ingin melanjutkan?
+              </Text>
+            ) : null}
           </View>
           {status !== 1 ? null : (
             <View style={{ marginTop: 5, marginBottom: 10 }}>
@@ -150,19 +151,12 @@ const ModalStatusCheck = ({
           )}
 
           <View style={{ marginTop: 10 }}>
-            {status === 3 ? (
-              <ButtonPrimary
-                text={"Batalkan"}
-                onPress={handleCloseButtonClick}
-              />
-            ) : (
-              <ButtonNextClose
-                nextName={"Lanjutkan"}
-                handleNextButtonClick={handleNextButtonClick}
-                handleCloseButtonClick={handleCloseButtonClick}
-                closeName={"Batalkan"}
-              />
-            )}
+            <ButtonNextClose
+              nextName={"Lanjutkan"}
+              handleNextButtonClick={handleNextButtonClick}
+              handleCloseButtonClick={handleCloseButtonClick}
+              closeName={"Batalkan"}
+            />
           </View>
         </View>
       </View>
@@ -192,6 +186,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
+    gap: 5,
   },
   icon: {
     width: 20,
@@ -211,7 +206,7 @@ const styles = StyleSheet.create({
 
   redTextBold: {
     color: "#D6264F",
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 10,
     fontFamily: "PlusJakartaSansBold",
   },
