@@ -224,7 +224,7 @@ const BuatLaporan = () => {
                     placeholderTextColor={"#98A1B0"}
                     value={searchInput}
                     onChangeText={(text) => setSearchInput(text)}
-                    keyboardType="number-pad"
+                    
                   />
                 </View>
               </View>
@@ -236,7 +236,7 @@ const BuatLaporan = () => {
                   (selectedAccount
                     ? transaction.account_number_source === selectedAccount
                     : false) &&
-                  transaction.account_number_destination.includes(searchInput)
+                  transaction.account_destination_owner_name.includes(searchInput)
                 );
               })
               .map((transaction) => renderItem(transaction))}

@@ -10,7 +10,7 @@ export const getAccountData = async () => {
     }
 
     const response = await axios.get(
-      `${API_URL}/users/accountNumber/2`,
+      `${API_URL}/users/accountNumber`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

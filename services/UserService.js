@@ -21,7 +21,7 @@ export const userLogin = async (username, mPin) => {
 
 export const getUserAccountNumbersData = async () => {
   try {
-    const response = await axios.get(`${API_URL}/users/accountNumber/2`, {
+    const response = await axios.get(`${API_URL}/users/accountNumber`, {
       headers: {
         Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
       },

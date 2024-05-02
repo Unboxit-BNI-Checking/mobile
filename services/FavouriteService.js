@@ -4,12 +4,12 @@ import API_URL from "./apiConfig";
 
 const getFavouriteData = async () => {
   try {
-    const response = await axios.get(`${API_URL}/favourites`, {
+    const response = await axios.get(`${API_URL}/favourites/user_id`, {
       headers: {
         Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
       },
     });
-    const responseData = response.data.data;
+    const responseData = response.data;
     const formattedData = responseData.map((item) => ({
       label: item.favourite_name,
       value: item.favourite_id.toString(),

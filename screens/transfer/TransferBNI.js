@@ -70,21 +70,28 @@ const TransferBNI = ({ navigation }) => {
   );
 
   const openModal = async () => {
-    let transactionSummary = await validateTransaction(
+    validateTransaction(
       accountNumberSource,
       accountNumberDestination,
       nominal,
       note
-    );
+    )
+      .then((transactionSummary) => {
+        setStatus(transactionSummary.account_number_destination_status ?? 1);
 
-    setStatus(transactionSummary.account_number_destination_status ?? 1);
-
-    if (transactionSummary.account_number_destination_status == 1 && transactionSummary.is_favourite) {
-      navigation.replace("TransferConfirm", {
-        summary: transactionSummary,
+        if (
+          transactionSummary.account_number_destination_status == 1 &&
+          transactionSummary.is_favourite
+        ) {
+          navigation.replace("TransferConfirm", {
+            summary: transactionSummary,
+          });
+        }
+        setModalVisible(true);
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
       });
-    }
-    setModalVisible(true);
   };
 
   const closeModal = () => {
@@ -145,18 +152,17 @@ const TransferBNI = ({ navigation }) => {
   const handleNextButtonPrimary = async () => {
     AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
       if (isWarningOn === "1") {
-        if (parseInt(nominal) < 1) {
-          Alert.alert(
-            "Alert",
-            "Silahkan isi nominal dengan benar untuk melanjutkan transaksi."
-          );
-        } else if (accountNumberDestination !== "2234567890") {
-          Alert.alert("Alert", "Nomor rekening tidak terdaftar");
-        } else if (accountNumberDestination.length !== 10) {
-          Alert.alert("Error", "Nomor rekening tujuan harus 10 digit");
-        } else {
-          openModal();
-        }
+        openModal();
+        // if (parseInt(nominal) < 1) {
+        //   Alert.alert(
+        //     "Alert",
+        //     "Silahkan isi nominal dengan benar untuk melanjutkan transaksi."
+        //   );
+        // } else if (accountNumberDestination.length !== 10) {
+        //   Alert.alert("Error", "Nomor rekening tujuan harus 10 digit");
+        // } else {
+        //   openModal();
+        // }
       } else {
         await handleNextButtonClick();
       }
