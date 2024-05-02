@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   backgroundImage: {
-    width: 406,
+    width: "100%",
     height: 401,
   },
   logoContainer: {
