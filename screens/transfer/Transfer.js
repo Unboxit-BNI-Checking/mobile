@@ -58,6 +58,11 @@ const data = [
 ];
 const Transfer = () => {
   const navigation = useNavigation();
+  const handleButtonMenu = (item) => {
+    if (item.route === "TransferBNI") {
+      navigation.navigate("TransferBNI");
+    }
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
@@ -72,7 +77,7 @@ const Transfer = () => {
             <TouchableOpacity
               key={item.id}
               // onPress={() => sampleCallback(item.name)}\
-              onPress={() => navigation.navigate(item.route)}
+              onPress={() => handleButtonMenu(item)}
             >
               <View>
                 <Image source={item.image} style={styles.imageMenu} />
