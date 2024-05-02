@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
     height: 26,
-    width: 59,
+    alignSelf: "baseline",
     backgroundColor: "#E7F8EF",
     borderRadius: 50,
 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
     height: 26,
-    width: 79,
+    alignSelf: "baseline",
     backgroundColor: "#FFF6E6",
     borderRadius: 50,
     
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
     height: 26,
-    width: 80,
+    alignSelf: "baseline",
     backgroundColor: "#FBE9ED",
     borderRadius: 50,
     
