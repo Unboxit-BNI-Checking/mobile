@@ -1,6 +1,6 @@
 import axios from "axios";
-import { API_URL, USER_ID } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import API_URL from "./apiConfig";
 
 export const getAccountData = async () => {
   try {
@@ -10,14 +10,14 @@ export const getAccountData = async () => {
     }
 
     const response = await axios.get(
-      `https://unboxit.50soa.my.id/api/users/accountNumber/2`,
+      `${API_URL}/users/accountNumber/2`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
-    
+
     return response.data.data;
   } catch (error) {
     console.error("Error fetching account data:", error);

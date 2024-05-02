@@ -1,6 +1,6 @@
 import axios from "axios";
-import { API_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import API_URL from "./apiConfig";
 
 export const checkAccountNumberReportStatus = async (accountNumber) => {
   try {
@@ -40,8 +40,8 @@ export const createNewReport = async (transactionId, chronology, files) => {
   const formData = new FormData();
   formData.append("transaction_id", transactionId);
   formData.append("chronology", chronology);
-  files.forEach(file => {
-    formData.append('file', file);
+  files.forEach((file) => {
+    formData.append("file", file);
   });
 
   try {
