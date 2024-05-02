@@ -21,14 +21,11 @@ export const userLogin = async (username, mPin) => {
 
 export const getUserAccountNumbersData = async () => {
   try {
-    const response = await axios.get(
-      `${API_URL}/users/accountNumber/${USER_ID}`,
-      {
-        headers: {
-          Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
-        },
-      }
-    );
+    const response = await axios.get(`${API_URL}/users/accountNumber/2`, {
+      headers: {
+        Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
+      },
+    });
 
     const formattedData = response.data.data.account.map((item) => ({
       label: item.account_number,

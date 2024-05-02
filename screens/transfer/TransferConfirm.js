@@ -47,7 +47,7 @@ const TransferConfirm = ({ route, navigation }) => {
       summary.account_number_source,
       summary.account_number_destination,
       summary.amount,
-      null
+      summary.note
     );
     navigation.navigate("TransferSuccess", {
       summary: transactionSummary,
