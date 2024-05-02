@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
@@ -17,6 +18,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
+import { createNewReport } from "../../../services/ReportService";
 
 const SertakanLaporanSummary = ({route}) => {
   const { transactionSummary, attachments, chronology } = route.params
@@ -35,7 +37,13 @@ const SertakanLaporanSummary = ({route}) => {
   };
 
   const handleSendReport = async () => {
-    navigation.navigate("LaporanBerhasilTerkirim");
+    let success = await createNewReport(transactionSummary.transaction_id, chronology, attachments)
+    if (success) {
+      navigation.navigate("LaporanBerhasilTerkirim");
+    } else {
+      Alert.alert("Gagal", "Laporan gagal dikirim");
+    }
+
   }
 
   return (

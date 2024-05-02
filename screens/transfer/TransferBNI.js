@@ -69,11 +69,21 @@ const TransferBNI = ({ navigation }) => {
     </View>
   );
 
-  const openModal = async (newStatus) => {
-    let accountReportStatus = await checkAccountNumberReportStatus(
-      accountNumberDestination
+  const openModal = async () => {
+    let transactionSummary = await validateTransaction(
+      accountNumberSource,
+      accountNumberDestination,
+      nominal,
+      note
     );
-    setStatus(accountReportStatus ?? 1);
+
+    setStatus(transactionSummary.account_number_destination_status ?? 1);
+
+    if (transactionSummary.account_number_destination_status == 1 && transactionSummary.is_favourite) {
+      navigation.replace("TransferConfirm", {
+        summary: transactionSummary,
+      });
+    }
     setModalVisible(true);
   };
 
@@ -145,7 +155,7 @@ const TransferBNI = ({ navigation }) => {
         } else if (accountNumberDestination.length !== 10) {
           Alert.alert("Error", "Nomor rekening tujuan harus 10 digit");
         } else {
-          openModal(2);
+          openModal();
         }
       } else {
         await handleNextButtonClick();

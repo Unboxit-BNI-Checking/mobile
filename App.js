@@ -48,7 +48,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Tabs" onLayout={onLayoutRootView}>
+      <Stack.Navigator initialRouteName="LoginScreen" onLayout={onLayoutRootView}>
         {/* HOME SCREEN ROOT */}
 
         <Stack.Screen
