@@ -9,13 +9,10 @@ const StatusBadge = ({ status }) => {
       badgeStyle = {
         paddingHorizontal: 8,
         paddingVertical: 2,
-        minWidth: 59, // Changed width to minWidth
-        backgroundColor: "#E7F8EF",
-        borderRadius: 50,
         height: 26,
-        // alignItems: "center",
-        // justifyContent: "center",
-        // alignSelf: "flex-start", // Added alignSelf
+        alignSelf: "baseline",
+        backgroundColor: "#FFF6E6",
+        borderRadius: 50,
       };
       textStyle = {
         color: "#10B55A",
@@ -31,9 +28,6 @@ const StatusBadge = ({ status }) => {
         backgroundColor: "#FFF6E6",
         borderRadius: 50,
         height: 26,
-        // alignItems: "center",
-        // justifyContent: "center",
-        // alignSelf: "flex-start", // Added alignSelf
       };
       textStyle = {
         color: "#FFA500",
@@ -49,9 +43,6 @@ const StatusBadge = ({ status }) => {
         backgroundColor: "#FBE9ED",
         borderRadius: 50,
         height: 26,
-        // alignItems: "center",
-        // justifyContent: "center",
-        // alignSelf: "flex-start", // Added alignSelf
       };
       textStyle = {
         color: "#D6264F",

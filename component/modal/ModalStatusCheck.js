@@ -15,7 +15,7 @@ const modalContent = {
   2: {
     linkText: "Cek No Rek Disini",
     mediumText:
-      "Nomor Rekening ini pernah menerima laporan dari orang lain dan sedang dalam investigasi. ",
+      "Nomor Rekening ini sedang dalam investigasi terkait dugaan penipuan. ",
     titleText: "Status Rekening:",
     statusText: "Investigasi",
   },
@@ -36,10 +36,9 @@ const getStatusStyles = (status) => {
           paddingHorizontal: 8,
           paddingVertical: 2,
           height: 26,
-          width: 59,
+          alignSelf: "baseline",
           backgroundColor: "#E7F8EF",
           borderRadius: 50,
-          marginTop: 5,
         },
         text: {
           color: "#10B55A",
@@ -53,7 +52,7 @@ const getStatusStyles = (status) => {
           paddingHorizontal: 8,
           paddingVertical: 2,
           height: 26,
-          width: 79,
+          alignSelf: "baseline",
           backgroundColor: "#FFF6E6",
           borderRadius: 50,
         },
@@ -69,7 +68,7 @@ const getStatusStyles = (status) => {
           paddingHorizontal: 8,
           paddingVertical: 2,
           height: 26,
-          width: 80,
+          alignSelf: "baseline",
           backgroundColor: "#FBE9ED",
           borderRadius: 50,
         },
