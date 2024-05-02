@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   stepText: {
     color: "white",
     fontSize: 18,
+    fontFamily: "PlusJakartaSansMedium",
   },
   stepLabel: {
     marginTop: 5,
