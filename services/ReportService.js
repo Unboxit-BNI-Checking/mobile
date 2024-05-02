@@ -36,9 +36,13 @@ export const checkAccountNumberReport = async (accountNumber) => {
   }
 };
 
-export const createNewReport = async (accountNumber) => {
+export const createNewReport = async (transactionId, chronology, files) => {
   const formData = new FormData();
-  formData.append("accountNumber", accountNumber);
+  formData.append("transaction_id", transactionId);
+  formData.append("chronology", chronology);
+  files.forEach(file => {
+    formData.append('file', file);
+  });
 
   try {
     const response = await axios.post(`${API_URL}/reports`, formData, {
@@ -46,7 +50,7 @@ export const createNewReport = async (accountNumber) => {
         Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
       },
     });
-    return response.data;
+    return response.data.success;
   } catch (error) {
     console.error("Error fetching account data:", error);
     return null;
