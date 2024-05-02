@@ -81,7 +81,7 @@ const Transfer = () => {
             >
               <View>
                 <Image source={item.image} style={styles.imageMenu} />
-                <Text style={{ textAlign: "center" }} numberOfLines={2}>
+                <Text style={{ textAlign: "center", fontFamily: "PlusJakartaSansMedium", fontSize: 13 }} numberOfLines={2}>
                   {item.name}
                 </Text>
               </View>
