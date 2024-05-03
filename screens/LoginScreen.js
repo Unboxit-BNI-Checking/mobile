@@ -225,6 +225,8 @@ const styles = StyleSheet.create({
   },
   iconText: {
     fontSize: 12,
+    fontFamily: "PlusJakartaSansRegular",
+    textAlign: "center",
   },
   modalContainer: {
     flex: 1,

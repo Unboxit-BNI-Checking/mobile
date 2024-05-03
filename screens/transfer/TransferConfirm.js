@@ -128,7 +128,13 @@ const TransferConfirm = ({ route, navigation }) => {
             />
           </View>
           <View style={{ height: 48, gap: 6, marginTop: 10 }}>
-            <Text style={{ fontSize: 14, color: "#243757" }}>
+            <Text
+              style={{
+                fontSize: 14,
+                color: "#243757",
+                fontFamily: "PlusJakartaSansMedium",
+              }}
+            >
               Password Transaksi
             </Text>
 
@@ -195,6 +201,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    fontFamily: "PlusJakartaSansRegular",
   },
 });
 export default TransferConfirm;
