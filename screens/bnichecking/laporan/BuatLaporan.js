@@ -39,7 +39,9 @@ const BuatLaporan = () => {
   }, []);
 
   const selectTransaction = (transaction) => {
-    setSelectedTransaction(transaction); // Memilih transaksi yang dipilih
+    if (!transaction.is_reported) {
+      setSelectedTransaction(transaction); // Memilih transaksi yang dipilih
+    }
   };
 
   const selectAccount = (account) => {
@@ -158,6 +160,10 @@ const BuatLaporan = () => {
                 second: "2-digit",
                 hour12: false,
               })}
+          </Text>
+
+          <Text style={{ textAlign: "right", color: transaction.is_reported ? "red" : "green" }}>
+            {transaction.is_reported ? "Sudah dilaporkan" : "Belum dilaporkan"}
           </Text>
         </View>
       </View>

@@ -20,7 +20,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 
-const SertakanLaporan = ({route}) => {
+const SertakanLaporan = ({ route }) => {
   const { transactionSummary } = route.params;
   const navigation = useNavigation();
   const [text, setText] = useState("");
@@ -58,7 +58,7 @@ const SertakanLaporan = ({route}) => {
     navigation.navigate("SertakanLaporanSummary", {
       transactionSummary: transactionSummary,
       attachments: images,
-      chronology: text
+      chronology: text,
     });
   };
 
@@ -77,15 +77,24 @@ const SertakanLaporan = ({route}) => {
             nomorRekeningPelapor={transactionSummary.account_number_source}
             namaRekeningDilaporkan={transactionSummary.account_name_destination}
             nominalRekeningDilaporkan={transactionSummary.amount}
-            nomorRekeningDilaporkan={transactionSummary.account_number_destination}
-            tanggalTransaksiDilaporkan={new Date(transactionSummary.transaction_time).toLocaleDateString()}
+            nomorRekeningDilaporkan={
+              transactionSummary.account_number_destination
+            }
+            tanggalTransaksiDilaporkan={new Date(
+              transactionSummary.transaction_time
+            ).toLocaleDateString()}
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
-            jamTransaksiDilaporkan={new Date(transactionSummary.transaction_time).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: false,
-            }) + " WIB"}
+            jamTransaksiDilaporkan={
+              new Date(transactionSummary.transaction_time).toLocaleTimeString(
+                [],
+                {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  hour12: false,
+                }
+              ) + " WIB"
+            }
           />
           <View style={styles.separator}></View>
           <View style={styles.peristiwaContainer}>

@@ -19,7 +19,7 @@ import SertakanLaporanSummary from "./screens/bnichecking/laporan/SertakanLapora
 import SplashScreenCustom from "./screens/SplashScreen";
 import LoginScreen from "./screens/LoginScreen";
 import BniChecking from "./screens/bnichecking/BniChecking";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import TransferHasilCekRekening from "./screens/transfer/TransferHasilCekRekening";
 
 // import * as SplashScreen from "expo-splash-screen";
