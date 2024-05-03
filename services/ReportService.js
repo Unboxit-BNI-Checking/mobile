@@ -40,9 +40,18 @@ export const createNewReport = async (transactionId, chronology, files) => {
   const formData = new FormData();
   formData.append("transaction_id", transactionId);
   formData.append("chronology", chronology);
-  files.forEach((file) => {
-    formData.append("file", file);
-  });
+  if (files != null) {    
+    files.forEach((file) => {
+      console.log(file.uri)
+      console.log(file.mimeType)
+      console.log(file.fileName)
+      formData.append("file", {
+        uri: file.uri,
+        type: file.mimeType,
+        name: file.fileName
+      });
+    });
+  }
 
   try {
     const response = await axios.post(`${API_URL}/reports`, formData, {
