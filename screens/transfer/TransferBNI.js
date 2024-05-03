@@ -424,6 +424,9 @@ const TransferBNI = ({ navigation }) => {
           isChecked={isCheckedModal}
           handleCheckboxChange={handleCheckboxChange}
           accountNumberDestination={accountNumberDestination}
+          accountNumberSource={accountNumberSource}
+          nominal={nominal}
+          note={note}
         />
       </ScrollView>
 

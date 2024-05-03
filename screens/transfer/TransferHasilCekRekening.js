@@ -15,9 +15,7 @@ import CustomAppBar from "../../component/header/CustomAppBar";
 import { validateTransaction } from "../../services/TransactionService";
 
 const TransferHasilCekRekening = ({ route, navigation }) => {
-  const { reportData } = route.params;
-  const { accountNumberSource, accountNumberDestination, nominal, note } =
-    route.params;
+  const { reportData, transactionSummary } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
@@ -29,14 +27,13 @@ const TransferHasilCekRekening = ({ route, navigation }) => {
   };
 
   const handleNextButtonClick = async () => {
-    let transactionSummary = await validateTransaction(
-      accountNumberSource,
-      accountNumberDestination,
-      nominal,
-      note
-    );
     navigation.replace("TransferConfirm", {
-      summary: transactionSummary,
+      summary: await validateTransaction(
+        transactionSummary.accountNumberSource,
+        transactionSummary.accountNumberDestination,
+        transactionSummary.nominal,
+        transactionSummary.note
+      ),
     });
   };
 

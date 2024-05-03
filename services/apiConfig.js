@@ -1,2 +1,2 @@
-export const API_URL = 'http://192.168.178.104:8080/api';
-export const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTb2Zpc2hyNyIsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6MSwiaWF0IjoxNzE0NzAwNDQzLCJleHAiOjE3NDYyMzY0NDN9.Lm9Lw0YL_i3GWXRh1lkWhceA-jnS_kvJaKi-u4Xs7nY"
+export const API_URL = 'https://unboxit.50soa.my.id/api';
+export const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyaXpraXJhZmkiLCJyb2xlIjoidXNlciIsInVzZXJfaWQiOjIsImlhdCI6MTcxNDcxODM0MCwiZXhwIjoxNzQ2MjU0MzQwfQ.h4HlRF-AuOtfg8h-7UlcIjqdvJdolwd5JQ52AxYrsOk"

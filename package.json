@@ -21,6 +21,7 @@
     "expo-image-picker": "~14.7.1",
     "expo-router": "^3.4.9",
     "expo-splash-screen": "^0.26.5",
+    "form-data": "^4.0.0",
     "react": "18.2.0",
     "react-native": "0.73.6",
     "react-native-element-dropdown": "^2.10.4",

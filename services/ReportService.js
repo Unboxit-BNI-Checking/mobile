@@ -38,14 +38,11 @@ export const checkAccountNumberReport = async (accountNumber) => {
 
 export const createNewReport = async (transactionId, chronology, files) => {
   const formData = new FormData();
-  formData.append("transaction_id", transactionId);
+  formData.append("transactionId", transactionId);
   formData.append("chronology", chronology);
   if (files != null) {    
     files.forEach((file) => {
-      console.log(file.uri)
-      console.log(file.mimeType)
-      console.log(file.fileName)
-      formData.append("file", {
+      formData.append("files", {
         uri: file.uri,
         type: file.mimeType,
         name: file.fileName
@@ -57,11 +54,15 @@ export const createNewReport = async (transactionId, chronology, files) => {
     const response = await axios.post(`${API_URL}/reports`, formData, {
       headers: {
         Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
+        'Content-Type': 'multipart/form-data'
       },
     });
     return response.data.success;
   } catch (error) {
-    console.error("Error fetching account data:", error);
+    console.error(error)
+    if (error.response) {
+      console.log("error data: ", error.response.data)
+    } 
     return null;
   }
 };

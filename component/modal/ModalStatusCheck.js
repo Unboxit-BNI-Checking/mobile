@@ -96,6 +96,9 @@ const ModalStatusCheck = ({
   handleCheckboxChange,
   isChecked,
   accountNumberDestination,
+  accountNumberSource,
+  nominal,
+  note
 }) => {
   const navigation = useNavigation();
   const { linkText, mediumText, titleText, statusText } = modalContent[status];
@@ -105,6 +108,12 @@ const ModalStatusCheck = ({
     reportData = await checkAccountNumberReport(accountNumberDestination);
     navigation.navigate("TransferHasilCekRekening", {
       reportData: reportData.data,
+      transactionSummary: {
+        accountNumberDestination: accountNumberDestination,
+        accountNumberSource: accountNumberSource,
+        nominal: nominal,
+        note: note
+      }
     });
   };
 
