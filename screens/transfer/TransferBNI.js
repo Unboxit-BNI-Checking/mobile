@@ -39,8 +39,9 @@ const TransferBNI = ({ navigation }) => {
   const [dataRekening, setDataRekening] = useState([]);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [accountNumberSource, setAccountNumberSource] = useState(null);
-  const [accountNumberDestination, setAccountNumberDestination] =
-    useState(null);
+  const [accountNumberDestination, setAccountNumberDestination] = useState(
+    null
+  );
   const [selectedBalance, setSelectedBalance] = useState(null);
 
   useEffect(() => {
@@ -324,13 +325,13 @@ const TransferBNI = ({ navigation }) => {
                 maxHeight={300}
                 labelField="label"
                 selectedTextStyle={{
-                  fontFamily: "PlusJakartaSansMedium",
+                  fontFamily: "PlusJakartaSansRegular",
                   fontSize: 14,
                 }}
                 valueField="value"
                 placeholder="Pilih Nama"
                 placeholderStyle={{
-                  fontFamily: "PlusJakartaSansMedium",
+                  fontFamily: "PlusJakartaSansRegular",
                   color: "#98A1B0",
                   fontSize: 14,
                 }}
@@ -392,9 +393,7 @@ const TransferBNI = ({ navigation }) => {
 
         <View style={{ alignItems: "center", marginBottom: 120 }}>
           <View style={styles.Nominal}>
-            <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>
-              Nominal
-            </Text>
+            <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>Nominal</Text>
             <TextInput
               style={styles.textInput}
               placeholder="Rp0"
@@ -403,12 +402,15 @@ const TransferBNI = ({ navigation }) => {
               placeholderTextColor={"#98A1B0"}
               keyboardType="numeric"
             />
-            <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>
+            <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
               Keterangan
             </Text>
             <TextInput
               style={styles.textInput}
               placeholder="Tulis Keterangan Transaksi (Optional)"
+              placeholderStyle={{
+                fontFamily: "PlusJakartaSansRegular",
+              }}
               placeholderTextColor={"#98A1B0"}
               onChangeText={handleNoteChange}
             />
@@ -481,11 +483,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     borderColor: "#C2C7D0",
-    fontFamily: "PlusJakartaSansMedium",
+    fontFamily: "PlusJakartaSansRegular",
   },
   disabledInput: {
     backgroundColor: "#f0f0f0",
-    fontFamily: "PlusJakartaSansMedium",
+    fontFamily: "PlusJakartaSansRegular",
   },
   Nominal: {
     height: 198,

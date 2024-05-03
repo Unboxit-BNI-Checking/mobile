@@ -50,6 +50,7 @@ const RingkasanLaporan = ({route}) => {
         <View style={styles.contentContainer}>
           <ProgressBarComponent currentStep={Math.min(status, 3)} />
           <StatusRingkasanPelaporan status={status} />
+          <View style={styles.separator}></View>
           <View style={{ paddingHorizontal: 20 }}>
             <View style={{ flexDirection: "row", gap: 4 }}>
               <Text
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    gap: 10,
+    gap: 15,
     marginBottom: 80,
   },
   separator: {
