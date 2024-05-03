@@ -18,7 +18,8 @@ import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import { useNavigation } from "@react-navigation/native";
 
-const RingkasanLaporan = () => {
+const RingkasanLaporan = ({route}) => {
+  const { reportData } = route.params;
   const [images, setImages] = useState([
     {
       uri: "https://picsum.photos/200",
@@ -28,10 +29,11 @@ const RingkasanLaporan = () => {
     },
   ]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedImageId, setSelectedImageId] = useState(0)
 
-  const status = 3;
-  const handleImageClick = (image) => {
-    setImages(image);
+  const status = reportData.status_int;
+  const handleImageClick = (imageId) => {
+    setSelectedImageId(imageId);
     setModalVisible(true);
   };
 
@@ -61,7 +63,7 @@ const RingkasanLaporan = () => {
                   fontFamily: "PlusJakartaSansRegular",
                 }}
               >
-                101010101010
+                {reportData.reports_id}
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 4 }}>
@@ -76,21 +78,26 @@ const RingkasanLaporan = () => {
                   fontFamily: "PlusJakartaSansRegular",
                 }}
               >
-                12/04/2024
+                {new Date(reportData.created_at_report).toLocaleDateString()}
               </Text>
             </View>
           </View>
           <View style={styles.line}></View>
 
           <CardDataPelaporan
-            namaRekeningPelapor={"Amelia Qatrunnada "}
-            nomorRekeningPelapor={"1818181818"}
-            namaRekeningDilaporkan={"Nama Pemilik Norek"}
-            nominalRekeningDilaporkan={"100.000"}
-            nomorRekeningDilaporkan={"1234567890"}
-            tanggalTransaksiDilaporkan={"19/04/2024"}
+            namaRekeningPelapor={reportData.account_number_source_username}
+            nomorRekeningPelapor={reportData.account_number_source}
+            namaRekeningDilaporkan={reportData.account_number_destination_username}
+            nominalRekeningDilaporkan={reportData.amount}
+            nomorRekeningDilaporkan={reportData.account_number_destination}
+            tanggalTransaksiDilaporkan={new Date(reportData.created_at_transaction).toLocaleDateString()}
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
-            jamTransaksiDilaporkan={"18:23:28"}
+            jamTransaksiDilaporkan={new Date(reportData.created_at_transaction).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: false,
+            })}
           />
           <View style={styles.separator}></View>
           <View style={styles.peristiwaContainer}>
@@ -98,7 +105,7 @@ const RingkasanLaporan = () => {
             <View style={styles.kronologiContainer}>
               <Text style={styles.label}>Kronologi</Text>
               <View style={styles.inputContainer}>
-                <Text style={styles.input}>Lorem Ipsum is simply dummy</Text>
+                <Text style={styles.input}>{reportData.chronology}</Text>
               </View>
             </View>
           </View>
@@ -106,11 +113,11 @@ const RingkasanLaporan = () => {
           <View style={styles.lampiranContainer}>
             <Text style={styles.label}>Lampiran</Text>
             <View style={styles.imagesContainer}>
-              {images &&
-                images.map((image, index) => (
+              {reportData.attachment &&
+                reportData.attachment.map((image, index) => (
                   <View key={index} style={styles.imageContainer}>
-                    <TouchableOpacity onPress={() => handleImageClick(images)}>
-                      <Image source={{ uri: image.uri }} style={styles.image} />
+                    <TouchableOpacity onPress={() => handleImageClick(index)}>
+                      <Image source={{ uri: image }} style={styles.image} />
                     </TouchableOpacity>
                   </View>
                 ))}
@@ -131,7 +138,7 @@ const RingkasanLaporan = () => {
                 </TouchableOpacity>
                 <View style={styles.modalContent}>
                   <Image
-                    source={{ uri: images[0].uri }}
+                    source={{ uri: reportData.attachment[selectedImageId] }}
                     style={styles.fullImage}
                     resizeMode="contain"
                   />

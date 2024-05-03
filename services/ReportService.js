@@ -66,3 +66,20 @@ export const createNewReport = async (transactionId, chronology, files) => {
     return null;
   }
 };
+
+export const getAllReportsMadeByCurrentUser = async () => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/reports/me`,
+      {
+        headers: {
+          Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching account data:", error);
+    return null;
+  }
+};
