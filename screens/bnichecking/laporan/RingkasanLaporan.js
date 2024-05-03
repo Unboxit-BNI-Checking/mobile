@@ -20,14 +20,6 @@ import { useNavigation } from "@react-navigation/native";
 
 const RingkasanLaporan = ({route}) => {
   const { reportData } = route.params;
-  const [images, setImages] = useState([
-    {
-      uri: "https://picsum.photos/200",
-    },
-    {
-      uri: "https://picsum.photos/200",
-    },
-  ]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImageId, setSelectedImageId] = useState(0)
 
