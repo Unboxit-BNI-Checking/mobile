@@ -1,10 +1,11 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import API_URL from "./apiConfig";
+import { API_URL, TOKEN } from "./apiConfig";
 
 export const getAccountData = async () => {
   try {
-    const token = await AsyncStorage.getItem("token");
+    // const token = await AsyncStorage.getItem("token");
+    const token = TOKEN;
     if (!token) {
       throw new Error("Token not found");
     }

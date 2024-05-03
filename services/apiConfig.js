@@ -1,3 +1,2 @@
-const API_URL = 'https://unboxit.50soa.my.id/api';
-
-export default API_URL;
+export const API_URL = 'https://unboxit.50soa.my.id/api';
+export const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTb2Zpc2hyNyIsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6MSwiaWF0IjoxNzE0Njk4NjUyLCJleHAiOjE3NDYyMzQ2NTJ9.3frNTWToDVkaWAAcoZu3jAtda6pV8nexW2lysmCTP7Y"
