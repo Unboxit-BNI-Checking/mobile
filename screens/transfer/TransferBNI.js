@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,65 +7,54 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  Alert,
 } from "react-native";
 import ButtonPrimary from "../../component/button/ButtonPrimary";
 import { Dropdown } from "react-native-element-dropdown";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CheckboxCustom from "../../component/checkbox/CheckboxCustom";
 import icons from "../../constants/icons";
-
+import { getUserAccountNumbersData } from "../../services/UserService";
+import getFavouriteData from "../../services/FavouriteService";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { validateTransaction } from "../../services/TransactionService";
 
-const dataFavorite = [
-  { label: "Tiansi Pratama", value: "1" },
-  { label: "Sdr Jeon Wonwoo", value: "2" },
-];
-
-const dataRekening = [
-  { label: "1818181818", value: "1" },
-  { label: "12839405948", value: "2" },
-];
-
-const TransferBNI = () => {
+const TransferBNI = ({ navigation }) => {
   const [showSaldo, setShowSaldo] = useState(false);
   const [activeButton, setActiveButton] = useState("Daftar Favorit");
   const [activeTabContent, setActiveTabContent] = useState("Daftar Favorit");
-  const [valueRekening, setValueRekening] = useState(null);
-  const [valueFavorite, setValueFavorite] = useState(null);
+  const [dataNomorRekening, setDataNomorRekening] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const [isCheckedModal, setIsCheckedModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(1);
   const [nominal, setNominal] = useState("");
+  const [note, setNote] = useState("");
 
-  const navigation = useNavigation();
+  // HANDLE DROPDOWN API INTERGRATION
+  const [dataRekening, setDataRekening] = useState([]);
+  const [selectedAccountId, setSelectedAccountId] = useState(null);
+  const [accountNumberSource, setAccountNumberSource] = useState(null);
+  const [accountNumberDestination, setAccountNumberDestination] = useState(
+    null
+  );
+  const [selectedBalance, setSelectedBalance] = useState(null);
 
-  const openModal = (newStatus) => {
-    setStatus(newStatus);
-    setModalVisible(true);
-  };
+  useEffect(() => {
+    async function getData() {
+      setDataRekening(await getFavouriteData());
+      setDataNomorRekening(await getUserAccountNumbersData());
+    }
+    getData();
+  }, []);
 
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
-  const handleNextButtonClick = () => {
-    navigation.replace("TransferConfirm");
-  };
-
-  const handleCloseButtonClick = () => {
-    setModalVisible(!modalVisible);
-  };
-
-  const handleCheckboxChange = () => {
-    setIsCheckedModal(!isCheckedModal);
-  };
-
-  const handleNominalChange = (text) => {
-    setNominal(text); // Perbarui state nominal dengan nilai input
+  const handleDropdownChange = (item) => {
+    setSelectedAccountId(item.value);
+    setAccountNumberDestination(item.accountNumber);
   };
 
   const renderItem = (item) => (
@@ -74,16 +63,118 @@ const TransferBNI = () => {
     </View>
   );
 
+  const openModal = async () => {
+    validateTransaction(
+      accountNumberSource,
+      accountNumberDestination,
+      nominal,
+      note
+    )
+      .then((transactionSummary) => {
+        setStatus(transactionSummary.account_number_destination_status ?? 1);
+        if (
+          transactionSummary.account_number_destination_status == 1 &&
+          transactionSummary.is_favourite
+        ) {
+          navigation.replace("TransferConfirm", {
+            summary: transactionSummary,
+          });
+        }
+        setModalVisible(true);
+      })
+      .catch((error) => {
+        Alert.alert("Alert", "Nomor rekening tujuan tidak ditemukan");
+      });
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleNextButtonClick = async () => {
+    let transactionSummary = await validateTransaction(
+      accountNumberSource,
+      accountNumberDestination,
+      nominal,
+      note
+    );
+    navigation.replace("TransferConfirm", {
+      summary: transactionSummary,
+    });
+  };
+
+  const handleCloseButtonClick = () => {
+    setModalVisible(!modalVisible);
+    AsyncStorage.setItem("isWarningOn", "1");
+    setIsCheckedModal(false);
+  };
+
+  const handleCheckboxChange = () => {
+    setIsCheckedModal(!isCheckedModal);
+    if (!isCheckedModal) {
+      AsyncStorage.setItem("isWarningOn", "0");
+    } else {
+      AsyncStorage.setItem("isWarningOn", "1");
+    }
+  };
+
+  const handleNominalChange = (text) => {
+    // Menghapus karakter non-digit
+    let filteredText = text.replace(/\D/g, "");
+
+    // Menghapus awalan nol jika ada
+    filteredText = filteredText.replace(/^0+/, "");
+
+    // Update the state with the filtered text
+    setNominal(filteredText);
+  };
+  const handleNoteChange = (text) => {
+    setNote(text); // Perbarui state nominal dengan nilai input
+  };
+
   const handleTabPress = (tab) => {
     setActiveButton(tab);
     setActiveTabContent(tab);
+    resetValues();
+  };
+
+  const handleNextButtonPrimary = async () => {
+    AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
+      if (isWarningOn === "1") {
+        if (parseInt(nominal) < 1) {
+          Alert.alert(
+            "Alert",
+            "Silahkan isi nominal dengan benar untuk melanjutkan transaksi."
+          );
+        } else if (selectedBalance < nominal) {
+          Alert.alert(
+            "Alert",
+            "Saldo pada rekening Anda tidak cukup. Pastikan saldo Anda tersedia dan silahakan ulangi transaksi Anda."
+          );
+        } else if (accountNumberDestination.length !== 10) {
+          Alert.alert("Error", "Nomor rekening tujuan harus 10 digit");
+        } else {
+          openModal();
+        }
+      } else {
+        await handleNextButtonClick();
+      }
+    });
+  };
+
+  const resetValues = () => {
+    setSelectedAccountId(null);
+    setAccountNumberDestination(null);
+    setNominal(null);
+    setNote(null);
+    setIsChecked(false);
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
         title="Transfer Antar BNI"
-        onLeftPress={() => navigation.goBack()}
+        onLeftPress={() => navigation.replace("Transfer")}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />
@@ -96,13 +187,20 @@ const TransferBNI = () => {
             </Text>
             <Dropdown
               style={styles.dropdown}
-              data={dataRekening}
+              data={dataNomorRekening}
               labelField="label"
               valueField="value"
               placeholder={"Pilih Rekening"}
+              selectedTextStyle={{
+                fontFamily: "PlusJakartaSansMedium",
+                fontSize: 14,
+              }}
               searchPlaceholder="Search..."
-              value={valueRekening}
-              onChange={(item) => setValueRekening(item.value)}
+              value={accountNumberSource}
+              onChange={(item) => {
+                setAccountNumberSource(item.value);
+                setSelectedBalance(item.balance);
+              }}
               placeholderStyle={{
                 fontFamily: "PlusJakartaSansMedium",
                 color: "#98A1B0",
@@ -122,7 +220,11 @@ const TransferBNI = () => {
                 style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
               >
                 <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-                  {showSaldo ? "Rp 300.478" : "Rp *******"}
+                  {showSaldo
+                    ? `Rp${new Intl.NumberFormat("id-ID").format(
+                        selectedBalance
+                      )}`
+                    : "Rp *******"}
                 </Text>
                 <TouchableOpacity onPress={() => setShowSaldo(!showSaldo)}>
                   {showSaldo ? (
@@ -218,37 +320,37 @@ const TransferBNI = () => {
               <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>Nama</Text>
               <Dropdown
                 style={styles.dropdown}
-                data={dataFavorite}
+                data={dataRekening}
                 search
                 maxHeight={300}
                 labelField="label"
+                selectedTextStyle={{
+                  fontFamily: "PlusJakartaSansRegular",
+                  fontSize: 14,
+                }}
                 valueField="value"
                 placeholder="Pilih Nama"
                 placeholderStyle={{
-                  fontFamily: "PlusJakartaSansMedium",
+                  fontFamily: "PlusJakartaSansRegular",
                   color: "#98A1B0",
                   fontSize: 14,
                 }}
                 searchPlaceholder="Search..."
-                value={valueFavorite}
-                onChange={(item) => setValueFavorite(item.value)}
+                value={selectedAccountId} // Gunakan selectedAccountId sebagai value
+                onChange={handleDropdownChange}
                 renderItem={renderItem}
               />
 
               <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
                 Rekening Tujuan
               </Text>
-              {/* <TextInput
-                style={styles.disabledInput}
-                placeholder="Masukan Nomor Rekening"
-                placeholderTextColor={"#98A1B0"}
-                editable={false}
-              /> */}
               <TextInput
                 style={[styles.NamaRekening, styles.disabledInput]}
                 editable={false}
-                placeholder={"Nomor Rekening"}
-                placeholderTextColor={"#98A1B0"}
+                placeholder="Nomor Rekening"
+                placeholderTextColor="#98A1B0"
+                value={accountNumberDestination} // Gunakan accountNumberDestination sebagai value
+                onChangeText={setAccountNumberDestination}
               />
             </View>
           </View>
@@ -264,6 +366,8 @@ const TransferBNI = () => {
                 placeholder="Masukan Nomor Rekening"
                 placeholderTextColor={"#98A1B0"}
                 keyboardType="numeric"
+                value={null}
+                onChangeText={setAccountNumberDestination}
               />
 
               <CheckboxCustom
@@ -289,9 +393,7 @@ const TransferBNI = () => {
 
         <View style={{ alignItems: "center", marginBottom: 120 }}>
           <View style={styles.Nominal}>
-            <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>
-              Nominal
-            </Text>
+            <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>Nominal</Text>
             <TextInput
               style={styles.textInput}
               placeholder="Rp0"
@@ -300,13 +402,17 @@ const TransferBNI = () => {
               placeholderTextColor={"#98A1B0"}
               keyboardType="numeric"
             />
-            <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>
+            <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
               Keterangan
             </Text>
             <TextInput
               style={styles.textInput}
               placeholder="Tulis Keterangan Transaksi (Optional)"
+              placeholderStyle={{
+                fontFamily: "PlusJakartaSansRegular",
+              }}
               placeholderTextColor={"#98A1B0"}
+              onChangeText={handleNoteChange}
             />
           </View>
         </View>
@@ -319,6 +425,10 @@ const TransferBNI = () => {
           handleCloseButtonClick={handleCloseButtonClick}
           isChecked={isCheckedModal}
           handleCheckboxChange={handleCheckboxChange}
+          accountNumberDestination={accountNumberDestination}
+          accountNumberSource={accountNumberSource}
+          nominal={nominal}
+          note={note}
         />
       </ScrollView>
 
@@ -326,9 +436,11 @@ const TransferBNI = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            openModal(1);
+            handleNextButtonPrimary();
           }}
-          disable={!nominal}
+          disable={
+            !nominal || !accountNumberDestination || !accountNumberSource
+          }
         />
       </View>
     </SafeAreaView>
@@ -371,11 +483,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     borderColor: "#C2C7D0",
-    fontFamily: "PlusJakartaSansMedium",
+    fontFamily: "PlusJakartaSansRegular",
   },
   disabledInput: {
     backgroundColor: "#f0f0f0",
-    fontFamily: "PlusJakartaSansMedium",
+    fontFamily: "PlusJakartaSansRegular",
   },
   Nominal: {
     height: 198,
@@ -409,7 +521,7 @@ const styles = StyleSheet.create({
   },
   textItem: {
     flex: 1,
-    fontSize: 16,
+    fontFamily: "PlusJakartaSansMedium",
   },
   NamaRekening: {
     height: 48,

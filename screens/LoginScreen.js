@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Modal,
   TextInput,
+  Alert,
 } from "react-native";
 import images from "../constants/images";
 import icons from "../constants/icons";
@@ -15,6 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import CheckboxCustom from "../component/checkbox/CheckboxCustom";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { userLogin } from "../services/UserService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -40,12 +43,23 @@ const LoginScreen = () => {
     setShowMpin(!showMpin);
   };
 
+  const handleLogin = async () => {
+    userLogin(userId, mpin)
+      .then((response) => {
+        AsyncStorage.setItem("token", response.token);
+        navigation.replace("Tabs");
+      })
+      .catch((error) => {
+        Alert.alert("Error", "Invalid username or mpin");
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Image
         source={images.background46}
         style={styles.backgroundImage}
-        resizeMode="contain"
+        resizeMode="cover"
       />
       <View style={styles.logoContainer}>
         <Image source={images.bnilogo} style={styles.logo} />
@@ -143,7 +157,7 @@ const LoginScreen = () => {
                 <ButtonPrimary
                   text={"Login"}
                   disable={!userId || !mpin}
-                  onPress={() => navigation.replace("Tabs")}
+                  onPress={() => handleLogin()}
                 />
               </View>
               <View>
@@ -168,7 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   backgroundImage: {
-    width: 406,
+    width: "100%",
     height: 401,
   },
   logoContainer: {
@@ -211,18 +225,20 @@ const styles = StyleSheet.create({
   },
   iconText: {
     fontSize: 12,
+    fontFamily: "PlusJakartaSansRegular",
+    textAlign: "center",
   },
   modalContainer: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   bottomSheet: {
     backgroundColor: "white",
-    width: "100%",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+
+    marginHorizontal: 20,
+    borderRadius: 20,
     padding: 20,
   },
   row: {
@@ -245,8 +261,7 @@ const styles = StyleSheet.create({
     borderColor: "#C2C7D0",
     borderRadius: 8,
     height: 48,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    padding: 14,
   },
   input: {
     flex: 1,
@@ -266,6 +281,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 24,
+    gap: 10,
   },
   biometricIcon: {
     width: 48,

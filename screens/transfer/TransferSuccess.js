@@ -12,14 +12,13 @@ import LabelValidasiComponent from "../../component/label/LabelValidasiComponent
 import LabelValidasiPengirimComponent from "../../component/label/LabelValidasiPengirimComponent";
 import LabelStatusComponent from "../../component/label/LabelStatusComponent";
 import ButtonPrimary from "../../component/button/ButtonPrimary";
-import { useNavigation } from "@react-navigation/native";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
 
-const TransferSuccess = () => {
+const TransferSuccess = ({ route, navigation }) => {
+  const { summary } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
   const openModal = () => {
     setModalVisible(!modalVisible);
   };
@@ -42,42 +41,57 @@ const TransferSuccess = () => {
           </View>
           <LabelValidasiComponent
             title={"Rekening Tujuan"}
-            subTitle={"1234567890"}
+            subTitle={summary.account_number_destination}
           />
           <LabelValidasiComponent
             title={"Nama Penerima"}
-            subTitle={"Sdr Jeon Wonwoo"}
+            subTitle={"Sdr " + summary.account_name_destination}
           />
           <LabelValidasiComponent
             title={"Tanggal Transaksi"}
-            subTitle={"19-04-2024"}
+            subTitle={new Date(summary.transaction_time).toLocaleDateString()}
           />
           <LabelValidasiComponent
             title={"Waktu Transaksi"}
-            subTitle={"19:48:23 WIB"}
+            subTitle={
+              new Date(summary.transaction_time).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+              }) + " WIB"
+            }
           />
           <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
           <TouchableOpacity onPress={openModal}>
-            <LabelStatusComponent title={"Status Rekening"} status={2} />
+            <LabelStatusComponent
+              title={"Status Rekening"}
+              status={Math.max(1, summary.account_number_destination_status)}
+            />
           </TouchableOpacity>
           <View style={styles.separator}></View>
           <LabelValidasiPengirimComponent
             title={"Nama Pengirim"}
-            subTitle={"Amelia Qatrunnada"}
+            subTitle={summary.account_name_source}
           />
           <LabelValidasiPengirimComponent
             title={"Rekening Pengirim"}
-            subTitle={"1818181818"}
+            subTitle={summary.account_number_source}
+          />
+
+          <LabelValidasiPengirimComponent
+            title={"Keterangan"}
+            subTitle={summary.note ? summary.note : "-"}
           />
           <LabelValidasiPengirimComponent
             title={"Nominal"}
-            subTitle={"100.000"}
+            subTitle={summary.amount}
           />
           <LabelValidasiPengirimComponent title={"Fee"} subTitle={"0"} />
           <View style={styles.totalContainer}>
             <LabelValidasiPengirimComponent
               title={"Total"}
-              subTitle={"100.000"}
+              subTitle={summary.total_amount}
             />
           </View>
           <LabelValidasiPengirimComponent title={"Keterangan"} subTitle={""} />
@@ -110,7 +124,7 @@ const TransferSuccess = () => {
         <ButtonPrimary
           text="Kembali Ke Home"
           onPress={() => {
-            navigation.navigate("Tabs");
+            navigation.replace("Tabs");
           }}
         />
       </View>

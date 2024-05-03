@@ -4,6 +4,7 @@ import ButtonNextClose from "../button/ButtonNextClose";
 import CheckboxCustom from "../checkbox/CheckboxCustom";
 import ButtonPrimary from "../button/ButtonPrimary";
 import { useNavigation } from "@react-navigation/native";
+import { checkAccountNumberReport } from "../../services/ReportService";
 const modalContent = {
   1: {
     linkText: "Cek No Rek Disini",
@@ -15,15 +16,16 @@ const modalContent = {
   2: {
     linkText: "Cek No Rek Disini",
     mediumText:
-      "Nomor Rekening ini pernah menerima laporan dari orang lain dan sedang dalam investigasi. ",
+      "Nomor Rekening ini sedang dalam investigasi terkait dugaan penipuan. ",
     titleText: "Status Rekening:",
     statusText: "Investigasi",
   },
   3: {
-    linkText: "Block Details",
-    mediumText: "Nomor Rekening ini terindikasi Penipuan dan sudah diblokir.",
+    linkText: "Cek No Rek Disini",
+    mediumText:
+      "Nomor Rekening ini mempunyai riwayat laporan terkait penipuan.",
     titleText: "Status Rekening:",
-    statusText: "Blokir",
+    statusText: "Peringatan",
   },
 };
 
@@ -35,11 +37,9 @@ const getStatusStyles = (status) => {
           paddingHorizontal: 8,
           paddingVertical: 2,
           height: 26,
-          width: 59,
+          marginTop: 5,
           backgroundColor: "#E7F8EF",
           borderRadius: 50,
-          alignItems: "center",
-          justifyContent: "center",
           marginTop: 5,
         },
         text: {
@@ -54,11 +54,9 @@ const getStatusStyles = (status) => {
           paddingHorizontal: 8,
           paddingVertical: 2,
           height: 26,
-          width: 79,
+          marginTop: 5,
           backgroundColor: "#FFF6E6",
           borderRadius: 50,
-          alignItems: "center",
-          justifyContent: "center",
         },
         text: {
           color: "#FFA500",
@@ -72,11 +70,9 @@ const getStatusStyles = (status) => {
           paddingHorizontal: 8,
           paddingVertical: 2,
           height: 26,
-          width: 50,
+          marginTop: 5,
           backgroundColor: "#FBE9ED",
           borderRadius: 50,
-          alignItems: "center",
-          justifyContent: "center",
         },
         text: {
           color: "#D6264F",
@@ -99,10 +95,27 @@ const ModalStatusCheck = ({
   handleCloseButtonClick,
   handleCheckboxChange,
   isChecked,
+  accountNumberDestination,
+  accountNumberSource,
+  nominal,
+  note
 }) => {
   const navigation = useNavigation();
   const { linkText, mediumText, titleText, statusText } = modalContent[status];
   const statusStyles = getStatusStyles(status);
+
+  const handleCheckAccountNumber = async (accountNumberDestination) => {
+    reportData = await checkAccountNumberReport(accountNumberDestination);
+    navigation.navigate("TransferHasilCekRekening", {
+      reportData: reportData.data,
+      transactionSummary: {
+        accountNumberDestination: accountNumberDestination,
+        accountNumberSource: accountNumberSource,
+        nominal: nominal,
+        note: note
+      }
+    });
+  };
 
   return (
     <Modal
@@ -121,15 +134,20 @@ const ModalStatusCheck = ({
           </View>
           <View>
             <Text style={styles.mediumText}>{mediumText}</Text>
-            {status === 3 ? null : (
-              <TouchableOpacity
-                onPress={() => navigation.replace("HasilCekRekening")}
-              >
-                <Text style={[styles.mediumText, styles.linkText]}>
-                  {linkText}
-                </Text>
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              onPress={() => {
+                handleCheckAccountNumber(accountNumberDestination);
+              }}
+            >
+              <Text style={[styles.mediumText, styles.linkText]}>
+                {linkText}
+              </Text>
+            </TouchableOpacity>
+            {status === 3 ? (
+              <Text style={styles.redTextBold}>
+                Apakah Anda yakin tetap ingin melanjutkan?
+              </Text>
+            ) : null}
           </View>
           {status !== 1 ? null : (
             <View style={{ marginTop: 5, marginBottom: 10 }}>
@@ -142,19 +160,12 @@ const ModalStatusCheck = ({
           )}
 
           <View style={{ marginTop: 10 }}>
-            {status === 3 ? (
-              <ButtonPrimary
-                text={"Batalkan"}
-                onPress={handleCloseButtonClick}
-              />
-            ) : (
-              <ButtonNextClose
-                nextName={"Lanjutkan"}
-                handleNextButtonClick={handleNextButtonClick}
-                handleCloseButtonClick={handleCloseButtonClick}
-                closeName={"Batalkan"}
-              />
-            )}
+            <ButtonNextClose
+              nextName={"Lanjutkan"}
+              handleNextButtonClick={handleNextButtonClick}
+              handleCloseButtonClick={handleCloseButtonClick}
+              closeName={"Batalkan"}
+            />
           </View>
         </View>
       </View>
@@ -184,6 +195,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
+    gap: 5,
   },
   icon: {
     width: 20,
@@ -200,50 +212,11 @@ const styles = StyleSheet.create({
     color: "#F15922",
     fontFamily: "PlusJakartaSansMedium",
   },
-  statusBadgeNormal: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    height: 26,
-    width: 59,
-    backgroundColor: "#E7F8EF",
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 5,
-  },
-  statusBadgeInvestigation: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    height: 26,
-    width: 79,
-    backgroundColor: "#FFF6E6",
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  statusBadgeBlocked: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    height: 26,
-    width: 50,
-    backgroundColor: "#FBE9ED",
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  statusTextNormal: {
-    color: "#10B55A",
-    fontSize: 12,
-    fontFamily: "PlusJakartaSansBold",
-  },
-  statusTextInvestigation: {
-    color: "#FFA500",
-    fontSize: 12,
-    fontFamily: "PlusJakartaSansBold",
-  },
-  statusTextBlocked: {
+
+  redTextBold: {
     color: "#D6264F",
-    fontSize: 12,
+    marginTop: 5,
+    marginBottom: 10,
     fontFamily: "PlusJakartaSansBold",
   },
 });

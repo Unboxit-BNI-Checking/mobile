@@ -7,17 +7,15 @@ import {
   Modal,
 } from "react-native";
 import React, { useState } from "react";
-import icons from "../../../constants/icons";
-
-import ButtonNextClose from "../../../component/button/ButtonNextClose";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../../component/header/CustomAppBar";
-import ModalStatusInformation from "../../../component/modal/ModalStatusInformation";
-import LabelValidasiComponent from "../../../component/label/LabelValidasiComponent";
-import LabelStatusComponent from "../../../component/label/LabelStatusComponent";
+import LabelStatusComponent from "../../component/label/LabelStatusComponent";
+import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
+import ButtonNextClose from "../../component/button/ButtonNextClose";
+import CustomAppBar from "../../component/header/CustomAppBar";
+import { validateTransaction } from "../../services/TransactionService";
 
-const HasilCekRekening = ({ route, navigation }) => {
-  const { reportData } = route.params;
+const TransferHasilCekRekening = ({ route, navigation }) => {
+  const { reportData, transactionSummary } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
@@ -28,12 +26,19 @@ const HasilCekRekening = ({ route, navigation }) => {
     setModalVisible(!modalVisible);
   };
 
-  const handleNextButtonClick = () => {
-    navigation.replace("CekRekening");
+  const handleNextButtonClick = async () => {
+    navigation.replace("TransferConfirm", {
+      summary: await validateTransaction(
+        transactionSummary.accountNumberSource,
+        transactionSummary.accountNumberDestination,
+        transactionSummary.nominal,
+        transactionSummary.note
+      ),
+    });
   };
 
   const handleCloseButtonClick = () => {
-    navigation.replace("Tabs");
+    navigation.replace("TransferBNI");
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -79,8 +84,8 @@ const HasilCekRekening = ({ route, navigation }) => {
 
         <View style={styles.bottomButtonContainer}>
           <ButtonNextClose
-            nextName="Cek Rekening Lagi"
-            closeName="Kembali Ke Home"
+            nextName="Lanjutkan Transaksi"
+            closeName="Batalkan Transaksi"
             handleNextButtonClick={handleNextButtonClick}
             handleCloseButtonClick={handleCloseButtonClick}
           />
@@ -172,7 +177,6 @@ const styles = StyleSheet.create({
   reportText: {
     color: "#6B788E",
     fontSize: 14,
-    fontFamily: "PlusJakartaSansRegular",
   },
   modalContainer: {
     flex: 1,
@@ -209,4 +213,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HasilCekRekening;
+export default TransferHasilCekRekening;

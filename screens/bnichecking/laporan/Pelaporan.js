@@ -5,30 +5,62 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardPelaporan from "../../../component/pelaporan/CardPelaporan";
-import ButtonPrimary from "../../../component/button/ButtonPrimary";
 import icons from "../../../constants/icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
+import MaterialIcon from "@expo/vector-icons/MaterialIcons";
+import { getAllReportsMadeByCurrentUser } from "../../../services/ReportService";
+import { reportStatus } from "../../../constants/reportStatus";
 
-const dataLaporan = [
-  { idlaporan: 1343232432, status: "Dilaporkan", tanggal: "10/10/2022" },
-  { idlaporan: 2324324324, status: "Diproses", tanggal: "10/10/2022" },
-  { idlaporan: 3324324324, status: "Selesai", tanggal: "10/10/2022" },
-  { idlaporan: 4324234324, status: "Dilaporkan", tanggal: "10/10/2022" },
-];
+
 const Pelaporan = () => {
   const navigation = useNavigation();
 
   const [activeButton, setActiveButton] = useState("Dilaporkan");
   const [activeTabContent, setActiveTabContent] = useState("Dilaporkan");
+  const [dataLaporan, setDataLaporan] = useState([]);
+
+  useEffect(() => {
+    getAllReports = async () => {
+      reports = await getAllReportsMadeByCurrentUser()
+      formattedReports = reports.map((report) => {
+        return {
+          report_id: report.reports_id,
+          status: reportStatus[report.status-1],
+          status_int: report.status,
+          created_at_report: report.created_at_reports,
+          chronology: report.chronology, 
+          amount: report.amount,
+          reports_id: report.reports_id,
+          created_at_reports: report.created_at_reports,
+          account_number_source: report.account_number_source,
+          account_number_source_username: report.account_number_source_username,
+          account_number_destination: report.account_number_destination,
+          account_number_destination_username: report.account_number_destination_username,
+          created_at_transaction: report.created_at_transaction,
+          attachment: report.attachment,
+        };
+      })
+      setDataLaporan(formattedReports);
+    }
+
+    getAllReports();
+  }, []);
 
   const handleTabPress = (tab) => {
     setActiveButton(tab);
     setActiveTabContent(tab);
   };
+
+  const handleSeeReportDetail = (report) => {
+    navigation.navigate("RingkasanLaporan", {
+      reportData: report
+    })
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomAppBar
@@ -62,7 +94,7 @@ const Pelaporan = () => {
                   activeButton === "Dilaporkan"
                     ? "rgb(241, 89, 34)"
                     : "rgba(204, 204, 204, 1)",
-                    fontFamily:
+                fontFamily:
                   activeButton === "Dilaporkan"
                     ? "PlusJakartaSansBold"
                     : "PlusJakartaSansMedium",
@@ -119,14 +151,14 @@ const Pelaporan = () => {
             <Text
               style={{
                 fontSize: 14,
-                fontFamily: activeButton === "Selesai"
-                ? "PlusJakartaSansBold"
-                : "PlusJakartaSansMedium",
+                fontFamily:
+                  activeButton === "Selesai"
+                    ? "PlusJakartaSansBold"
+                    : "PlusJakartaSansMedium",
                 color:
                   activeButton === "Selesai"
                     ? "rgb(241, 89, 34)"
                     : "rgba(204, 204, 204, 1)",
-                    
               }}
             >
               Selesai
@@ -140,13 +172,13 @@ const Pelaporan = () => {
           .filter((item) => item.status === "Dilaporkan")
           .map((item) => (
             <Pressable
-              key={item.idlaporan} // Move key to the outermost JSX element
-              onPress={() => navigation.navigate("RingkasanLaporan")}
+              key={item.report_id} // Move key to the outermost JSX element
+              onPress={() => { handleSeeReportDetail(item) } }
             >
               <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                 <CardPelaporan
-                  titleIdLaporan={item.idlaporan}
-                  dateLaporan={item.tanggal}
+                  titleReportId={item.report_id}
+                  dateLaporan={new Date(item.created_at_report).toLocaleDateString()}
                   status={item.status}
                 />
               </View>
@@ -157,13 +189,13 @@ const Pelaporan = () => {
           .filter((item) => item.status === "Diproses")
           .map((item) => (
             <Pressable
-              key={item.idlaporan} // Move key to the outermost JSX element
-              onPress={() => navigation.navigate("RingkasanLaporan")}
+              key={item.report_id} // Move key to the outermost JSX element
+              onPress={() => handleSeeReportDetail(item) }
             >
               <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                 <CardPelaporan
-                  titleIdLaporan={item.idlaporan}
-                  dateLaporan={item.tanggal}
+                  titleReportId={item.report_id}
+                  dateLaporan={item.created_at_report}
                   status={item.status}
                 />
               </View>
@@ -174,25 +206,29 @@ const Pelaporan = () => {
           .filter((item) => item.status === "Selesai")
           .map((item) => (
             <Pressable
-              key={item.idlaporan} // Move key to the outermost JSX element
-              onPress={() => navigation.navigate("RingkasanLaporan")}
+              key={item.report_id} // Move key to the outermost JSX element
+              onPress={() => handleSeeReportDetail(item) }
             >
               <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                 <CardPelaporan
-                  titleIdLaporan={item.idlaporan}
-                  dateLaporan={item.tanggal}
+                  titleReportId={item.report_id}
+                  dateLaporan={item.created_at_report}
                   status={item.status}
                 />
               </View>
             </Pressable>
           ))}
       <View style={styles.bottomButtonContainer}>
-        <ButtonPrimary
-          text="Buat Laporan"
-          onPress={() => {
-            navigation.navigate("BuatLaporan");
-          }}
-        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("BuatLaporan")}
+          
+        >
+          <View style={{ flexDirection: "row", gap: 8 }}>
+            <MaterialIcon name="add" size={24} color="#fff" />
+            <Text style={styles.text}>Buat Laporan</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -222,6 +258,19 @@ const styles = StyleSheet.create({
     borderTopColor: "rgba(204, 204, 204, 0.5)",
     height: 102,
     alignItems: "center",
+  },
+  button: {
+    backgroundColor: "#F15922",
+    padding: 14,
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+  text: {
+    color: "white",
+    marginRight: 10,
+    fontFamily: "PlusJakartaSansMedium",
   },
 });
 

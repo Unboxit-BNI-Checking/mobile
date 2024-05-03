@@ -58,11 +58,16 @@ const data = [
 ];
 const Transfer = () => {
   const navigation = useNavigation();
+  const handleButtonMenu = (item) => {
+    if (item.route === "TransferBNI") {
+      navigation.navigate("TransferBNI");
+    }
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
         title="Transfer"
-        onLeftPress={() => navigation.goBack()}
+        onLeftPress={() => navigation.reset({ routes: [{ name: "Tabs" }] })}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />
@@ -72,11 +77,11 @@ const Transfer = () => {
             <TouchableOpacity
               key={item.id}
               // onPress={() => sampleCallback(item.name)}\
-              onPress={() => navigation.navigate(item.route)}
+              onPress={() => handleButtonMenu(item)}
             >
               <View>
                 <Image source={item.image} style={styles.imageMenu} />
-                <Text style={{ textAlign: "center" }} numberOfLines={2}>
+                <Text style={{ textAlign: "center", fontFamily: "PlusJakartaSansMedium", fontSize: 13 }} numberOfLines={2}>
                   {item.name}
                 </Text>
               </View>

@@ -15,16 +15,16 @@ import LabelStatusComponent from "../../component/label/LabelStatusComponent";
 import ButtonPrimary from "../../component/button/ButtonPrimary";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
+import { createNewTransaction } from "../../services/TransactionService";
 
-const TransferConfirm = () => {
+const TransferConfirm = ({ route, navigation }) => {
+  const { summary } = route.params;
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const navigation = useNavigation();
 
   const handlePasswordChange = (text) => {
     setPassword(text);
@@ -41,11 +41,23 @@ const TransferConfirm = () => {
   const closeModal = () => {
     setModalVisible(!modalVisible);
   };
+
+  const handleCreateTransaction = async () => {
+    let transactionSummary = await createNewTransaction(
+      summary.account_number_source,
+      summary.account_number_destination,
+      summary.amount,
+      summary.note
+    );
+    navigation.navigate("TransferSuccess", {
+      summary: transactionSummary,
+    });
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
         title="Validasi"
-        onLeftPress={() => navigation.navigate("TransferBNI")}
+        onLeftPress={() => navigation.replace("TransferBNI")}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />
@@ -60,32 +72,46 @@ const TransferConfirm = () => {
         >
           <LabelValidasiComponent
             title={"Rekening Tujuan"}
-            subTitle={"1234567890"}
+            subTitle={summary.account_number_destination}
           />
           <LabelValidasiComponent
             title={"Nama Penerima"}
-            subTitle={"Sdr Jeon Wonwoo"}
+            subTitle={"Sdr " + summary.account_name_destination}
           />
 
-          <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
+          <LabelValidasiComponent
+            title={"Bank Tujuan"}
+            subTitle={summary.bank_destination}
+          />
           <TouchableOpacity onPress={openModal}>
-            <LabelStatusComponent title={"Status Rekening"} status={2} />
+            <LabelStatusComponent
+              title={"Status Rekening"}
+              status={summary.account_number_destination_status}
+            />
           </TouchableOpacity>
 
           <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
           <LabelValidasiPengirimComponent
             title={"Nama Pengirim"}
-            subTitle={"Amelia Qatrunnada"}
+            subTitle={summary.account_name_source}
           />
           <LabelValidasiPengirimComponent
             title={"Rekening Pengirim"}
-            subTitle={"1818181818"}
+            subTitle={summary.account_number_source}
+          />
+          <LabelValidasiPengirimComponent
+            title={"Keterangan"}
+            subTitle={summary.note ? summary.note : "-"}
           />
           <LabelValidasiPengirimComponent
             title={"Nominal"}
-            subTitle={"100.000"}
+            subTitle={summary.amount}
           />
-          <LabelValidasiPengirimComponent title={"Fee"} subTitle={"0"} />
+
+          <LabelValidasiPengirimComponent
+            title={"Fee"}
+            subTitle={summary.fee}
+          />
           <View
             style={{
               backgroundColor: "#F5F6F7",
@@ -98,11 +124,17 @@ const TransferConfirm = () => {
           >
             <LabelValidasiPengirimComponent
               title={"Total"}
-              subTitle={"100.000"}
+              subTitle={summary.total_amount}
             />
           </View>
           <View style={{ height: 48, gap: 6, marginTop: 10 }}>
-            <Text style={{ fontSize: 14, color: "#243757" }}>
+            <Text
+              style={{
+                fontSize: 14,
+                color: "#243757",
+                fontFamily: "PlusJakartaSansMedium",
+              }}
+            >
               Password Transaksi
             </Text>
 
@@ -137,7 +169,7 @@ const TransferConfirm = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            navigation.navigate("TransferSuccess");
+            handleCreateTransaction();
           }}
           disable={!password}
         />
@@ -169,6 +201,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    fontFamily: "PlusJakartaSansRegular",
   },
 });
 export default TransferConfirm;

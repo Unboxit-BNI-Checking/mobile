@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
@@ -17,27 +18,34 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
+import { createNewReport } from "../../../services/ReportService";
 
-const SertakanLaporanSummary = () => {
+const SertakanLaporanSummary = ({route}) => {
+  const { transactionSummary, attachments, chronology } = route.params
   const navigation = useNavigation();
   const [isChecked, setIsChecked] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [images, setImages] = useState([
-    {
-      uri: "https://picsum.photos/200",
-    },
-    {
-      uri: "https://picsum.photos/200",
-    },
-  ]);
+  const [selectedImage, setSelectedImage] = useState(0);
+
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
   const handleImageClick = (image) => {
-    setImages(image);
+    setSelectedImage(image);
     setModalVisible(true);
   };
+
+  const handleSendReport = async () => {
+    let success = await createNewReport(transactionSummary.transaction_id, chronology, attachments)
+    if (success) {
+      navigation.navigate("LaporanBerhasilTerkirim");
+    } else {
+      Alert.alert("Gagal", "Laporan gagal dikirim");
+    }
+
+  }
+
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
       <CustomAppBar
@@ -49,14 +57,19 @@ const SertakanLaporanSummary = () => {
       <ScrollView>
         <View style={styles.contentContainer}>
           <CardDataPelaporan
-            namaRekeningPelapor={"Amelia Qatrunnada "}
-            nomorRekeningPelapor={"1818181818"}
-            namaRekeningDilaporkan={"Nama Pemilik Norek"}
-            nominalRekeningDilaporkan={"100.000"}
-            nomorRekeningDilaporkan={"1234567890"}
-            tanggalTransaksiDilaporkan={"19/04/2024"}
+            namaRekeningPelapor={transactionSummary.account_name_source}
+            nomorRekeningPelapor={transactionSummary.account_number_source}
+            namaRekeningDilaporkan={transactionSummary.account_name_destination}
+            nominalRekeningDilaporkan={transactionSummary.amount}
+            nomorRekeningDilaporkan={transactionSummary.account_number_destination}
+            tanggalTransaksiDilaporkan={new Date(transactionSummary.transaction_time).toLocaleDateString()}
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
-            jamTransaksiDilaporkan={"18:23:28"}
+            jamTransaksiDilaporkan={new Date(transactionSummary.transaction_time).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: false,
+            }) + " WIB"}
           />
           <View style={styles.separator}></View>
           <View style={styles.peristiwaContainer}>
@@ -65,7 +78,7 @@ const SertakanLaporanSummary = () => {
               <Text style={styles.label}>Kronologi</Text>
               <View style={styles.inputContainer}>
                 <Text style={styles.input}>
-                  Lorem Ipsum is simply dummy 
+                  { chronology }
                  
                 </Text>
               </View>
@@ -75,10 +88,10 @@ const SertakanLaporanSummary = () => {
           <View style={styles.lampiranContainer}>
             <Text style={styles.label}>Lampiran</Text>
             <View style={styles.imagesContainer}>
-              {images &&
-                images.map((image, index) => (
+              {attachments &&
+                attachments.map((image, index) => (
                   <View key={index} style={styles.imageContainer}>
-                    <TouchableOpacity onPress={() => handleImageClick(images)}>
+                    <TouchableOpacity onPress={() => handleImageClick(image)}>
                       <Image source={{ uri: image.uri }} style={styles.image} />
                     </TouchableOpacity>
                   </View>
@@ -100,7 +113,7 @@ const SertakanLaporanSummary = () => {
                 </TouchableOpacity>
                 <View style={styles.modalContent}>
                   <Image
-                    source={{ uri: images[0].uri }}
+                    source={{ uri: selectedImage.uri }}
                     style={styles.fullImage}
                     resizeMode="contain"
                   />
@@ -119,7 +132,7 @@ const SertakanLaporanSummary = () => {
         <ButtonPrimary
           text="Kirim Laporan"
           onPress={() => {
-            navigation.navigate("LaporanBerhasilTerkirim");
+            handleSendReport();
           }}
           disable={!isChecked}
         />

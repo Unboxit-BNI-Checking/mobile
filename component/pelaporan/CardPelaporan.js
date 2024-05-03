@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
-const CardPelaporan = ({ titleIdLaporan, dateLaporan, status }) => {
+const CardPelaporan = ({ titleReportId, dateLaporan, status }) => {
   let backgroundColors = "blue";
   let fontColos = "red";
 
@@ -48,7 +48,7 @@ const CardPelaporan = ({ titleIdLaporan, dateLaporan, status }) => {
                 fontFamily: "PlusJakartaSansMedium",
               }}
             >
-              {titleIdLaporan}
+              {titleReportId}
             </Text>
           </View>
 

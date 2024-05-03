@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
 
   closeButton: {
     flex: 1,
-    padding: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 14,
     backgroundColor: "#FEEEE9",
     borderRadius: 100,
     justifyContent: "center",
@@ -50,11 +51,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: "center",
     alignItems: "center",
-    padding: 14,
+
+    paddingHorizontal: 12,
+    paddingVertical: 14,
   },
   nextButtonText: {
     color: "white",
-
     fontFamily: "PlusJakartaSansMedium",
   },
 });

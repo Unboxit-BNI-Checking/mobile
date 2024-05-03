@@ -20,7 +20,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 
-const SertakanLaporan = () => {
+const SertakanLaporan = ({ route }) => {
+  const { transactionSummary } = route.params;
   const navigation = useNavigation();
   const [text, setText] = useState("");
   const [images, setImages] = useState([]);
@@ -53,6 +54,14 @@ const SertakanLaporan = () => {
     setImages(newImages);
   };
 
+  const handleConfirmMakeReport = () => {
+    navigation.navigate("SertakanLaporanSummary", {
+      transactionSummary: transactionSummary,
+      attachments: images,
+      chronology: text,
+    });
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
       <CustomAppBar
@@ -64,14 +73,28 @@ const SertakanLaporan = () => {
       <ScrollView>
         <View style={styles.contentContainer}>
           <CardDataPelaporan
-            namaRekeningPelapor={"Amelia Qatrunnada "}
-            nomorRekeningPelapor={"1818181818"}
-            namaRekeningDilaporkan={"Nama Pemilik Norek"}
-            nominalRekeningDilaporkan={"100.000"}
-            nomorRekeningDilaporkan={"1234567890"}
-            tanggalTransaksiDilaporkan={"19/04/2024"}
+            namaRekeningPelapor={transactionSummary.account_name_source}
+            nomorRekeningPelapor={transactionSummary.account_number_source}
+            namaRekeningDilaporkan={transactionSummary.account_name_destination}
+            nominalRekeningDilaporkan={transactionSummary.amount}
+            nomorRekeningDilaporkan={
+              transactionSummary.account_number_destination
+            }
+            tanggalTransaksiDilaporkan={new Date(
+              transactionSummary.transaction_time
+            ).toLocaleDateString()}
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
-            jamTransaksiDilaporkan={"18:23:28"}
+            jamTransaksiDilaporkan={
+              new Date(transactionSummary.transaction_time).toLocaleTimeString(
+                [],
+                {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  hour12: false,
+                }
+              ) + " WIB"
+            }
           />
           <View style={styles.separator}></View>
           <View style={styles.peristiwaContainer}>
@@ -156,7 +179,7 @@ const SertakanLaporan = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            navigation.navigate("SertakanLaporanSummary", {});
+            handleConfirmMakeReport();
           }}
         />
       </View>

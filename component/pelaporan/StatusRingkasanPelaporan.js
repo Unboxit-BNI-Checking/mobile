@@ -9,30 +9,22 @@ const StatusRingkasanPelaporan = ({ status }) => {
     if (status === 1) {
       return (
         <Text style={styles.normalText}>
-          Laporan sudah terkirim dan akan segera {"\n"}ditindaklanjuti oleh tim
+          Laporan sudah terkirim dan akan segera {"\n"}diproses oleh tim
         </Text>
       );
     } else if (status === 2) {
-      return <Text style={styles.normalText}>Laporan sedang diproses</Text>;
+      return <Text style={styles.normalText}>Laporan sedang diproses oleh tim.</Text>;
     } else if (status === 3) {
       return (
         <View>
           <Text style={styles.normalText}>Laporan telah selesai diproses.</Text>
-          <Text style={styles.normalText}>
-            Status rekening yang dilaporkan adalah:
-          </Text>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.redText}>Terblokir </Text>
-            <Text style={styles.boldText}>atau sudah diblokir oleh tim.</Text>
+            <Text style={styles.boldText}>Rekening yang Anda laporkan</Text>
+            <Text style={styles.redText}> saldonya </Text>
           </View>
-          <View style={{ marginTop: 10 }}>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.orangeText}>Klik disini </Text>
-              <Text style={styles.normalText}>
-                untuk memproses kerugian yang
-              </Text>
-            </View>
-            <Text style={styles.normalText}>diterima</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.redText}>telah diblokir </Text>
+            <Text style={styles.boldText}>atau dibekukan.</Text>
           </View>
         </View>
       );
@@ -40,15 +32,15 @@ const StatusRingkasanPelaporan = ({ status }) => {
       return (
         <View>
           <Text style={styles.normalText}>Laporan telah selesai diproses.</Text>
-          <Text style={styles.normalText}>
-            Status rekening yang dilaporkan adalah:
-          </Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.greenText}>Bebas Aduan </Text>
-            <Text style={styles.boldText}>atau tidak terindikasi </Text>
-          </View>
           <View>
-            <Text style={styles.boldText}>penipuan.</Text>
+            <Text style={styles.boldText}>
+              Rekening yang Anda laporkan tidak
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.boldText}>terindikasi penipuan atau</Text>
+              <Text style={styles.greenText}> dibebas adukan</Text>
+              <Text style={styles.normalText}>.</Text>
+            </View>
           </View>
         </View>
       );

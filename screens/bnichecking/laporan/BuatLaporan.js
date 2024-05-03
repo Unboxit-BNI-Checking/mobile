@@ -14,51 +14,58 @@ import ButtonPrimary from "../../../component/button/ButtonPrimary";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
+import { getUserAccountNumbersData } from "../../../services/UserService";
+import { getTransactionById, getTransactionHistory } from "../../../services/TransactionService";
 
-// Impor dummy transaction data
-
-const dataRekening = [
-  { label: "123144142", value: "123144142" },
-  { label: "12839405948", value: "12839405948" },
-];
-
-const dummyTransactionHistory = [
-  {
-    date: "19/04/2024_1",
-    time: "18:23:28",
-    type: "Bank Negara Indonesia",
-    accountNumber: "123144142",
-    accountNumberDestination: "12839405948",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: -10000,
-  },
-  {
-    date: "20/04/2024",
-    time: "18:23:28",
-    type: "Bank Negara Indonesia",
-    accountNumber: "123144142",
-    accountNumberDestination: "9999999999",
-    accountOwner: "Nama Pemilik Rekening",
-    amount: -15000,
-  },
-];
 
 const BuatLaporan = () => {
   const navigation = useNavigation();
   const [selectedTransaction, setSelectedTransaction] = useState(null); // State untuk menyimpan transaksi yang dipilih
-  const [selectedAccount, setSelectedAccount] = useState(dataRekening[0]);
+  const [selectedAccount, setSelectedAccount] = useState(null);
   const [searchInput, setSearchInput] = useState("");
+  const [transactionHistory, setTransactionHistory] = useState([]);
+  const [accountNumbers, setAccountNumbers] = useState([]);
+
+  useEffect(() => {
+    const fetchAccountNumbers = async () => {
+      getUserAccountNumbersData().then((formattedData) => {
+        setAccountNumbers(formattedData)
+      }).catch((error) => {
+        console.error("Error fetching account numbers:", error);
+      })
+    }
+
+    fetchAccountNumbers()
+  }, []);
+
   const selectTransaction = (transaction) => {
-    setSelectedTransaction(transaction); // Memilih transaksi yang dipilih
+    if (!transaction.is_reported) {
+      setSelectedTransaction(transaction); // Memilih transaksi yang dipilih
+    }
   };
 
   const selectAccount = (account) => {
     setSelectedAccount(account); // Memilih rekening yang dipilih
+    getTransactionHistory(account).then((response) => {
+      setTransactionHistory(response);
+    }).catch((error) => {
+      console.error("Error fetching transaction history:", error);
+    })
   };
+
+  const handleMakeReport = async () => {
+    navigation.navigate("SertakanLaporan", {
+      transactionSummary: await getTransactionById(selectedTransaction.transaction_id)
+    });
+  }
+
+  transactionComponentColor = (transactionId) => {
+    return selectedTransaction && selectedTransaction.transaction_id === transactionId ? "#F15922":"#6B788E"
+  }
 
   const renderItem = (transaction) => (
     <TouchableOpacity
-      key={transaction.date}
+      key={transaction.transaction_id}
       onPress={() => selectTransaction(transaction)} // Memanggil fungsi untuk memilih transaksi yang dipilih
     >
       <View
@@ -68,7 +75,7 @@ const BuatLaporan = () => {
           gap: 8,
           borderWidth: 1,
           borderColor:
-            selectedTransaction && selectedTransaction.date === transaction.date // Memeriksa apakah transaksi saat ini dipilih
+            selectedTransaction && selectedTransaction.transaction_id === transaction.transaction_id // Memeriksa apakah transaksi saat ini dipilih
               ? "#F15922"
               : "#C2C7D0",
           borderRadius: 8,
@@ -77,7 +84,7 @@ const BuatLaporan = () => {
       >
         <Image
           source={
-            selectedTransaction && selectedTransaction.date === transaction.date // Menetapkan gambar radio sesuai dengan apakah transaksi saat ini dipilih atau tidak
+            selectedTransaction && selectedTransaction.transaction_id === transaction.transaction_id // Menetapkan gambar radio sesuai dengan apakah transaksi saat ini dipilih atau tidak
               ? icons.icRadioActive
               : icons.icRadioInactive
           }
@@ -89,49 +96,41 @@ const BuatLaporan = () => {
               fontFamily: "PlusJakartaSansMedium",
               color:
                 selectedTransaction &&
-                selectedTransaction.date === transaction.date // Menetapkan warna teks sesuai dengan apakah transaksi saat ini dipilih atau tidak
+                selectedTransaction.transaction_id === transaction.transaction_id // Menetapkan warna teks sesuai dengan apakah transaksi saat ini dipilih atau tidak
                   ? "#F15922"
                   : "#243757",
               fontSize: 12,
             }}
           >
-            {transaction.date}
+            {new Date(transaction.transaction_time).toLocaleDateString()}
           </Text>
           <Text
             style={{
               fontFamily: "PlusJakartaSansBold",
               color:
                 selectedTransaction &&
-                selectedTransaction.date === transaction.date
+                selectedTransaction.transaction_id === transaction.transaction_id
                   ? "#F15922"
                   : "#243757",
             }}
           >
-            {transaction.accountOwner}
+            {transaction.account_destination_owner_name}
           </Text>
           <Text
             style={{
               fontFamily: "PlusJakartaSansMedium",
-              color:
-                selectedTransaction &&
-                selectedTransaction.date === transaction.date
-                  ? "#F15922"
-                  : "#6B788E",
+              color: transactionComponentColor(transaction.transaction_id),
             }}
           >
-            {transaction.accountNumberDestination}
+            {transaction.account_number_destination}
           </Text>
           <Text
             style={{
               fontFamily: "PlusJakartaSansMedium",
-              color:
-                selectedTransaction &&
-                selectedTransaction.date === transaction.date
-                  ? "#F15922"
-                  : "#6B788E",
+              color: transactionComponentColor(transaction.transaction_id),
             }}
           >
-            {transaction.type}
+            {"Bank Negara Indonesia"}
           </Text>
         </View>
         <View style={{ flex: 1 }}></View>
@@ -141,14 +140,10 @@ const BuatLaporan = () => {
               fontFamily: "PlusJakartaSansBold",
               marginRight: 8,
               textAlign: "right",
-              color:
-                selectedTransaction &&
-                selectedTransaction.date === transaction.date
-                  ? "#F15922"
-                  : "#6B788E",
+              color: transactionComponentColor(transaction.transaction_id),
             }}
           >
-            {transaction.amount}
+            {"-" +transaction.amount}
           </Text>
           <Text
             style={{
@@ -156,43 +151,25 @@ const BuatLaporan = () => {
               marginRight: 8,
               color: "#6B788E",
               textAlign: "right",
-              color:
-                selectedTransaction &&
-                selectedTransaction.date === transaction.date
-                  ? "#F15922"
-                  : "#6B788E",
+              color: transactionComponentColor(transaction.transaction_id),
             }}
           >
-            {transaction.time}
+            {new Date(transaction.transaction_time).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+              })}
+          </Text>
+
+          <Text style={{ textAlign: "right", color: transaction.is_reported ? "red" : "green" }}>
+            {transaction.is_reported ? "Sudah dilaporkan" : "Belum dilaporkan"}
           </Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 
-  useEffect(() => {
-    setSelectedAccount(dataRekening[0]);
-  }, []);
-
-  const filteredTransactionsByAccount = dummyTransactionHistory.filter(
-    (transaction) => {
-      return selectedAccount
-        ? transaction.accountNumber === selectedAccount.value
-        : true;
-    }
-  );
-
-  {
-    /* Filter transaksi berdasarkan pencarian jika akun sudah dipilih */
-  }
-  const filteredTransactionsBySearch = filteredTransactionsByAccount.filter(
-    (transaction) => {
-      return (
-        searchInput === "" ||
-        transaction.accountNumberDestination.includes(searchInput)
-      );
-    }
-  );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
@@ -219,13 +196,13 @@ const BuatLaporan = () => {
 
             <Dropdown
               style={styles.dropdown}
-              data={dataRekening}
+              data={accountNumbers}
               labelField="label"
               valueField="value"
-              placeholder={null}
+              placeholder={"Pilih Rekening"}
               selectedTextStyle={{ color: "#5D6B82" }}
               searchPlaceholder="Search..."
-              value={dataRekening[0].label}
+              value={selectedAccount}
               onChange={(item) => selectAccount(item.value)}
               renderItem={(item) => (
                 <View style={styles.item}>
@@ -233,38 +210,42 @@ const BuatLaporan = () => {
                 </View>
               )}
             />
-            <Text
-              style={{
-                fontSize: 16,
-                fontFamily: "PlusJakartaSansBold",
-                marginBottom: 8,
-              }}
-            >
-              Pilih Transaksi yang ingin dilaporkan
-            </Text>
-            <View style={styles.inputContainer}>
-              <Image source={icons.icSearchCekRekening} />
-              <TextInput
-                style={styles.input}
-                placeholder="Cari Transaksi"
-                placeholderTextColor={"#98A1B0"}
-                value={searchInput}
-                onChangeText={(text) => setSearchInput(text)}
-                keyboardType="number-pad"
-              />
-            </View>
+            {selectedAccount ? (
+              <View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontFamily: "PlusJakartaSansBold",
+                    marginBottom: 10,
+                    marginTop: 5,
+                  }}
+                >
+                  Pilih Transaksi yang ingin dilaporkan
+                </Text>
+                <View style={styles.inputContainer}>
+                  <Image source={icons.icSearchCekRekening} />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Cari Transaksi"
+                    placeholderTextColor={"#98A1B0"}
+                    value={searchInput}
+                    onChangeText={(text) => setSearchInput(text)}
+                    
+                  />
+                </View>
+              </View>
+            ) : null}
 
-            {dummyTransactionHistory
+            {transactionHistory
               .filter((transaction) => {
-                return selectedAccount
-                  ? transaction.accountNumber === selectedAccount
-                  : true;
+                return (
+                  (selectedAccount
+                    ? transaction.account_number_source === selectedAccount
+                    : false) &&
+                  transaction.account_destination_owner_name.includes(searchInput)
+                );
               })
               .map((transaction) => renderItem(transaction))}
-
-            {/* {filteredTransactionsBySearch.map((transaction) => 
-              renderItem(transaction)
-            )} */}
           </View>
         </View>
       </ScrollView>
@@ -272,8 +253,9 @@ const BuatLaporan = () => {
         <ButtonPrimary
           text="Selanjutnya"
           onPress={() => {
-            navigation.navigate("SertakanLaporan");
+            handleMakeReport();
           }}
+          disable={!selectedTransaction}
         />
       </View>
     </SafeAreaView>

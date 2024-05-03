@@ -38,7 +38,13 @@ const BniChecking = () => {
             >
               <View>
                 <Image source={item.image} style={styles.imageMenu} />
-                <Text style={{ textAlign: "center" }} numberOfLines={2}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "PlusJakartaSansMedium",
+                    fontSize: 13,
+                  }}
+                >
                   {item.name}
                 </Text>
               </View>

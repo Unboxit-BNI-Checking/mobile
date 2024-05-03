@@ -4,46 +4,44 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 const ProgressBarComponent = ({ currentStep }) => {
   return (
-    
-      <View style={styles.stepperContainer}>
-        <View>
-          <View style={styles.stepContainer}>
-            <View style={[styles.step, currentStep >= 1 && styles.activeStep]}>
-              {currentStep >= 1 ? (
-                <MaterialIcons name="check" size={24} color="white" />
-              ) : (
-                <Text style={styles.stepText}>1</Text>
-              )}
-            </View>
-            <Text style={styles.stepLabel}>Dilaporkan</Text>
-          </View>
-        </View>
-        <View style={styles.line} />
+    <View style={styles.stepperContainer}>
+      <View>
         <View style={styles.stepContainer}>
-          <View style={[styles.step, currentStep >= 2 && styles.activeStep]}>
-            {currentStep >= 2 ? (
+          <View style={[styles.step, currentStep >= 1 && styles.activeStep]}>
+            {currentStep >= 1 ? (
               <MaterialIcons name="check" size={24} color="white" />
             ) : (
-              <View>
-                <Text style={styles.stepText}>2</Text>
-              </View>
+              <Text style={styles.stepText}>1</Text>
             )}
           </View>
-          <Text style={styles.stepLabel}>Diproses</Text>
-        </View>
-        <View style={styles.line} />
-        <View style={styles.stepContainer}>
-          <View style={[styles.step, currentStep >= 3 && styles.activeStep]}>
-            {currentStep >= 3 ? (
-              <MaterialIcons name="check" size={24} color="white" />
-            ) : (
-              <Text style={styles.stepText}>3</Text>
-            )}
-          </View>
-          <Text style={styles.stepLabel}>Selesai</Text>
+          <Text style={styles.stepLabel}>Dilaporkan</Text>
         </View>
       </View>
-    
+      <View style={styles.line} />
+      <View style={styles.stepContainer}>
+        <View style={[styles.step, currentStep >= 2 && styles.activeStep]}>
+          {currentStep >= 2 ? (
+            <MaterialIcons name="check" size={24} color="white" />
+          ) : (
+            <View>
+              <Text style={styles.stepText}>2</Text>
+            </View>
+          )}
+        </View>
+        <Text style={styles.stepLabel}>Diproses</Text>
+      </View>
+      <View style={styles.line} />
+      <View style={styles.stepContainer}>
+        <View style={[styles.step, currentStep >= 3 && styles.activeStep]}>
+          {currentStep >= 3 ? (
+            <MaterialIcons name="check" size={24} color="white" />
+          ) : (
+            <Text style={styles.stepText}>3</Text>
+          )}
+        </View>
+        <Text style={styles.stepLabel}>Selesai</Text>
+      </View>
+    </View>
   );
 };
 
@@ -55,6 +53,7 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     alignItems: "center",
+    resizeMode: "contain",
   },
   step: {
     width: 40,
@@ -71,9 +70,12 @@ const styles = StyleSheet.create({
   stepText: {
     color: "white",
     fontSize: 18,
+    fontFamily: "PlusJakartaSansMedium",
   },
   stepLabel: {
     marginTop: 5,
+    fontFamily: "PlusJakartaSansRegular",
+    textAlign: "center",
   },
   line: {
     flex: 1,

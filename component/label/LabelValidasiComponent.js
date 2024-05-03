@@ -4,6 +4,7 @@ const LabelValidasiComponent = ({ title, subTitle }) => {
   return (
     <View
       style={{
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
       }}
@@ -17,7 +18,14 @@ const LabelValidasiComponent = ({ title, subTitle }) => {
       >
         {title}
       </Text>
-      <Text style={{ fontSize: 14, color: "#006885" }}>{subTitle}</Text>
+      <Text
+        style={{
+          color: "#006885",
+          fontFamily: "PlusJakartaSansRegular",
+        }}
+      >
+        {subTitle}
+      </Text>
     </View>
   );
 };
