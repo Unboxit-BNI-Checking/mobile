@@ -59,7 +59,7 @@ const LoginScreen = () => {
       <Image
         source={images.background46}
         style={styles.backgroundImage}
-        resizeMode="contain"
+        resizeMode="cover"
       />
       <View style={styles.logoContainer}>
         <Image source={images.bnilogo} style={styles.logo} />
@@ -160,7 +160,7 @@ const LoginScreen = () => {
                   onPress={() => handleLogin()}
                 />
               </View>
-              <View  >
+              <View>
                 <Image
                   source={icons.icBiometricLoginForm}
                   style={styles.biometricIcon}

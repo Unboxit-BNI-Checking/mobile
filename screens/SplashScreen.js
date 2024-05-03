@@ -24,7 +24,7 @@ const SplashScreenCustom = () => {
       <Image
         source={images.background46}
         style={{ width: "100%", height: 401 }}
-        resizeMode="contain"
+        resizeMode="cover"
       />
       <View
         style={{

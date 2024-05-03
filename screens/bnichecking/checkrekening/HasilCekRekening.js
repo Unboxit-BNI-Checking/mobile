@@ -48,12 +48,17 @@ const HasilCekRekening = ({ route, navigation }) => {
           <View style={styles.rekeningInfo}>
             <Text style={styles.name}>{reportData.account_owner_name}</Text>
             <Text style={styles.bank}>Bank Negara Indonesia</Text>
-            <Text style={styles.accountNumber}>{reportData.account_number}</Text>
+            <Text style={styles.accountNumber}>
+              {reportData.account_number}
+            </Text>
           </View>
           <View style={styles.divider}></View>
 
           <TouchableOpacity onPress={openModal} style={styles.statusContainer}>
-            <LabelStatusComponent title="Status Rekening" status={reportData.status ?? 1} />
+            <LabelStatusComponent
+              title="Status Rekening"
+              status={reportData.status ?? 1}
+            />
           </TouchableOpacity>
         </View>
         <View style={styles.reportContainer}>
@@ -167,6 +172,7 @@ const styles = StyleSheet.create({
   reportText: {
     color: "#6B788E",
     fontSize: 14,
+    fontFamily: "PlusJakartaSansRegular",
   },
   modalContainer: {
     flex: 1,

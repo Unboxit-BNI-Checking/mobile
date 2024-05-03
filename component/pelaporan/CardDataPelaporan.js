@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#6B788E",
+    fontFamily: "PlusJakartaSansRegular",
   },
   row: {
     flexDirection: "row",

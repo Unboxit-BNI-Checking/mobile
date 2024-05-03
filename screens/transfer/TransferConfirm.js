@@ -76,12 +76,18 @@ const TransferConfirm = ({ route, navigation }) => {
           />
           <LabelValidasiComponent
             title={"Nama Penerima"}
-            subTitle={summary.account_name_destination}
+            subTitle={"Sdr " + summary.account_name_destination}
           />
 
-          <LabelValidasiComponent title={"Bank Tujuan"} subTitle={summary.bank_destination} />
+          <LabelValidasiComponent
+            title={"Bank Tujuan"}
+            subTitle={summary.bank_destination}
+          />
           <TouchableOpacity onPress={openModal}>
-            <LabelStatusComponent title={"Status Rekening"} status={summary.account_number_destination_status} />
+            <LabelStatusComponent
+              title={"Status Rekening"}
+              status={summary.account_number_destination_status}
+            />
           </TouchableOpacity>
 
           <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
@@ -102,7 +108,10 @@ const TransferConfirm = ({ route, navigation }) => {
             subTitle={summary.amount}
           />
 
-          <LabelValidasiPengirimComponent title={"Fee"} subTitle={summary.fee} />
+          <LabelValidasiPengirimComponent
+            title={"Fee"}
+            subTitle={summary.fee}
+          />
           <View
             style={{
               backgroundColor: "#F5F6F7",
