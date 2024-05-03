@@ -87,11 +87,6 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="TransferHasilCekRekening"
-          component={TransferHasilCekRekening}
-          options={ { headerShown: false } }
-        />
-        <Stack.Screen
           name="TransferConfirm"
           component={TransferConfirm}
           options={{ headerShown: false }}
