@@ -19,7 +19,8 @@ import SertakanLaporanSummary from "./screens/bnichecking/laporan/SertakanLapora
 import SplashScreenCustom from "./screens/SplashScreen";
 import LoginScreen from "./screens/LoginScreen";
 import BniChecking from "./screens/bnichecking/BniChecking";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import TransferHasilCekRekening from "./screens/transfer/TransferHasilCekRekening";
 
 // import * as SplashScreen from "expo-splash-screen";
 
@@ -48,7 +49,10 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginScreen" onLayout={onLayoutRootView}>
+      <Stack.Navigator
+        initialRouteName="SplashScreen"
+        onLayout={onLayoutRootView}
+      >
         {/* HOME SCREEN ROOT */}
 
         <Stack.Screen
@@ -70,74 +74,80 @@ export default function App() {
         <Stack.Screen
           name="Transfer"
           component={Transfer}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="TransferBNI"
           component={TransferBNI}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TransferHasilCekRekening"
+          component={TransferHasilCekRekening}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="TransferConfirm"
           component={TransferConfirm}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="TransferSuccess"
           component={TransferSuccess}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
+
         {/* CHEKING SCREEN */}
         <Stack.Screen
           name="BNIChecking"
           component={BniChecking}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="CekRekening"
           component={CekRekening}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="HasilCekRekening"
           component={HasilCekRekening}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="StatusRekening"
           component={StatusRekening}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         {/* LAPORAN SCREEN */}
         <Stack.Screen
           name="BuatLaporan"
           component={BuatLaporan}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Pelaporan"
           component={Pelaporan}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="RingkasanLaporan"
           component={RingkasanLaporan}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SertakanLaporan"
           component={SertakanLaporan}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SertakanLaporanSummary"
           component={SertakanLaporanSummary}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="LaporanBerhasilTerkirim"
           component={LaporanBerhasilTerkirim}
-          options={ { headerShown: false } }
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
