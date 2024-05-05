@@ -103,7 +103,9 @@ const SertakanLaporan = ({ route }) => {
               <Text style={styles.label}>Kronologi</Text>
               <TextInput
                 style={styles.textArea}
+                numberOfLines={5}
                 multiline={true}
+                placeholder="Tulis Kronologi Peristiwa Yang Dilaporkan"
                 onChangeText={setText}
                 value={text}
               />
