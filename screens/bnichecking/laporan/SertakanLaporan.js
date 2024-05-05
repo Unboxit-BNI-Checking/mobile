@@ -181,6 +181,7 @@ const SertakanLaporan = ({ route }) => {
           onPress={() => {
             handleConfirmMakeReport();
           }}
+          disable={text.length === 0 || images.length === 0}
         />
       </View>
     </SafeAreaView>
