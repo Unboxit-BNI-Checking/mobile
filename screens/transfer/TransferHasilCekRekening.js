@@ -72,7 +72,9 @@ const TransferHasilCekRekening = ({ route, navigation }) => {
             <Text style={styles.reportText}>Laporan Nasabah</Text>
           </View>
           <View style={styles.report}>
-            <Text style={styles.reportNumber}>{reportData.reports_twitter_count}</Text>
+            <Text style={styles.reportNumber}>
+              {reportData.reports_twitter_count}
+            </Text>
             <Text style={styles.reportText}>Laporan Sosial {"\n"}Media</Text>
           </View>
         </View>
@@ -177,6 +179,7 @@ const styles = StyleSheet.create({
   reportText: {
     color: "#6B788E",
     fontSize: 14,
+    fontFamily: "PlusJakartaSansMedium",
   },
   modalContainer: {
     flex: 1,
