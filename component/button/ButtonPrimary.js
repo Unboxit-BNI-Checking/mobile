@@ -1,7 +1,21 @@
 import React from "react";
-import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 
-const ButtonPrimary = ({ text, iconUrl, onPress, dimension, disable }) => {
+const ButtonPrimary = ({
+  text,
+  iconUrl,
+  onPress,
+  dimension,
+  disable,
+  loading,
+}) => {
   const buttonStyles = disable
     ? [styles.button, styles.disabledButton]
     : styles.button;
@@ -10,12 +24,22 @@ const ButtonPrimary = ({ text, iconUrl, onPress, dimension, disable }) => {
   return (
     <TouchableOpacity style={buttonStyles} onPress={onPress} disabled={disable}>
       <View style={styles.container}>
-        <Text style={textStyles}>{text}</Text>
-        <Image
-          source={iconUrl}
-          style={styles.btnImg(dimension)}
-          resizeMode="contain"
-        />
+        {loading ? (
+          <ActivityIndicator
+            size="small"
+            color="white"
+            style={styles.loadingIndicator}
+          />
+        ) : (
+          <>
+            <Text style={textStyles}>{text}</Text>
+            <Image
+              source={iconUrl}
+              style={styles.btnImg(dimension)}
+              resizeMode="contain"
+            />
+          </>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -50,6 +74,9 @@ const styles = StyleSheet.create({
     width: dimension,
     height: dimension,
   }),
+  loadingIndicator: {
+    marginRight: 10, // Adjust margin to separate loading indicator from text
+  },
 });
 
 export default ButtonPrimary;
