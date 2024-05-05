@@ -15,6 +15,7 @@ import CustomAppBar from "../../../component/header/CustomAppBar";
 import MaterialIcon from "@expo/vector-icons/MaterialIcons";
 import { getAllReportsMadeByCurrentUser } from "../../../services/ReportService";
 import { reportStatus } from "../../../constants/reportStatus";
+import DateFormatComponent from "../../../component/text/DateFormatComponent";
 
 const Pelaporan = () => {
   const navigation = useNavigation();
@@ -185,9 +186,11 @@ const Pelaporan = () => {
                   <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                     <CardPelaporan
                       titleReportId={item.report_id}
-                      dateLaporan={new Date(
-                        item.created_at_report
-                      ).toLocaleDateString()}
+                      dateLaporan={
+                        <DateFormatComponent
+                          dateString={item.created_at_report}
+                        />
+                      }
                       status={item.status}
                     />
                   </View>
@@ -205,9 +208,11 @@ const Pelaporan = () => {
                   <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                     <CardPelaporan
                       titleReportId={item.report_id}
-                      dateLaporan={new Date(
-                        item.created_at_report
-                      ).toLocaleDateString()}
+                      dateLaporan={
+                        <DateFormatComponent
+                          dateString={item.created_at_report}
+                        />
+                      }
                       status={item.status}
                     />
                   </View>
@@ -224,9 +229,11 @@ const Pelaporan = () => {
                   <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                     <CardPelaporan
                       titleReportId={item.report_id}
-                      dateLaporan={new Date(
-                        item.created_at_report
-                      ).toLocaleDateString()}
+                      dateLaporan={
+                        <DateFormatComponent
+                          dateString={item.created_at_report}
+                        />
+                      }
                       status={item.status}
                     />
                   </View>
