@@ -22,6 +22,12 @@ import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { validateTransaction } from "../../services/TransactionService";
+import {
+  ALERT_TYPE,
+  AlertNotificationDialog,
+  AlertNotificationRoot,
+  Dialog,
+} from "react-native-alert-notification";
 
 const TransferBNI = ({ navigation }) => {
   const [showSaldo, setShowSaldo] = useState(false);
@@ -39,9 +45,8 @@ const TransferBNI = ({ navigation }) => {
   const [dataRekening, setDataRekening] = useState([]);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [accountNumberSource, setAccountNumberSource] = useState(null);
-  const [accountNumberDestination, setAccountNumberDestination] = useState(
-    null
-  );
+  const [accountNumberDestination, setAccountNumberDestination] =
+    useState(null);
   const [selectedBalance, setSelectedBalance] = useState(null);
 
   useEffect(() => {
@@ -83,7 +88,13 @@ const TransferBNI = ({ navigation }) => {
         setModalVisible(true);
       })
       .catch((error) => {
-        Alert.alert("Alert", "Nomor rekening tujuan tidak ditemukan");
+        Dialog.show({
+          type: ALERT_TYPE.WARNING,
+          title: "Perhatian",
+          textBody:
+            "Nomor rekening yang anda masukkan\ntidak valid.",
+          button: "Tutup",
+        });
       });
   };
 
@@ -118,6 +129,24 @@ const TransferBNI = ({ navigation }) => {
     }
   };
 
+  // const formatCurrency = (value) => {
+  //   // Hapus semua karakter kecuali angka
+  //   let formattedValue = value.replace(/[^0-9]/g, '');
+    
+  //   // Format sebagai mata uang Rupiah
+  //   if (formattedValue) {
+  //     formattedValue = 'Rp' + parseInt(formattedValue, 10).toLocaleString('id-ID');
+  //   }
+
+  //   return formattedValue;
+  // };
+
+  // const handleNominalChange = (value) => {
+  //   // Format input saat berubah
+  //   const formattedValue = formatCurrency(value);
+  //   setNominal(formattedValue);
+  // };
+
   const handleNominalChange = (text) => {
     // Menghapus karakter non-digit
     let filteredText = text.replace(/\D/g, "");
@@ -128,6 +157,7 @@ const TransferBNI = ({ navigation }) => {
     // Update the state with the filtered text
     setNominal(filteredText);
   };
+
   const handleNoteChange = (text) => {
     setNote(text); // Perbarui state nominal dengan nilai input
   };
@@ -142,17 +172,29 @@ const TransferBNI = ({ navigation }) => {
     AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
       if (isWarningOn === "1") {
         if (parseInt(nominal) < 1) {
-          Alert.alert(
-            "Alert",
-            "Silahkan isi nominal dengan benar untuk melanjutkan transaksi."
-          );
+          Dialog.show({
+            type: ALERT_TYPE.WARNING,
+            title: "Perhatian",
+            textBody:
+              "Silahkan isi nominal dengan benar untuk melanjutkan transaksi.",
+            button: "Tutup",
+          });
         } else if (selectedBalance < nominal) {
-          Alert.alert(
-            "Alert",
-            "Saldo pada rekening Anda tidak cukup. Pastikan saldo Anda tersedia dan silahakan ulangi transaksi Anda."
-          );
+          Dialog.show({
+            type: ALERT_TYPE.WARNING,
+            title: "Perhatian",
+            textBody:
+              "Saldo pada rekening Anda tidak cukup. Pastikan saldo Anda tersedia dan silahkan ulangi transaksi Anda.",
+            button: "Tutup",
+          });
         } else if (accountNumberDestination.length !== 10) {
-          Alert.alert("Error", "Nomor rekening tujuan harus 10 digit");
+          Dialog.show({
+            type: ALERT_TYPE.WARNING,
+            title: "Perhatian",
+            textBody:
+              "Transaksi anda tidak dapat diproses. Nomor rekening yang anda masukkan tidak valid. Silahkan ulangi transaksi Anda.",
+            button: "Tutup",
+          });
         } else {
           openModal();
         }
@@ -171,279 +213,294 @@ const TransferBNI = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <CustomAppBar
-        title="Transfer Antar BNI"
-        onLeftPress={() => navigation.replace("Transfer")}
-        leftIcon={icons.icArrowForward}
-        dimension={24}
-      />
-      <ScrollView>
-        {/* Rekening, Saldo */}
-        <View style={{ alignItems: "center" }}>
-          <View style={styles.Rekening}>
-            <Text style={{ fontSize: 14, fontFamily: "PlusJakartaSansMedium" }}>
-              Rekening Debet
-            </Text>
-            <Dropdown
-              style={styles.dropdown}
-              data={dataNomorRekening}
-              labelField="label"
-              valueField="value"
-              placeholder={"Pilih Rekening"}
-              selectedTextStyle={{
-                fontFamily: "PlusJakartaSansMedium",
-                fontSize: 14,
-              }}
-              searchPlaceholder="Search..."
-              value={accountNumberSource}
-              onChange={(item) => {
-                setAccountNumberSource(item.value);
-                setSelectedBalance(item.balance);
-              }}
-              placeholderStyle={{
-                fontFamily: "PlusJakartaSansMedium",
-                color: "#98A1B0",
-                fontSize: 14,
-              }}
-              renderItem={renderItem}
-            />
-
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Text style={{ fontFamily: "PlusJakartaSansBold" }}>Saldo</Text>
-              <View
-                style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
-              >
-                <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-                  {showSaldo
-                    ? `Rp${new Intl.NumberFormat("id-ID").format(
-                        selectedBalance
-                      )}`
-                    : "Rp *******"}
-                </Text>
-                <TouchableOpacity onPress={() => setShowSaldo(!showSaldo)}>
-                  {showSaldo ? (
-                    <Ionicons name="eye-outline" size={18} color="#F37548" />
-                  ) : (
-                    <Ionicons
-                      name="eye-off-outline"
-                      size={18}
-                      color="#F37548"
-                    />
-                  )}
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </View>
-
-        {/* SPACING */}
-        <View
-          style={{ backgroundColor: "rgba(204, 204, 204, 0.5)", height: 5 }}
-        ></View>
-        {/* TOPBAR DAFTAR FAVORIT */}
-        <View>
-          <View style={styles.tabRekTujuan}>
-            {/* TAB DAFTAR FAVORIT DAN INPUT BARU */}
-            <TouchableOpacity
-              style={[
-                styles.textRekTujuan,
-                activeButton === "Daftar Favorit" && styles.activeTab,
-                {
-                  borderBottomColor:
-                    activeButton === "Daftar Favorit"
-                      ? "rgb(241, 89, 34)"
-                      : "rgba(204, 204, 204, 0.5)",
-                  borderBottomWidth: activeButton === "Daftar Favorit" ? 3 : 2,
-                },
-              ]}
-              onPress={() => handleTabPress("Daftar Favorit")}
-            >
+    <AlertNotificationRoot>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+        <CustomAppBar
+          title="Transfer Antar BNI"
+          onLeftPress={() => navigation.replace("Transfer")}
+          leftIcon={icons.icArrowForward}
+          dimension={24}
+        />
+        <ScrollView>
+          {/* Rekening, Saldo */}
+          <View style={{ alignItems: "center" }}>
+            <View style={styles.Rekening}>
               <Text
-                style={{
-                  fontFamily:
-                    activeButton === "Daftar Favorit"
-                      ? "PlusJakartaSansBold"
-                      : "PlusJakartaSansMedium",
-                  color:
-                    activeButton === "Daftar Favorit"
-                      ? "rgb(241, 89, 34)"
-                      : "rgba(204, 204, 204, 1)",
-                }}
+                style={{ fontSize: 14, fontFamily: "PlusJakartaSansMedium" }}
               >
-                Daftar Favorit
+                Rekening Debet
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.textRekTujuan,
-                activeButton === "Input Baru" && styles.activeTab,
-                {
-                  borderBottomColor:
-                    activeButton === "Input Baru"
-                      ? "rgb(241, 89, 34)"
-                      : "rgba(204, 204, 204, 0.5)",
-                  borderBottomWidth: activeButton === "Input Baru" ? 3 : 2,
-                },
-              ]}
-              onPress={() => handleTabPress("Input Baru")}
-            >
-              <Text
-                style={{
-                  fontFamily:
-                    activeButton === "Input Baru"
-                      ? "PlusJakartaSansBold"
-                      : "PlusJakartaSansMedium",
-                  color:
-                    activeButton === "Input Baru"
-                      ? "rgb(241, 89, 34)"
-                      : "rgba(204, 204, 204, 1)",
-                }}
-              >
-                Input Baru
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {/* CONTENT YANG AKTIF SESUAI DENGAN TAB YANG AKTIF */}
-        {activeTabContent === "Daftar Favorit" && (
-          <View style={styles.activeTabContent}>
-            <View style={styles.DaftarFavorit}>
-              <Text style={{ fontSize: 16, fontFamily: "PlusJakartaSansBold" }}>
-                Rekening Tujuan
-              </Text>
-              <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>Nama</Text>
               <Dropdown
                 style={styles.dropdown}
-                data={dataRekening}
-                search
-                maxHeight={300}
+                data={dataNomorRekening}
                 labelField="label"
-                selectedTextStyle={{
-                  fontFamily: "PlusJakartaSansRegular",
-                  fontSize: 14,
-                }}
                 valueField="value"
-                placeholder="Pilih Nama"
-                placeholderStyle={{
-                  fontFamily: "PlusJakartaSansRegular",
-                  color: "#98A1B0",
+                placeholder={"Pilih Rekening"}
+                selectedTextStyle={{
+                  fontFamily: "PlusJakartaSansMedium",
                   fontSize: 14,
                 }}
                 searchPlaceholder="Search..."
-                value={selectedAccountId} // Gunakan selectedAccountId sebagai value
-                onChange={handleDropdownChange}
+                value={accountNumberSource}
+                onChange={(item) => {
+                  setAccountNumberSource(item.value);
+                  setSelectedBalance(item.balance);
+                }}
+                placeholderStyle={{
+                  fontFamily: "PlusJakartaSansMedium",
+                  color: "#98A1B0",
+                  fontSize: 14,
+                }}
                 renderItem={renderItem}
               />
 
-              <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-                Rekening Tujuan
-              </Text>
-              <TextInput
-                style={[styles.NamaRekening, styles.disabledInput]}
-                editable={false}
-                placeholder="Nomor Rekening"
-                placeholderTextColor="#98A1B0"
-                value={accountNumberDestination} // Gunakan accountNumberDestination sebagai value
-                onChangeText={setAccountNumberDestination}
-              />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={{ fontFamily: "PlusJakartaSansBold" }}>Saldo</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
+                    {showSaldo
+                      ? `Rp${new Intl.NumberFormat("id-ID").format(
+                          selectedBalance
+                        )}`
+                      : "Rp *******"}
+                  </Text>
+                  <TouchableOpacity onPress={() => setShowSaldo(!showSaldo)}>
+                    {showSaldo ? (
+                      <Ionicons name="eye-outline" size={18} color="#F37548" />
+                    ) : (
+                      <Ionicons
+                        name="eye-off-outline"
+                        size={18}
+                        color="#F37548"
+                      />
+                    )}
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
           </View>
-        )}
-        {activeTabContent === "Input Baru" && (
-          <View style={styles.activeTabContent}>
-            <View style={styles.DaftarFavorit}>
-              <Text style={{ fontFamily: "PlusJakartaSansBold" }}>
-                Rekening Tujuan
+
+          {/* SPACING */}
+          <View
+            style={{ backgroundColor: "rgba(204, 204, 204, 0.5)", height: 5 }}
+          ></View>
+          {/* TOPBAR DAFTAR FAVORIT */}
+          <View>
+            <View style={styles.tabRekTujuan}>
+              {/* TAB DAFTAR FAVORIT DAN INPUT BARU */}
+              <TouchableOpacity
+                style={[
+                  styles.textRekTujuan,
+                  activeButton === "Daftar Favorit" && styles.activeTab,
+                  {
+                    borderBottomColor:
+                      activeButton === "Daftar Favorit"
+                        ? "rgb(241, 89, 34)"
+                        : "rgba(204, 204, 204, 0.5)",
+                    borderBottomWidth:
+                      activeButton === "Daftar Favorit" ? 3 : 2,
+                  },
+                ]}
+                onPress={() => handleTabPress("Daftar Favorit")}
+              >
+                <Text
+                  style={{
+                    fontFamily:
+                      activeButton === "Daftar Favorit"
+                        ? "PlusJakartaSansBold"
+                        : "PlusJakartaSansMedium",
+                    color:
+                      activeButton === "Daftar Favorit"
+                        ? "rgb(241, 89, 34)"
+                        : "rgba(204, 204, 204, 1)",
+                  }}
+                >
+                  Daftar Favorit
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.textRekTujuan,
+                  activeButton === "Input Baru" && styles.activeTab,
+                  {
+                    borderBottomColor:
+                      activeButton === "Input Baru"
+                        ? "rgb(241, 89, 34)"
+                        : "rgba(204, 204, 204, 0.5)",
+                    borderBottomWidth: activeButton === "Input Baru" ? 3 : 2,
+                  },
+                ]}
+                onPress={() => handleTabPress("Input Baru")}
+              >
+                <Text
+                  style={{
+                    fontFamily:
+                      activeButton === "Input Baru"
+                        ? "PlusJakartaSansBold"
+                        : "PlusJakartaSansMedium",
+                    color:
+                      activeButton === "Input Baru"
+                        ? "rgb(241, 89, 34)"
+                        : "rgba(204, 204, 204, 1)",
+                  }}
+                >
+                  Input Baru
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {/* CONTENT YANG AKTIF SESUAI DENGAN TAB YANG AKTIF */}
+          {activeTabContent === "Daftar Favorit" && (
+            <View style={styles.activeTabContent}>
+              <View style={styles.DaftarFavorit}>
+                <Text
+                  style={{ fontSize: 16, fontFamily: "PlusJakartaSansBold" }}
+                >
+                  Rekening Tujuan
+                </Text>
+                <Text style={{ fontFamily: "PlusJakartaSansRegular" }}>
+                  Nama
+                </Text>
+                <Dropdown
+                  style={styles.dropdown}
+                  data={dataRekening}
+                  search
+                  maxHeight={300}
+                  labelField="label"
+                  selectedTextStyle={{
+                    fontFamily: "PlusJakartaSansRegular",
+                    fontSize: 14,
+                  }}
+                  valueField="value"
+                  placeholder="Pilih Nama"
+                  placeholderStyle={{
+                    fontFamily: "PlusJakartaSansRegular",
+                    color: "#98A1B0",
+                    fontSize: 14,
+                  }}
+                  searchPlaceholder="Search..."
+                  value={selectedAccountId} // Gunakan selectedAccountId sebagai value
+                  onChange={handleDropdownChange}
+                  renderItem={renderItem}
+                />
+
+                <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
+                  Rekening Tujuan
+                </Text>
+                <TextInput
+                  style={[styles.NamaRekening, styles.disabledInput]}
+                  editable={false}
+                  placeholder="Nomor Rekening"
+                  placeholderTextColor="#98A1B0"
+                  value={accountNumberDestination} // Gunakan accountNumberDestination sebagai value
+                  onChangeText={setAccountNumberDestination}
+                />
+              </View>
+            </View>
+          )}
+          {activeTabContent === "Input Baru" && (
+            <View style={styles.activeTabContent}>
+              <View style={styles.DaftarFavorit}>
+                <Text style={{ fontFamily: "PlusJakartaSansBold" }}>
+                  Rekening Tujuan
+                </Text>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Masukan Nomor Rekening"
+                  placeholderTextColor={"#98A1B0"}
+                  keyboardType="numeric"
+                  value={null}
+                  onChangeText={setAccountNumberDestination}
+                />
+
+                <CheckboxCustom
+                  value={isChecked}
+                  onValueChange={setIsChecked}
+                  label="Simpan ke Daftar Favorit"
+                />
+                <TextInput
+                  style={[
+                    styles.NamaRekening,
+                    !isChecked && styles.disabledInput,
+                  ]}
+                  editable={isChecked}
+                  placeholder={!isChecked ? "(max 30 karakter)" : null}
+                  placeholderTextColor={"#98A1B0"}
+                />
+              </View>
+            </View>
+          )}
+          <View
+            style={{ backgroundColor: "rgba(204, 204, 204, 0.5)", height: 5 }}
+          ></View>
+
+          <View style={{ alignItems: "center", marginBottom: 120 }}>
+            <View style={styles.Nominal}>
+              <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
+                Nominal
               </Text>
               <TextInput
                 style={styles.textInput}
-                placeholder="Masukan Nomor Rekening"
+                placeholder="Rp0"
+                value={nominal} // Mengikat nilai ke state nominal
+                onChangeText={handleNominalChange}
                 placeholderTextColor={"#98A1B0"}
                 keyboardType="numeric"
-                value={null}
-                onChangeText={setAccountNumberDestination}
               />
-
-              <CheckboxCustom
-                value={isChecked}
-                onValueChange={setIsChecked}
-                label="Simpan ke Daftar Favorit"
-              />
+              <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
+                Keterangan
+              </Text>
               <TextInput
-                style={[
-                  styles.NamaRekening,
-                  !isChecked && styles.disabledInput,
-                ]}
-                editable={isChecked}
-                placeholder={!isChecked ? "(max 30 karakter)" : null}
+                style={styles.textInput}
+                placeholder="Tulis Keterangan Transaksi (Optional)"
+                placeholderStyle={{
+                  fontFamily: "PlusJakartaSansRegular",
+                }}
                 placeholderTextColor={"#98A1B0"}
+                onChangeText={handleNoteChange}
               />
             </View>
           </View>
-        )}
-        <View
-          style={{ backgroundColor: "rgba(204, 204, 204, 0.5)", height: 5 }}
-        ></View>
 
-        <View style={{ alignItems: "center", marginBottom: 120 }}>
-          <View style={styles.Nominal}>
-            <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>Nominal</Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Rp0"
-              value={nominal} // Mengikat nilai ke state nominal
-              onChangeText={handleNominalChange}
-              placeholderTextColor={"#98A1B0"}
-              keyboardType="numeric"
-            />
-            <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-              Keterangan
-            </Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Tulis Keterangan Transaksi (Optional)"
-              placeholderStyle={{
-                fontFamily: "PlusJakartaSansRegular",
-              }}
-              placeholderTextColor={"#98A1B0"}
-              onChangeText={handleNoteChange}
-            />
-          </View>
+          <ModalStatusCheck
+            closeModal={closeModal}
+            status={status}
+            modalVisible={modalVisible}
+            handleNextButtonClick={handleNextButtonClick}
+            handleCloseButtonClick={handleCloseButtonClick}
+            isChecked={isCheckedModal}
+            handleCheckboxChange={handleCheckboxChange}
+            accountNumberDestination={accountNumberDestination}
+            accountNumberSource={accountNumberSource}
+            nominal={nominal}
+            note={note}
+          />
+        </ScrollView>
+
+        <View style={styles.bottomButtonContainer}>
+          <ButtonPrimary
+            text="Selanjutnya"
+            onPress={() => {
+              handleNextButtonPrimary();
+            }}
+            disable={
+              !nominal || !accountNumberDestination || !accountNumberSource
+            }
+          />
         </View>
-
-        <ModalStatusCheck
-          closeModal={closeModal}
-          status={status}
-          modalVisible={modalVisible}
-          handleNextButtonClick={handleNextButtonClick}
-          handleCloseButtonClick={handleCloseButtonClick}
-          isChecked={isCheckedModal}
-          handleCheckboxChange={handleCheckboxChange}
-          accountNumberDestination={accountNumberDestination}
-          accountNumberSource={accountNumberSource}
-          nominal={nominal}
-          note={note}
-        />
-      </ScrollView>
-
-      <View style={styles.bottomButtonContainer}>
-        <ButtonPrimary
-          text="Selanjutnya"
-          onPress={() => {
-            handleNextButtonPrimary();
-          }}
-          disable={
-            !nominal || !accountNumberDestination || !accountNumberSource
-          }
-        />
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </AlertNotificationRoot>
   );
 };
 

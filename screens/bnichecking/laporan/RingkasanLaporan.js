@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
@@ -18,10 +19,15 @@ import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import { useNavigation } from "@react-navigation/native";
 
-const RingkasanLaporan = ({route}) => {
+const RingkasanLaporan = ({ route }) => {
   const { reportData } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedImageId, setSelectedImageId] = useState(0)
+  const [selectedImageId, setSelectedImageId] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const handleLoad = () => {
+    setLoading(false);
+  };
 
   const status = reportData.status_int;
   const handleImageClick = (imageId) => {
@@ -80,12 +86,18 @@ const RingkasanLaporan = ({route}) => {
           <CardDataPelaporan
             namaRekeningPelapor={reportData.account_number_source_username}
             nomorRekeningPelapor={reportData.account_number_source}
-            namaRekeningDilaporkan={reportData.account_number_destination_username}
+            namaRekeningDilaporkan={
+              reportData.account_number_destination_username
+            }
             nominalRekeningDilaporkan={reportData.amount}
             nomorRekeningDilaporkan={reportData.account_number_destination}
-            tanggalTransaksiDilaporkan={new Date(reportData.created_at_transaction).toLocaleDateString()}
+            tanggalTransaksiDilaporkan={new Date(
+              reportData.created_at_transaction
+            ).toLocaleDateString()}
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
-            jamTransaksiDilaporkan={new Date(reportData.created_at_transaction).toLocaleTimeString([], {
+            jamTransaksiDilaporkan={new Date(
+              reportData.created_at_transaction
+            ).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
               second: "2-digit",
@@ -110,7 +122,26 @@ const RingkasanLaporan = ({route}) => {
                 reportData.attachment.map((image, index) => (
                   <View key={index} style={styles.imageContainer}>
                     <TouchableOpacity onPress={() => handleImageClick(index)}>
-                      <Image source={{ uri: image }} style={styles.image} />
+                      <View
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        {loading && (
+                          <ActivityIndicator
+                            style={styles.loader}
+                            size="large"
+                            color="#F37548"
+                          />
+                        )}
+
+                        <Image
+                          source={{ uri: image }}
+                          style={styles.image}
+                          onLoad={handleLoad}
+                        />
+                      </View>
                     </TouchableOpacity>
                   </View>
                 ))}

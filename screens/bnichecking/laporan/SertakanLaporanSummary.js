@@ -19,14 +19,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import { createNewReport } from "../../../services/ReportService";
+import {
+  ALERT_TYPE,
+  AlertNotificationRoot,
+} from "react-native-alert-notification";
 
-const SertakanLaporanSummary = ({route}) => {
-  const { transactionSummary, attachments, chronology } = route.params
+const SertakanLaporanSummary = ({ route }) => {
+  const { transactionSummary, attachments, chronology } = route.params;
   const navigation = useNavigation();
   const [isChecked, setIsChecked] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
-
+  const [loading, setLoading] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -37,107 +42,157 @@ const SertakanLaporanSummary = ({route}) => {
   };
 
   const handleSendReport = async () => {
-    let success = await createNewReport(transactionSummary.transaction_id, chronology, attachments)
-    if (success) {
-      navigation.navigate("LaporanBerhasilTerkirim");
-    } else {
-      Alert.alert("Gagal", "Laporan gagal dikirim");
-    }
+    setLoading(true);
+    setDisableButton(true);
 
-  }
+    try {
+      const success = await createNewReport(
+        transactionSummary.transaction_id,
+        chronology,
+        attachments
+      );
+
+      if (success) {
+        navigation.replace("LaporanBerhasilTerkirim");
+      }
+    } catch (error) {
+      Toast.show({
+        type: ALERT_TYPE.WARNING,
+        title: "Perhatian",
+        textBody: "Laporan gagal dikirim. Silahkan coba kembali",
+      });
+    } finally {
+      const randomDelay = Math.floor(Math.random() * (1000 - 500)) + 500;
+      setTimeout(() => {
+        setLoading(false);
+        setDisableButton(false);
+      }, randomDelay);
+    }
+  };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
-      <CustomAppBar
-        title="Sertakan Laporan"
-        onLeftPress={() => navigation.goBack()}
-        leftIcon={icons.icArrowForward}
-        dimension={24}
-      />
-      <ScrollView>
-        <View style={styles.contentContainer}>
-          <CardDataPelaporan
-            namaRekeningPelapor={transactionSummary.account_name_source}
-            nomorRekeningPelapor={transactionSummary.account_number_source}
-            namaRekeningDilaporkan={transactionSummary.account_name_destination}
-            nominalRekeningDilaporkan={transactionSummary.amount}
-            nomorRekeningDilaporkan={transactionSummary.account_number_destination}
-            tanggalTransaksiDilaporkan={new Date(transactionSummary.transaction_time).toLocaleDateString()}
-            bankRekeningDilaporkan={"Bank Negara Indonesia"}
-            jamTransaksiDilaporkan={new Date(transactionSummary.transaction_time).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: false,
-            }) + " WIB"}
-          />
-          <View style={styles.separator}></View>
-          <View style={styles.peristiwaContainer}>
-            <Text style={styles.headerText}>Peristiwa Yang Dilaporkan</Text>
-            <View style={styles.kronologiContainer}>
-              <Text style={styles.label}>Kronologi</Text>
-              <View style={styles.inputContainer}>
-                <Text style={styles.input}>
-                  { chronology }
-                 
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.lampiranContainer}>
-            <Text style={styles.label}>Lampiran</Text>
-            <View style={styles.imagesContainer}>
-              {attachments &&
-                attachments.map((image, index) => (
-                  <View key={index} style={styles.imageContainer}>
-                    <TouchableOpacity onPress={() => handleImageClick(image)}>
-                      <Image source={{ uri: image.uri }} style={styles.image} />
-                    </TouchableOpacity>
-                  </View>
-                ))}
-            </View>
-
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => setModalVisible(false)}
-            >
-              <View style={styles.modalContainer}>
-                <TouchableOpacity
-                  onPress={() => setModalVisible(false)}
-                  style={styles.closeButton}
-                >
-                  <MaterialIcons name="close" size={24} color="white" />
-                </TouchableOpacity>
-                <View style={styles.modalContent}>
-                  <Image
-                    source={{ uri: selectedImage.uri }}
-                    style={styles.fullImage}
-                    resizeMode="contain"
-                  />
+    <AlertNotificationRoot
+      toastConfig={{
+        titleStyle: {
+          fontSize: 16,
+          fontFamily: "PlusJakartaSansBold",
+        },
+        textBodyStyle: {
+          fontSize: 14,
+          fontFamily: "PlusJakartaSansMedium",
+        },
+      }}
+      colors={[
+        {
+          card: "#D6264F",
+          label: "#FFFFFF",
+        },
+      ]}
+    >
+      <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
+        <CustomAppBar
+          title="Sertakan Laporan"
+          onLeftPress={() => navigation.goBack()}
+          leftIcon={icons.icArrowForward}
+          dimension={24}
+        />
+        <ScrollView>
+          <View style={styles.contentContainer}>
+            <CardDataPelaporan
+              namaRekeningPelapor={transactionSummary.account_name_source}
+              nomorRekeningPelapor={transactionSummary.account_number_source}
+              namaRekeningDilaporkan={
+                transactionSummary.account_name_destination
+              }
+              nominalRekeningDilaporkan={transactionSummary.amount}
+              nomorRekeningDilaporkan={
+                transactionSummary.account_number_destination
+              }
+              tanggalTransaksiDilaporkan={new Date(
+                transactionSummary.transaction_time
+              ).toLocaleDateString()}
+              bankRekeningDilaporkan={"Bank Negara Indonesia"}
+              jamTransaksiDilaporkan={
+                new Date(
+                  transactionSummary.transaction_time
+                ).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  hour12: false,
+                }) + " WIB"
+              }
+            />
+            <View style={styles.separator}></View>
+            <View style={styles.peristiwaContainer}>
+              <Text style={styles.headerText}>Peristiwa Yang Dilaporkan</Text>
+              <View style={styles.kronologiContainer}>
+                <Text style={styles.label}>Kronologi</Text>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.input}>{chronology}</Text>
                 </View>
               </View>
-            </Modal>
+            </View>
+
+            <View style={styles.lampiranContainer}>
+              <Text style={styles.label}>Lampiran</Text>
+              <View style={styles.imagesContainer}>
+                {attachments &&
+                  attachments.map((image, index) => (
+                    <View key={index} style={styles.imageContainer}>
+                      <TouchableOpacity onPress={() => handleImageClick(image)}>
+                        <Image
+                          source={{ uri: image.uri }}
+                          style={styles.image}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+              </View>
+
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+              >
+                <View style={styles.modalContainer}>
+                  <TouchableOpacity
+                    onPress={() => setModalVisible(false)}
+                    style={styles.closeButton}
+                  >
+                    <MaterialIcons name="close" size={24} color="white" />
+                  </TouchableOpacity>
+                  <View style={styles.modalContent}>
+                    <Image
+                      source={{ uri: selectedImage.uri }}
+                      style={styles.fullImage}
+                      resizeMode="contain"
+                    />
+                  </View>
+                </View>
+              </Modal>
+            </View>
           </View>
+        </ScrollView>
+        <View style={styles.bottomButtonContainer}>
+          <CheckboxCustom
+            label={"Saya menyatakan bahwa data yang saya input\nadalah benar."}
+            value={isChecked}
+            onValueChange={handleCheckboxChange}
+          />
+
+          <ButtonPrimary
+            text="Kirim Laporan"
+            onPress={() => {
+              handleSendReport();
+            }}
+            disable={!isChecked || disableButton} // Atur apakah tombol dinonaktifkan atau tidak
+            loading={loading} // Set loading ke status saat ini
+          />
         </View>
-      </ScrollView>
-      <View style={styles.bottomButtonContainer}>
-        <CheckboxCustom
-          label={"Saya menyatakan bahwa data yang saya input\nadalah benar."}
-          value={isChecked}
-          onValueChange={handleCheckboxChange}
-        />
-        <ButtonPrimary
-          text="Kirim Laporan"
-          onPress={() => {
-            handleSendReport();
-          }}
-          disable={!isChecked}
-        />
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </AlertNotificationRoot>
   );
 };
 
