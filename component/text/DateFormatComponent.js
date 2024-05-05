@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 
-const DateFormatComponent = (dateString) => {
+const formatDate = (dateString) => {
   const months = [
     "Januari",
     "Februari",
@@ -25,8 +25,8 @@ const DateFormatComponent = (dateString) => {
   return `${day} ${month} ${year}`;
 };
 
-const DateComponent = ({ dateString }) => {
-  return <Text>{DateFormatComponent(dateString)}</Text>;
+const DateFormatComponent = ({ dateString }) => {
+  return <Text>{formatDate(dateString)}</Text>;
 };
 
-export default DateComponent;
+export default DateFormatComponent;
