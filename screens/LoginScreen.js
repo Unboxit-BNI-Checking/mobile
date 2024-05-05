@@ -155,7 +155,7 @@ const LoginScreen = () => {
                     style={styles.input}
                     placeholder="Masukan User ID"
                     value={userId}
-                    onChangeText={setUserId}
+                    onChangeText={(text) => setUserId(text.replace(/\s/g, ""))}
                   />
                 </View>
               </View>
