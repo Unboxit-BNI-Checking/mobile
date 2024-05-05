@@ -149,7 +149,7 @@ const TransferBNI = ({ navigation }) => {
         } else if (selectedBalance < nominal) {
           Alert.alert(
             "Alert",
-            "Saldo pada rekening Anda tidak cukup. Pastikan saldo Anda tersedia dan silahakan ulangi transaksi Anda."
+            "Saldo pada rekening Anda tidak cukup. Pastikan saldo Anda tersedia dan silahkan ulangi transaksi Anda."
           );
         } else if (accountNumberDestination.length !== 10) {
           Alert.alert("Error", "Nomor rekening tujuan harus 10 digit");
@@ -358,7 +358,7 @@ const TransferBNI = ({ navigation }) => {
         {activeTabContent === "Input Baru" && (
           <View style={styles.activeTabContent}>
             <View style={styles.DaftarFavorit}>
-              <Text style={{ fontFamily: "PlusJakartaSansBold" }}>
+              <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
                 Rekening Tujuan
               </Text>
               <TextInput
@@ -399,7 +399,7 @@ const TransferBNI = ({ navigation }) => {
               placeholder="Rp0"
               value={nominal} // Mengikat nilai ke state nominal
               onChangeText={handleNominalChange}
-              placeholderTextColor={"#98A1B0"}
+              placeholderTextColor={"#5D6B82"}
               keyboardType="numeric"
             />
             <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
