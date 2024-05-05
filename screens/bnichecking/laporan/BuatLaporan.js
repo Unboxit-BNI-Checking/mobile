@@ -15,8 +15,10 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import { getUserAccountNumbersData } from "../../../services/UserService";
-import { getTransactionById, getTransactionHistory } from "../../../services/TransactionService";
-
+import {
+  getTransactionById,
+  getTransactionHistory,
+} from "../../../services/TransactionService";
 
 const BuatLaporan = () => {
   const navigation = useNavigation();
@@ -28,14 +30,16 @@ const BuatLaporan = () => {
 
   useEffect(() => {
     const fetchAccountNumbers = async () => {
-      getUserAccountNumbersData().then((formattedData) => {
-        setAccountNumbers(formattedData)
-      }).catch((error) => {
-        console.error("Error fetching account numbers:", error);
-      })
-    }
+      getUserAccountNumbersData()
+        .then((formattedData) => {
+          setAccountNumbers(formattedData);
+        })
+        .catch((error) => {
+          console.error("Error fetching account numbers:", error);
+        });
+    };
 
-    fetchAccountNumbers()
+    fetchAccountNumbers();
   }, []);
 
   const selectTransaction = (transaction) => {
@@ -46,22 +50,29 @@ const BuatLaporan = () => {
 
   const selectAccount = (account) => {
     setSelectedAccount(account); // Memilih rekening yang dipilih
-    getTransactionHistory(account).then((response) => {
-      setTransactionHistory(response);
-    }).catch((error) => {
-      console.error("Error fetching transaction history:", error);
-    })
+    getTransactionHistory(account)
+      .then((response) => {
+        setTransactionHistory(response);
+      })
+      .catch((error) => {
+        console.error("Error fetching transaction history:", error);
+      });
   };
 
   const handleMakeReport = async () => {
     navigation.navigate("SertakanLaporan", {
-      transactionSummary: await getTransactionById(selectedTransaction.transaction_id)
+      transactionSummary: await getTransactionById(
+        selectedTransaction.transaction_id
+      ),
     });
-  }
+  };
 
   transactionComponentColor = (transactionId) => {
-    return selectedTransaction && selectedTransaction.transaction_id === transactionId ? "#F15922":"#6B788E"
-  }
+    return selectedTransaction &&
+      selectedTransaction.transaction_id === transactionId
+      ? "#F15922"
+      : "#6B788E";
+  };
 
   const renderItem = (transaction) => (
     <TouchableOpacity
@@ -75,7 +86,8 @@ const BuatLaporan = () => {
           gap: 8,
           borderWidth: 1,
           borderColor:
-            selectedTransaction && selectedTransaction.transaction_id === transaction.transaction_id // Memeriksa apakah transaksi saat ini dipilih
+            selectedTransaction &&
+            selectedTransaction.transaction_id === transaction.transaction_id // Memeriksa apakah transaksi saat ini dipilih
               ? "#F15922"
               : "#C2C7D0",
           borderRadius: 8,
@@ -84,7 +96,8 @@ const BuatLaporan = () => {
       >
         <Image
           source={
-            selectedTransaction && selectedTransaction.transaction_id === transaction.transaction_id // Menetapkan gambar radio sesuai dengan apakah transaksi saat ini dipilih atau tidak
+            selectedTransaction &&
+            selectedTransaction.transaction_id === transaction.transaction_id // Menetapkan gambar radio sesuai dengan apakah transaksi saat ini dipilih atau tidak
               ? icons.icRadioActive
               : icons.icRadioInactive
           }
@@ -96,7 +109,8 @@ const BuatLaporan = () => {
               fontFamily: "PlusJakartaSansMedium",
               color:
                 selectedTransaction &&
-                selectedTransaction.transaction_id === transaction.transaction_id // Menetapkan warna teks sesuai dengan apakah transaksi saat ini dipilih atau tidak
+                selectedTransaction.transaction_id ===
+                  transaction.transaction_id // Menetapkan warna teks sesuai dengan apakah transaksi saat ini dipilih atau tidak
                   ? "#F15922"
                   : "#243757",
               fontSize: 12,
@@ -109,7 +123,8 @@ const BuatLaporan = () => {
               fontFamily: "PlusJakartaSansBold",
               color:
                 selectedTransaction &&
-                selectedTransaction.transaction_id === transaction.transaction_id
+                selectedTransaction.transaction_id ===
+                  transaction.transaction_id
                   ? "#F15922"
                   : "#243757",
             }}
@@ -143,7 +158,7 @@ const BuatLaporan = () => {
               color: transactionComponentColor(transaction.transaction_id),
             }}
           >
-            {"-" +transaction.amount}
+            {"-" + transaction.amount}
           </Text>
           <Text
             style={{
@@ -155,14 +170,19 @@ const BuatLaporan = () => {
             }}
           >
             {new Date(transaction.transaction_time).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: false,
-              })}
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: false,
+            })}
           </Text>
 
-          <Text style={{ textAlign: "right", color: transaction.is_reported ? "red" : "green" }}>
+          <Text
+            style={{
+              textAlign: "right",
+              color: transaction.is_reported ? "red" : "green",
+            }}
+          >
             {transaction.is_reported ? "Sudah dilaporkan" : "Belum dilaporkan"}
           </Text>
         </View>
@@ -174,7 +194,7 @@ const BuatLaporan = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
         title="Pelapor"
-        onLeftPress={() => navigation.goBack()}
+        onLeftPress={() => navigation.navigate("Pelaporan")}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />
@@ -230,7 +250,6 @@ const BuatLaporan = () => {
                     placeholderTextColor={"#98A1B0"}
                     value={searchInput}
                     onChangeText={(text) => setSearchInput(text)}
-                    
                   />
                 </View>
               </View>
@@ -242,7 +261,9 @@ const BuatLaporan = () => {
                   (selectedAccount
                     ? transaction.account_number_source === selectedAccount
                     : false) &&
-                  transaction.account_destination_owner_name.includes(searchInput)
+                  transaction.account_destination_owner_name.includes(
+                    searchInput
+                  )
                 );
               })
               .map((transaction) => renderItem(transaction))}
