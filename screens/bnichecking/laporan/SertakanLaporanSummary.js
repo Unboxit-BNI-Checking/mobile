@@ -23,6 +23,7 @@ import {
   ALERT_TYPE,
   AlertNotificationRoot,
 } from "react-native-alert-notification";
+import DateFormatComponent from "../../../component/text/DateFormatComponent";
 
 const SertakanLaporanSummary = ({ route }) => {
   const { transactionSummary, attachments, chronology } = route.params;
@@ -108,9 +109,14 @@ const SertakanLaporanSummary = ({ route }) => {
               nomorRekeningDilaporkan={
                 transactionSummary.account_number_destination
               }
-              tanggalTransaksiDilaporkan={new Date(
-                transactionSummary.transaction_time
-              ).toLocaleDateString()}
+              // tanggalTransaksiDilaporkan={new Date(
+              //   transactionSummary.transaction_time
+              // ).toLocaleDateString()}
+              tanggalTransaksiDilaporkan={
+                <DateFormatComponent
+                  dateString={transactionSummary.transaction_time}
+                />
+              }
               bankRekeningDilaporkan={"Bank Negara Indonesia"}
               jamTransaksiDilaporkan={
                 new Date(
