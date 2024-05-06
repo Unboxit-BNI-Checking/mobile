@@ -45,9 +45,8 @@ const TransferBNI = ({ navigation }) => {
   const [dataRekening, setDataRekening] = useState([]);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [accountNumberSource, setAccountNumberSource] = useState(null);
-  const [accountNumberDestination, setAccountNumberDestination] = useState(
-    null
-  );
+  const [accountNumberDestination, setAccountNumberDestination] =
+    useState(null);
   const [selectedBalance, setSelectedBalance] = useState(null);
 
   useEffect(() => {
@@ -412,7 +411,9 @@ const TransferBNI = ({ navigation }) => {
           {activeTabContent === "Input Baru" && (
             <View style={styles.activeTabContent}>
               <View style={styles.DaftarFavorit}>
-                <Text style={{ fontFamily: "PlusJakartaSansBold" }}>
+                <Text
+                  style={{ fontFamily: "PlusJakartaSansMedium", fontSize: 14 }}
+                >
                   Rekening Tujuan
                 </Text>
                 <TextInput
