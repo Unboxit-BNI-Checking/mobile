@@ -20,6 +20,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
+import RupiahFormatComponent from "../../../component/text/RupiahFormatComponent";
 
 const SertakanLaporan = ({ route }) => {
   const { transactionSummary } = route.params;
@@ -77,7 +78,10 @@ const SertakanLaporan = ({ route }) => {
             namaRekeningPelapor={transactionSummary.account_name_source}
             nomorRekeningPelapor={transactionSummary.account_number_source}
             namaRekeningDilaporkan={transactionSummary.account_name_destination}
-            nominalRekeningDilaporkan={transactionSummary.amount}
+            // nominalRekeningDilaporkan={transactionSummary.amount}
+            nominalRekeningDilaporkan={
+              <RupiahFormatComponent value={transactionSummary.amount} />
+            }
             nomorRekeningDilaporkan={
               transactionSummary.account_number_destination
             }
