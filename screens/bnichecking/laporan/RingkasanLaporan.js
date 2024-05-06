@@ -19,6 +19,7 @@ import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import { useNavigation } from "@react-navigation/native";
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
+import RupiahFormatComponent from "../../../component/text/RupiahFormatComponent";
 
 const RingkasanLaporan = ({ route }) => {
   const { reportData } = route.params;
@@ -95,11 +96,9 @@ const RingkasanLaporan = ({ route }) => {
             namaRekeningDilaporkan={
               reportData.account_number_destination_username
             }
-            nominalRekeningDilaporkan={reportData.amount}
+            nominalRekeningDilaporkan={<RupiahFormatComponent value={reportData.amount} />}
             nomorRekeningDilaporkan={reportData.account_number_destination}
-            // tanggalTransaksiDilaporkan={new Date(
-            //   reportData.created_at_transaction
-            // ).toLocaleDateString()}
+            
             tanggalTransaksiDilaporkan={
               <DateFormatComponent
                 dateString={reportData.created_at_transaction}
