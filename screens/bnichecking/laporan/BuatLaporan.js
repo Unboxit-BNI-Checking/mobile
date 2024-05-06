@@ -19,6 +19,7 @@ import {
   getTransactionById,
   getTransactionHistory,
 } from "../../../services/TransactionService";
+import DateFormatComponent from "../../../component/text/DateFormatComponent";
 
 const BuatLaporan = () => {
   const navigation = useNavigation();
@@ -104,20 +105,48 @@ const BuatLaporan = () => {
           style={{ width: 20, height: 20 }}
         />
         <View>
-          <Text
-            style={{
-              fontFamily: "PlusJakartaSansMedium",
-              color:
-                selectedTransaction &&
-                selectedTransaction.transaction_id ===
-                  transaction.transaction_id // Menetapkan warna teks sesuai dengan apakah transaksi saat ini dipilih atau tidak
-                  ? "#F15922"
-                  : "#243757",
-              fontSize: 12,
-            }}
-          >
-            {new Date(transaction.transaction_time).toLocaleDateString()}
-          </Text>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text
+              style={{
+                fontFamily: "PlusJakartaSansMedium",
+                color:
+                  selectedTransaction &&
+                  selectedTransaction.transaction_id ===
+                    transaction.transaction_id // Menetapkan warna teks sesuai dengan apakah transaksi saat ini dipilih atau tidak
+                    ? "#F15922"
+                    : "#243757",
+                fontSize: 12,
+              }}
+            >
+              {
+                <DateFormatComponent
+                  dateString={transaction.transaction_time}
+                />
+              }
+            </Text>
+            <View
+              style={{
+                paddingHorizontal: 16,
+                paddingVertical: 2,
+                height: 26,
+                alignSelf: "baseline",
+                borderRadius: 50,
+                backgroundColor: "#E7F8EF",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: "PlusJakartaSansBold",
+                  textAlign: "center",
+                  lineHeight: 20, // Adjust line height as needed
+                }}
+              >
+                Dilaporkan
+              </Text>
+            </View>
+          </View>
+
           <Text
             style={{
               fontFamily: "PlusJakartaSansBold",
