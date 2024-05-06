@@ -19,6 +19,18 @@ export const userLogin = async (username, mPin) => {
   }
 };
 
+export const userLogout = async () => {
+  try {
+    // Remove token from AsyncStorage
+    await AsyncStorage.removeItem("token");
+    return true;
+  } catch (error) {
+    console.error("Error logging out:", error);
+    return false;
+  }
+};
+
+
 export const getUserAccountNumbersData = async () => {
   try {
     const response = await axios.get(`${API_URL}/users/accountNumber`, {

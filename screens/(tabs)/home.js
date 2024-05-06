@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import images from "../../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
+import { userLogout } from "../../services/UserService";
 
 const data = [
   {
@@ -153,7 +154,7 @@ const PromotionComponent = () => {
   );
 };
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [accountData, setAccountData] = useState(null);
   const [showBalance, setShowBalance] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -187,6 +188,18 @@ export default function Home() {
     getAccount();
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      // Call the logout function
+      await userLogout();
+      // Navigate to the login screen (or any other screen you want to navigate to after logout)
+      navigation.reset({ index: 0, routes: [{ name: "LoginScreen" }] });
+    } catch (error) {
+      console.error("Error logging out:", error);
+      // Handle logout error if necessary
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#F37548" }}>
       <View
@@ -208,7 +221,9 @@ export default function Home() {
             source={icons.icNotification}
             style={{ width: 24, height: 24 }}
           />
-          <Image source={icons.icListen} style={{ width: 24, height: 24 }} />
+          <TouchableOpacity onPress={handleLogout}>
+            <Image source={icons.icListen} style={{ width: 24, height: 24 }} />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={{ backgroundColor: "#fff" }}>
