@@ -16,6 +16,7 @@ import CustomAppBar from "../../component/header/CustomAppBar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
 import RupiahFormatComponent from "../../component/text/RupiahFormatComponent";
+import DateFormatComponent from "../../component/text/DateFormatComponent";
 
 const TransferSuccess = ({ route, navigation }) => {
   const { summary } = route.params;
@@ -50,7 +51,7 @@ const TransferSuccess = ({ route, navigation }) => {
           />
           <LabelValidasiComponent
             title={"Tanggal Transaksi"}
-            subTitle={new Date(summary.transaction_time).toLocaleDateString()}
+            subTitle={<DateFormatComponent dateString={summary.transaction_time} />}
           />
           <LabelValidasiComponent
             title={"Waktu Transaksi"}
