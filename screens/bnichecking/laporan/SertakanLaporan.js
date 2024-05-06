@@ -114,44 +114,33 @@ const SertakanLaporan = ({ route }) => {
 
           <View style={styles.lampiranContainer}>
             <Text style={styles.label}>Lampiran</Text>
-            {images.length === 0 ? (
-              <TouchableOpacity onPress={pickImages}>
-                <View style={styles.inputImage}>
-                  <Image source={icons.icPaste} style={styles.pasteIcon} />
-                  <Text style={styles.addText}>Tambahkan Bukti Disini</Text>
-                  <Text style={styles.uploadInfo}>
-                    Anda bisa upload lebih dari 1 file
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <View>
-                <TouchableOpacity onPress={pickImages}>
-                  <View style={styles.addButtonImage}>
-                    <MaterialIcons name="add" size={24} color="#F15922" />
-                    <Text style={styles.addTextMore}>Tambah Lampiran</Text>
+            <TouchableOpacity onPress={pickImages}>
+              <View style={styles.inputImage}>
+                <Image source={icons.icPaste} style={styles.pasteIcon} />
+                <Text style={styles.addText}>Tambahkan Bukti Disini</Text>
+                <Text style={styles.uploadInfo}>
+                  Anda bisa upload lebih dari 1 file
+                </Text>
+              </View>
+            </TouchableOpacity>
+            {images.length === 0 ? null : (
+              <View style={styles.imagesContainer}>
+                {images.map((image, index) => (
+                  <View key={index} style={styles.imageContainer}>
+                    <TouchableOpacity onPress={() => handleImageClick(image)}>
+                      <Image source={{ uri: image.uri }} style={styles.image} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => deleteImage(index)}
+                      style={styles.deleteButton}
+                    >
+                      <MaterialIcons name="close" size={24} color="white" />
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
-                <View style={styles.imagesContainer}>
-                  {images.map((image, index) => (
-                    <View key={index} style={styles.imageContainer}>
-                      <TouchableOpacity onPress={() => handleImageClick(image)}>
-                        <Image
-                          source={{ uri: image.uri }}
-                          style={styles.image}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => deleteImage(index)}
-                        style={styles.deleteButton}
-                      >
-                        <MaterialIcons name="close" size={24} color="white" />
-                      </TouchableOpacity>
-                    </View>
-                  ))}
-                </View>
+                ))}
               </View>
             )}
+
             <Modal
               animationType="slide"
               transparent={true}
