@@ -24,6 +24,7 @@ import {
   AlertNotificationRoot,
 } from "react-native-alert-notification";
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
+import RupiahFormatComponent from "../../../component/text/RupiahFormatComponent";
 
 const SertakanLaporanSummary = ({ route }) => {
   const { transactionSummary, attachments, chronology } = route.params;
@@ -105,7 +106,10 @@ const SertakanLaporanSummary = ({ route }) => {
               namaRekeningDilaporkan={
                 transactionSummary.account_name_destination
               }
-              nominalRekeningDilaporkan={transactionSummary.amount}
+              // nominalRekeningDilaporkan={transactionSummary.amount}
+              nominalRekeningDilaporkan={
+                <RupiahFormatComponent value={transactionSummary.amount} />
+              }
               nomorRekeningDilaporkan={
                 transactionSummary.account_number_destination
               }
