@@ -18,6 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import { useNavigation } from "@react-navigation/native";
+import DateFormatComponent from "../../../component/text/DateFormatComponent";
 
 const RingkasanLaporan = ({ route }) => {
   const { reportData } = route.params;
@@ -77,7 +78,12 @@ const RingkasanLaporan = ({ route }) => {
                   fontFamily: "PlusJakartaSansRegular",
                 }}
               >
-                {new Date(reportData.created_at_report).toLocaleDateString()}
+                {/* {new Date(reportData.created_at_report).toLocaleDateString()} */}
+                {
+                  <DateFormatComponent
+                    dateString={reportData.created_at_report}
+                  />
+                }
               </Text>
             </View>
           </View>
@@ -91,9 +97,14 @@ const RingkasanLaporan = ({ route }) => {
             }
             nominalRekeningDilaporkan={reportData.amount}
             nomorRekeningDilaporkan={reportData.account_number_destination}
-            tanggalTransaksiDilaporkan={new Date(
-              reportData.created_at_transaction
-            ).toLocaleDateString()}
+            // tanggalTransaksiDilaporkan={new Date(
+            //   reportData.created_at_transaction
+            // ).toLocaleDateString()}
+            tanggalTransaksiDilaporkan={
+              <DateFormatComponent
+                dateString={reportData.created_at_transaction}
+              />
+            }
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
             jamTransaksiDilaporkan={new Date(
               reportData.created_at_transaction
