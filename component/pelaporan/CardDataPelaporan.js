@@ -26,9 +26,7 @@ const CardDataPelaporan = ({
         <Text style={styles.headerText}>Transaksi yang dipilih</Text>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.headerText}>{namaRekeningDilaporkan}</Text>
-          <Text style={styles.headerText}>
-            - Rp.{nominalRekeningDilaporkan}
-          </Text>
+          <Text style={styles.headerText}>- {nominalRekeningDilaporkan}</Text>
         </View>
         <View style={styles.spaceBetweenRow}>
           <Text style={styles.subHeaderText}>{nomorRekeningDilaporkan}</Text>
