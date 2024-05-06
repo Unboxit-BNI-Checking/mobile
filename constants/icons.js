@@ -48,6 +48,7 @@ import icInfoRingkasanLaporan from "../assets/icons/ic-info-ringkasan-laporan.pn
 import icRefresh from "../assets/icons/ic-refresh.png";
 import icShare from "../assets/icons/ic-share.png";
 import icBiometricLoginForm from "../assets/icons/ic-biometric-login-form.png";
+import icNoReport from "../assets/icons/ic-no-report.png";
 
 export default {
   icBni,
@@ -100,4 +101,5 @@ export default {
   icRefresh,
   icShare,
   icBiometricLoginForm,
+  icNoReport
 };

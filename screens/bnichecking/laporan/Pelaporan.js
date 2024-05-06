@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
+  Image,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import CardPelaporan from "../../../component/pelaporan/CardPelaporan";
@@ -23,11 +25,14 @@ const Pelaporan = () => {
   const [activeButton, setActiveButton] = useState("Dilaporkan");
   const [activeTabContent, setActiveTabContent] = useState("Dilaporkan");
   const [dataLaporan, setDataLaporan] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getAllReports = async () => {
+      // Fetching reports
       reports = await getAllReportsMadeByCurrentUser();
       formattedReports = reports.map((report) => {
+        // Formatting reports
         return {
           report_id: report.reports_id,
           status: reportStatus[report.status - 1],
@@ -46,9 +51,13 @@ const Pelaporan = () => {
           attachment: report.attachment,
         };
       });
+      // Setting data to state
       setDataLaporan(formattedReports);
+      // Setting isLoading to false after data fetching is complete
+      setIsLoading(false);
     };
 
+    // Calling the function to fetch data
     getAllReports();
   }, []);
 
@@ -169,77 +178,108 @@ const Pelaporan = () => {
         </View>
       </View>
       {/* CONTENT YANG AKTIF SESUAI DENGAN TAB YANG AKTIF */}
-
-      <ScrollView>
-        <View>
-          {activeTabContent === "Dilaporkan" &&
-            dataLaporan
-              .filter((item) => item.status === "Dilaporkan")
-
-              .map((item) => (
-                <Pressable
-                  key={item.report_id} // Move key to the outermost JSX element
-                  onPress={() => {
-                    handleSeeReportDetail(item);
-                  }}
-                >
-                  <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
-                    <CardPelaporan
-                      titleReportId={item.report_id}
-                      dateLaporan={
-                        <DateFormatComponent
-                          dateString={item.created_at_report}
+      <ScrollView
+        contentContainerStyle={
+          isLoading ? { flexGrow: 1, justifyContent: "center" } : null
+        }
+      >
+        {isLoading ? ( // Display loading indicator if isLoading is true
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" color="#F37548" />
+          </View>
+        ) : (
+          <>
+            {activeTabContent === "Dilaporkan" &&
+              (dataLaporan.filter((item) => item.status === "Dilaporkan")
+                .length > 0 ? (
+                dataLaporan
+                  .filter((item) => item.status === "Dilaporkan")
+                  .map((item) => (
+                    <Pressable
+                      key={item.report_id}
+                      onPress={() => {
+                        handleSeeReportDetail(item);
+                      }}
+                    >
+                      <View
+                        style={{ paddingHorizontal: 20, paddingVertical: 10 }}
+                      >
+                        <CardPelaporan
+                          titleReportId={item.report_id}
+                          dateLaporan={
+                            <DateFormatComponent
+                              dateString={item.created_at_report}
+                            />
+                          }
+                          status={item.status}
                         />
-                      }
-                      status={item.status}
-                    />
-                  </View>
-                </Pressable>
+                      </View>
+                    </Pressable>
+                  ))
+              ) : (
+                <View style={{ marginTop: 100 }}>
+                  <Image
+                    source={icons.icNoReport}
+                    style={{ alignSelf: "center", width: 150, height: 150 }}
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontFamily: "PlusJakartaSansBold",
+                      color: "#6B788E",
+                    }}
+                  >
+                    Belum Ada Pelaporan
+                  </Text>
+                </View>
               ))}
-          {activeTabContent === "Diproses" &&
-            dataLaporan
-              .filter((item) => item.status === "Diproses")
-
-              .map((item) => (
-                <Pressable
-                  key={item.report_id} // Move key to the outermost JSX element
-                  onPress={() => handleSeeReportDetail(item)}
-                >
-                  <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
-                    <CardPelaporan
-                      titleReportId={item.report_id}
-                      dateLaporan={
-                        <DateFormatComponent
-                          dateString={item.created_at_report}
+            {(activeTabContent === "Diproses" ||
+              activeTabContent === "Selesai") &&
+              (dataLaporan.filter((item) => item.status === activeTabContent)
+                .length > 0 ? (
+                dataLaporan
+                  .filter((item) => item.status === activeTabContent)
+                  .map((item) => (
+                    <Pressable
+                      key={item.report_id}
+                      onPress={() => handleSeeReportDetail(item)}
+                    >
+                      <View
+                        style={{ paddingHorizontal: 20, paddingVertical: 10 }}
+                      >
+                        <CardPelaporan
+                          titleReportId={item.report_id}
+                          dateLaporan={
+                            <DateFormatComponent
+                              dateString={item.created_at_report}
+                            />
+                          }
+                          status={item.status}
                         />
-                      }
-                      status={item.status}
-                    />
-                  </View>
-                </Pressable>
+                      </View>
+                    </Pressable>
+                  ))
+              ) : (
+                <View style={{ marginTop: 100 }}>
+                  <Image
+                    source={icons.icNoReport}
+                    style={{ alignSelf: "center", width: 150, height: 150 }}
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontFamily: "PlusJakartaSansBold",
+                      color: "#6B788E",
+                    }}
+                  >
+                    Belum Ada Pelaporan
+                  </Text>
+                </View>
               ))}
-          {activeTabContent === "Selesai" &&
-            dataLaporan
-              .filter((item) => item.status === "Selesai")
-              .map((item) => (
-                <Pressable
-                  key={item.report_id} // Move key to the outermost JSX element
-                  onPress={() => handleSeeReportDetail(item)}
-                >
-                  <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
-                    <CardPelaporan
-                      titleReportId={item.report_id}
-                      dateLaporan={
-                        <DateFormatComponent
-                          dateString={item.created_at_report}
-                        />
-                      }
-                      status={item.status}
-                    />
-                  </View>
-                </Pressable>
-              ))}
-        </View>
+          </>
+        )}
       </ScrollView>
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity
