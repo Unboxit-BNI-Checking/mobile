@@ -15,93 +15,102 @@ import { StackActions, useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import { checkAccountNumberReport } from "../../../services/ReportService";
+import { ALERT_TYPE, AlertNotificationRoot, Dialog } from "react-native-alert-notification";
 
 const CekRekening = () => {
   const navigation = useNavigation();
   const [rekening, setRekening] = useState("");
 
   const handleCheckAccountNumber = async (rekening) => {
-
-    checkAccountNumberReport(rekening).then((response) => {
-      navigation.navigate("HasilCekRekening", {
-        reportData: response.data
+    checkAccountNumberReport(rekening)
+      .then((response) => {
+        navigation.navigate("HasilCekRekening", {
+          reportData: response.data,
+        });
+      })
+      .catch((error) => {
+        Dialog.show({
+          type: ALERT_TYPE.WARNING,
+          title: "Perhatian",
+          textBody:
+            "No rekening tidak ditemukan.",
+          button: "Tutup",
+        });
       });
-    }).catch((error) => {
-      Alert.alert("Cek Rekening", "No rekening tidak ditemukan");
-    })
-
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <CustomAppBar
-        title="Cek Rekening"
-        onLeftPress={() => navigation.navigate("BNIChecking")}
-        leftIcon={icons.icArrowForward}
-        dimension={24}
-      />
+    <AlertNotificationRoot>
+      <SafeAreaView style={styles.container}>
+        <CustomAppBar
+          title="Cek Rekening"
+          onLeftPress={() => navigation.navigate("BNIChecking")}
+          leftIcon={icons.icArrowForward}
+          dimension={24}
+        />
 
-      <View style={{ padding: 20 }}>
-        <View style={{ gap: 8 }}>
-          <Text
+        <View style={{ padding: 20 }}>
+          <View style={{ gap: 8 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: "PlusJakartaSansBold",
+                color: "#243757",
+              }}
+            >
+              Cek Rekening
+            </Text>
+            <Text
+              style={{
+                fontSize: 14,
+                fontFamily: "PlusJakartaSansRegular",
+                color: "#6B788E",
+              }}
+            >
+              Identifikasi apakah seseorang berpotensi {"\n"}melakukan penipuan
+              sebelum bertransaksi.
+            </Text>
+          </View>
+          <View
             style={{
-              fontSize: 18,
-              fontFamily: "PlusJakartaSansBold",
-              color: "#243757",
+              gap: 15,
+              marginTop: 10,
             }}
           >
-            Cek Rekening
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              fontFamily: "PlusJakartaSansRegular",
-              color: "#6B788E",
-            }}
-          >
-            Identifikasi apakah seseorang berpotensi {"\n"}melakukan penipuan
-            sebelum bertransaksi.
-          </Text>
-        </View>
-        <View
-          style={{
-            gap: 15,
-            marginTop: 10,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 14,
-              fontFamily: "PlusJakartaSansRegular",
-              color: "#243757",
-            }}
-          >
-            No Rekening
-          </Text>
+            <Text
+              style={{
+                fontSize: 14,
+                fontFamily: "PlusJakartaSansRegular",
+                color: "#243757",
+              }}
+            >
+              No Rekening
+            </Text>
 
-          <View style={styles.inputContainer}>
-            <Image source={icons.icSearchCekRekening} />
-            <TextInput
-              style={styles.input}
-              placeholder="Masukan Nomor Rekening"
-              value={rekening}
-              onChangeText={setRekening}
-              keyboardType="number-pad"
-            />
+            <View style={styles.inputContainer}>
+              <Image source={icons.icSearchCekRekening} />
+              <TextInput
+                style={styles.input}
+                placeholder="Masukan Nomor Rekening"
+                value={rekening}
+                onChangeText={setRekening}
+                keyboardType="number-pad"
+              />
+            </View>
           </View>
         </View>
-      </View>
 
-      <View style={styles.bottomButtonContainer}>
-        <ButtonPrimary
-          text="Cek Rekening"
-          onPress={() => {
-            handleCheckAccountNumber(rekening)
-          }}
-          disable={!rekening}
-        />
-      </View>
-    </SafeAreaView>
+        <View style={styles.bottomButtonContainer}>
+          <ButtonPrimary
+            text="Cek Rekening"
+            onPress={() => {
+              handleCheckAccountNumber(rekening);
+            }}
+            disable={!rekening}
+          />
+        </View>
+      </SafeAreaView>
+    </AlertNotificationRoot>
   );
 };
 

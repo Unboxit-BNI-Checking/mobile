@@ -194,7 +194,7 @@ const BuatLaporan = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <CustomAppBar
         title="Pelapor"
-        onLeftPress={() => navigation.goBack()}
+        onLeftPress={() => navigation.navigate("Pelaporan")}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />

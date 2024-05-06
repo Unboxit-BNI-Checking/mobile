@@ -106,7 +106,7 @@ const ModalStatusCheck = ({
 
   const handleCheckAccountNumber = async (accountNumberDestination) => {
     reportData = await checkAccountNumberReport(accountNumberDestination);
-    navigation.navigate("TransferHasilCekRekening", {
+    navigation.replace("TransferHasilCekRekening", {
       reportData: reportData.data,
       transactionSummary: {
         accountNumberDestination: accountNumberDestination,

@@ -5,11 +5,9 @@ import ButtonNextClose from "../../../component/button/ButtonNextClose";
 import { useNavigation } from "@react-navigation/native";
 
 const LaporanBerhasilTerkirim = () => {
-
-const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-     
       <View
         style={{
           flex: 1,
@@ -42,13 +40,10 @@ const navigation = useNavigation();
           closeName={"Balik Ke Home"}
           nextName={"Lihat Laporan"}
           handleNextButtonClick={() => {
-           navigation.navigate("Pelaporan");
+            navigation.replace("Pelaporan");
           }}
           handleCloseButtonClick={() => {
-            navigation.navigate("Tabs");
-          }}
-          onPress={() => {
-           
+            navigation.replace("Tabs");
           }}
         />
       </View>

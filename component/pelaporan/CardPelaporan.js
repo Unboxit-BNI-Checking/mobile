@@ -1,124 +1,111 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
-const CardPelaporan = ({ titleReportId, dateLaporan, status }) => {
-  let backgroundColors = "blue";
-  let fontColos = "red";
+import { View, Text, StyleSheet } from "react-native";
 
-  if (status === "Dilaporkan") {
-    backgroundColors = "#FBE9ED";
-    fontColos = "#D6264F";
-  } else if (status === "Diproses") {
-    backgroundColors = "#FFF6E6";
-    fontColos = "#FFA500";
-  } else if (status === "Selesai") {
-    backgroundColors = "#E7F8EF";
-    fontColos = "#10B55A";
+const getStatusStyles = (status) => {
+  let backgroundColor, fontColor;
+
+  switch (status) {
+    case "Dilaporkan":
+      backgroundColor = "#FBE9ED";
+      fontColor = "#D6264F";
+      break;
+    case "Diproses":
+      backgroundColor = "#FFF6E6";
+      fontColor = "#FFA500";
+      break;
+    case "Selesai":
+      backgroundColor = "#E7F8EF";
+      fontColor = "#10B55A";
+      break;
+    default:
+      backgroundColor = "#FFF";
+      fontColor = "#000";
   }
 
-  return (
-    <View
-      style={{
-        backgroundColor: "#FFF",
-        padding: 14,
-        elevation: 10,
-        borderRadius: 8,
-      }}
-    >
-      <View style={{ gap: 6, marginBottom: 8 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            gap: 8,
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <View style={{ flexDirection: "row", gap: 8, alignItems: "center" }}>
-            <Text
-              style={{
-                color: "#6B788E",
-                fontFamily: "PlusJakartaSansBold",
-              }}
-            >
-              ID Laporan
-            </Text>
-            <Text
-              style={{
-                color: "#6B788E",
-                fontFamily: "PlusJakartaSansMedium",
-              }}
-            >
-              {titleReportId}
-            </Text>
-          </View>
+  return { backgroundColor, fontColor };
+};
 
+const CardPelaporan = ({ titleReportId, dateLaporan, status }) => {
+  const { backgroundColor, fontColor } = getStatusStyles(status);
+
+  return (
+    <View style={styles.cardContainer}>
+      <View style={styles.infoContainer}>
+        <View style={styles.infoRowContainer}>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>ID Laporan</Text>
+            <Text style={styles.infoText}>{titleReportId}</Text>
+          </View>
           <View>
-            <Text
-              style={{
-                color: "#F15922",
-                fontFamily: "PlusJakartaSansBold",
-                textDecorationLine: "underline",
-              }}
-            >
-              Lihat
-            </Text>
+            <Text style={styles.infoUnderline}>Lihat</Text>
           </View>
         </View>
 
-        <View
-          style={{
-            flexDirection: "row",
-            gap: 8,
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              color: "#6B788E",
-              fontFamily: "PlusJakartaSansBold",
-            }}
-          >
-            Tanggal Laporan
-          </Text>
-          <Text
-            style={{
-              color: "#6B788E",
-              fontFamily: "PlusJakartaSansMedium",
-            }}
-          >
-            {dateLaporan}
-          </Text>
+        <View style={styles.infoRow}>
+          <Text style={styles.infoLabel}>Tanggal Laporan</Text>
+          <Text style={styles.infoText}>{dateLaporan}</Text>
         </View>
       </View>
-
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 8,
-        }}
-      >
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 8,
-            borderRadius: 50,
-            backgroundColor: backgroundColors,
-          }}
-        >
-          <Text
-            style={{
-              color: fontColos,
-              fontSize: 12,
-              fontFamily: "PlusJakartaSansBold",
-            }}
-          >
-            {status}
-          </Text>
-        </View>
+      <View style={[styles.statusBadge, { backgroundColor }]}>
+        <Text style={[styles.statusText, { color: fontColor }]}>{status}</Text>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    padding: 14,
+    borderRadius: 8,
+    backgroundColor: "#FFF",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 18,
+    elevation: 4,
+  },
+  infoContainer: {
+    marginBottom: 8,
+  },
+  infoRowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  infoRow: {
+    flexDirection: "row",
+    gap: 6,
+    alignItems: "center",
+    marginBottom: 6,
+  },
+  infoLabel: {
+    color: "#6B788E",
+    fontFamily: "PlusJakartaSansBold",
+  },
+  infoText: {
+    color: "#6B788E",
+    fontFamily: "PlusJakartaSansMedium",
+  },
+  infoUnderline: {
+    color: "#F15922",
+    fontFamily: "PlusJakartaSansBold",
+    textDecorationLine: "underline",
+  },
+  statusBadge: {
+    paddingHorizontal: 16,
+    paddingVertical: 2,
+    height: 26,
+    alignSelf: "baseline",
+    borderRadius: 50,
+  },
+  statusText: {
+    fontSize: 12,
+    fontFamily: "PlusJakartaSansBold",
+    textAlign: "center",
+    lineHeight: 20, // Adjust line height as needed
+  },
+});
 
 export default CardPelaporan;

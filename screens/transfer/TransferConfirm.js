@@ -19,6 +19,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
 import { createNewTransaction } from "../../services/TransactionService";
+import RupiahFormatComponent from "../../component/text/RupiahFormatComponent";
 
 const TransferConfirm = ({ route, navigation }) => {
   const { summary } = route.params;
@@ -105,12 +106,12 @@ const TransferConfirm = ({ route, navigation }) => {
           />
           <LabelValidasiPengirimComponent
             title={"Nominal"}
-            subTitle={summary.amount}
+            subTitle={<RupiahFormatComponent value={summary.amount} />}
           />
 
           <LabelValidasiPengirimComponent
             title={"Fee"}
-            subTitle={summary.fee}
+            subTitle={<RupiahFormatComponent value={summary.fee} />}
           />
           <View
             style={{
@@ -124,7 +125,7 @@ const TransferConfirm = ({ route, navigation }) => {
           >
             <LabelValidasiPengirimComponent
               title={"Total"}
-              subTitle={summary.total_amount}
+              subTitle={<RupiahFormatComponent value={summary.total_amount} />}
             />
           </View>
           <View style={{ height: 48, gap: 6, marginTop: 10 }}>

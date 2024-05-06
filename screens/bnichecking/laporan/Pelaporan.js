@@ -15,6 +15,7 @@ import CustomAppBar from "../../../component/header/CustomAppBar";
 import MaterialIcon from "@expo/vector-icons/MaterialIcons";
 import { getAllReportsMadeByCurrentUser } from "../../../services/ReportService";
 import { reportStatus } from "../../../constants/reportStatus";
+import DateFormatComponent from "../../../component/text/DateFormatComponent";
 
 const Pelaporan = () => {
   const navigation = useNavigation();
@@ -66,7 +67,7 @@ const Pelaporan = () => {
     <SafeAreaView style={styles.container}>
       <CustomAppBar
         title="Pelaporan"
-        onLeftPress={() => navigation.goBack()}
+        onLeftPress={() => navigation.replace("BNIChecking")}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />
@@ -174,6 +175,7 @@ const Pelaporan = () => {
           {activeTabContent === "Dilaporkan" &&
             dataLaporan
               .filter((item) => item.status === "Dilaporkan")
+
               .map((item) => (
                 <Pressable
                   key={item.report_id} // Move key to the outermost JSX element
@@ -184,9 +186,11 @@ const Pelaporan = () => {
                   <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                     <CardPelaporan
                       titleReportId={item.report_id}
-                      dateLaporan={new Date(
-                        item.created_at_report
-                      ).toLocaleDateString()}
+                      dateLaporan={
+                        <DateFormatComponent
+                          dateString={item.created_at_report}
+                        />
+                      }
                       status={item.status}
                     />
                   </View>
@@ -195,6 +199,7 @@ const Pelaporan = () => {
           {activeTabContent === "Diproses" &&
             dataLaporan
               .filter((item) => item.status === "Diproses")
+
               .map((item) => (
                 <Pressable
                   key={item.report_id} // Move key to the outermost JSX element
@@ -203,7 +208,11 @@ const Pelaporan = () => {
                   <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                     <CardPelaporan
                       titleReportId={item.report_id}
-                      dateLaporan={item.created_at_report}
+                      dateLaporan={
+                        <DateFormatComponent
+                          dateString={item.created_at_report}
+                        />
+                      }
                       status={item.status}
                     />
                   </View>
@@ -220,7 +229,11 @@ const Pelaporan = () => {
                   <View style={{ paddingHorizontal: 20, paddingVertical: 10 }}>
                     <CardPelaporan
                       titleReportId={item.report_id}
-                      dateLaporan={item.created_at_report}
+                      dateLaporan={
+                        <DateFormatComponent
+                          dateString={item.created_at_report}
+                        />
+                      }
                       status={item.status}
                     />
                   </View>
@@ -231,7 +244,7 @@ const Pelaporan = () => {
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("BuatLaporan")}
+          onPress={() => navigation.replace("BuatLaporan")}
         >
           <View style={{ flexDirection: "row", gap: 8 }}>
             <MaterialIcon name="add" size={24} color="#fff" />
@@ -258,7 +271,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   bottomButtonContainer: {
-  
     width: "100%",
     padding: 20,
     backgroundColor: "#fff",
