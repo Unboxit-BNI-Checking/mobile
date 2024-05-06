@@ -19,6 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
+import DateFormatComponent from "../../../component/text/DateFormatComponent";
 
 const SertakanLaporan = ({ route }) => {
   const { transactionSummary } = route.params;
@@ -80,9 +81,14 @@ const SertakanLaporan = ({ route }) => {
             nomorRekeningDilaporkan={
               transactionSummary.account_number_destination
             }
-            tanggalTransaksiDilaporkan={new Date(
-              transactionSummary.transaction_time
-            ).toLocaleDateString()}
+            // tanggalTransaksiDilaporkan={new Date(
+            //   transactionSummary.transaction_time
+            // ).toLocaleDateString()}
+            tanggalTransaksiDilaporkan={
+              <DateFormatComponent
+                dateString={transactionSummary.transaction_time}
+              />
+            }
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
             jamTransaksiDilaporkan={
               new Date(transactionSummary.transaction_time).toLocaleTimeString(
