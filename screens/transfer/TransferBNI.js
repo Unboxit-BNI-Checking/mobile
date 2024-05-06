@@ -45,8 +45,9 @@ const TransferBNI = ({ navigation }) => {
   const [dataRekening, setDataRekening] = useState([]);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [accountNumberSource, setAccountNumberSource] = useState(null);
-  const [accountNumberDestination, setAccountNumberDestination] =
-    useState(null);
+  const [accountNumberDestination, setAccountNumberDestination] = useState(
+    null
+  );
   const [selectedBalance, setSelectedBalance] = useState(null);
 
   useEffect(() => {
@@ -91,8 +92,7 @@ const TransferBNI = ({ navigation }) => {
         Dialog.show({
           type: ALERT_TYPE.WARNING,
           title: "Perhatian",
-          textBody:
-            "Nomor rekening yang anda masukkan\ntidak valid.",
+          textBody: "Nomor rekening yang anda masukkan\ntidak valid.",
           button: "Tutup",
         });
       });
@@ -132,7 +132,7 @@ const TransferBNI = ({ navigation }) => {
   // const formatCurrency = (value) => {
   //   // Hapus semua karakter kecuali angka
   //   let formattedValue = value.replace(/[^0-9]/g, '');
-    
+
   //   // Format sebagai mata uang Rupiah
   //   if (formattedValue) {
   //     formattedValue = 'Rp' + parseInt(formattedValue, 10).toLocaleString('id-ID');

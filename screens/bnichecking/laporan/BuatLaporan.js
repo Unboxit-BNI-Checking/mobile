@@ -249,7 +249,14 @@ const BuatLaporan = () => {
               labelField="label"
               valueField="value"
               placeholder={"Pilih Rekening"}
-              selectedTextStyle={{ color: "#5D6B82" }}
+              placeholderStyle={{
+                fontFamily: "PlusJakartaSansMedium",
+                color: "#98A1B0",
+                fontSize: 14,
+              }}
+              selectedTextStyle={{
+                color: "#5D6B82",
+              }}
               searchPlaceholder="Search..."
               value={selectedAccount}
               onChange={(item) => selectAccount(item.value)}

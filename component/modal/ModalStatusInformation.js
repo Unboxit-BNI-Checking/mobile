@@ -24,6 +24,7 @@ const ModalStatusInformation = ({ modalVisible, closeModal }) => {
                 Nomor Rekening ini belum pernah melalui proses investigasi.
               </Text>
             </View>
+            <View style={{ backgroundColor: "#F5F6F7", height: 2 }}></View>
             <View style={styles.statusItem}>
               <View style={styles.statusBadgeInvestigation}>
                 <Text style={styles.statusTextInvestigation}>Investigasi</Text>
@@ -33,6 +34,7 @@ const ModalStatusInformation = ({ modalVisible, closeModal }) => {
                 penipuan.
               </Text>
             </View>
+            <View style={{ backgroundColor: "#F5F6F7", height: 2 }}></View>
             <View style={styles.statusItem}>
               <View style={styles.statusBadgeBlocked}>
                 <Text style={styles.statusTextBlocked}>Peringatan</Text>
@@ -41,6 +43,7 @@ const ModalStatusInformation = ({ modalVisible, closeModal }) => {
                 Nomor Rekening ini mempunyai riwayat laporan terkait penipuan.
               </Text>
             </View>
+            <View style={{ backgroundColor: "#F5F6F7", height: 2 }}></View>
           </View>
           <View style={styles.buttonContainer}>
             <ButtonPrimary text={"Mengerti"} onPress={closeModal} />
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
   },
   statusContainer: {
     marginTop: 4,
-    gap: 16,
+    gap: 8,
   },
   statusItem: {
     gap: 8,
@@ -88,7 +91,6 @@ const styles = StyleSheet.create({
     alignSelf: "baseline",
     backgroundColor: "#E7F8EF",
     borderRadius: 50,
-
   },
   statusBadgeInvestigation: {
     paddingHorizontal: 8,
@@ -97,7 +99,6 @@ const styles = StyleSheet.create({
     alignSelf: "baseline",
     backgroundColor: "#FFF6E6",
     borderRadius: 50,
-    
   },
   statusBadgeBlocked: {
     paddingHorizontal: 8,
@@ -106,7 +107,6 @@ const styles = StyleSheet.create({
     alignSelf: "baseline",
     backgroundColor: "#FBE9ED",
     borderRadius: 50,
-    
   },
   statusTextNormal: {
     color: "#10B55A",
