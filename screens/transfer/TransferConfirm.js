@@ -20,6 +20,11 @@ import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
 import { createNewTransaction } from "../../services/TransactionService";
 import RupiahFormatComponent from "../../component/text/RupiahFormatComponent";
+import {
+  ALERT_TYPE,
+  AlertNotificationRoot,
+  Dialog,
+} from "react-native-alert-notification";
 
 const TransferConfirm = ({ route, navigation }) => {
   const { summary } = route.params;
@@ -44,138 +49,153 @@ const TransferConfirm = ({ route, navigation }) => {
   };
 
   const handleCreateTransaction = async () => {
-    let transactionSummary = await createNewTransaction(
-      summary.account_number_source,
-      summary.account_number_destination,
-      summary.amount,
-      summary.note,
-      password
-    );
-    navigation.navigate("TransferSuccess", {
-      summary: transactionSummary,
-    });
+    try {
+      let transactionSummary = await createNewTransaction(
+        summary.account_number_source,
+        summary.account_number_destination,
+        summary.amount,
+        summary.note,
+        password
+      );
+      navigation.navigate("TransferSuccess", {
+        summary: transactionSummary,
+      });
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        Dialog.show({
+          type: ALERT_TYPE.WARNING,
+          title: "Perhatian",
+          textBody: "Password salah, silahkan coba kembali",
+          button: "Tutup",
+        });
+      }
+    }
   };
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <CustomAppBar
-        title="Validasi"
-        onLeftPress={() => navigation.replace("TransferBNI")}
-        leftIcon={icons.icArrowForward}
-        dimension={24}
-      />
-      <ScrollView>
-        <View
-          style={{
-            gap: 10,
-            marginHorizontal: 20,
-            marginBottom: 140,
-            marginTop: 20,
-          }}
-        >
-          <LabelValidasiComponent
-            title={"Rekening Tujuan"}
-            subTitle={summary.account_number_destination}
-          />
-          <LabelValidasiComponent
-            title={"Nama Penerima"}
-            subTitle={"Sdr " + summary.account_name_destination}
-          />
-
-          <LabelValidasiComponent
-            title={"Bank Tujuan"}
-            subTitle={summary.bank_destination}
-          />
-          <TouchableOpacity onPress={openModal}>
-            <LabelStatusComponent
-              title={"Status Rekening"}
-              status={summary.account_number_destination_status}
-            />
-          </TouchableOpacity>
-
-          <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
-          <LabelValidasiPengirimComponent
-            title={"Nama Pengirim"}
-            subTitle={summary.account_name_source}
-          />
-          <LabelValidasiPengirimComponent
-            title={"Rekening Pengirim"}
-            subTitle={summary.account_number_source}
-          />
-          <LabelValidasiPengirimComponent
-            title={"Keterangan"}
-            subTitle={summary.note ? summary.note : "-"}
-          />
-          <LabelValidasiPengirimComponent
-            title={"Nominal"}
-            subTitle={<RupiahFormatComponent value={summary.amount} />}
-          />
-
-          <LabelValidasiPengirimComponent
-            title={"Fee"}
-            subTitle={<RupiahFormatComponent value={summary.fee} />}
-          />
+    <AlertNotificationRoot>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+        <CustomAppBar
+          title="Validasi"
+          onLeftPress={() => navigation.replace("TransferBNI")}
+          leftIcon={icons.icArrowForward}
+          dimension={24}
+        />
+        <ScrollView>
           <View
             style={{
-              backgroundColor: "#F5F6F7",
-              height: 48,
-              justifyContent: "center",
-              borderRadius: 6,
-              paddingHorizontal: 10,
+              gap: 10,
+              marginHorizontal: 20,
+              marginBottom: 140,
+              marginTop: 20,
             }}
           >
-            <LabelValidasiPengirimComponent
-              title={"Total"}
-              subTitle={<RupiahFormatComponent value={summary.total_amount} />}
+            <LabelValidasiComponent
+              title={"Rekening Tujuan"}
+              subTitle={summary.account_number_destination}
             />
-          </View>
-          <View style={{ height: 48, gap: 6, marginTop: 10 }}>
-            <Text
+            <LabelValidasiComponent
+              title={"Nama Penerima"}
+              subTitle={"Sdr " + summary.account_name_destination}
+            />
+
+            <LabelValidasiComponent
+              title={"Bank Tujuan"}
+              subTitle={summary.bank_destination}
+            />
+            <TouchableOpacity onPress={openModal}>
+              <LabelStatusComponent
+                title={"Status Rekening"}
+                status={summary.account_number_destination_status}
+              />
+            </TouchableOpacity>
+
+            <View style={{ height: 1, backgroundColor: "#F5F6F7" }}></View>
+            <LabelValidasiPengirimComponent
+              title={"Nama Pengirim"}
+              subTitle={summary.account_name_source}
+            />
+            <LabelValidasiPengirimComponent
+              title={"Rekening Pengirim"}
+              subTitle={summary.account_number_source}
+            />
+            <LabelValidasiPengirimComponent
+              title={"Keterangan"}
+              subTitle={summary.note ? summary.note : "-"}
+            />
+            <LabelValidasiPengirimComponent
+              title={"Nominal"}
+              subTitle={<RupiahFormatComponent value={summary.amount} />}
+            />
+
+            <LabelValidasiPengirimComponent
+              title={"Fee"}
+              subTitle={<RupiahFormatComponent value={summary.fee} />}
+            />
+            <View
               style={{
-                fontSize: 14,
-                color: "#243757",
-                fontFamily: "PlusJakartaSansMedium",
+                backgroundColor: "#F5F6F7",
+                height: 48,
+                justifyContent: "center",
+                borderRadius: 6,
+                paddingHorizontal: 10,
               }}
             >
-              Password Transaksi
-            </Text>
-
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Masukan Password Transaksi"
-                secureTextEntry={!showPassword}
-                value={password}
-                onChangeText={handlePasswordChange}
+              <LabelValidasiPengirimComponent
+                title={"Total"}
+                subTitle={
+                  <RupiahFormatComponent value={summary.total_amount} />
+                }
               />
-              <TouchableOpacity
-                onPress={toggleShowPassword}
-                style={{ position: "absolute", right: 10, top: 10 }}
+            </View>
+            <View style={{ height: 48, gap: 6, marginTop: 10 }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: "#243757",
+                  fontFamily: "PlusJakartaSansMedium",
+                }}
               >
-                <Ionicons
-                  name={showPassword ? "eye-outline" : "eye-off-outline"}
-                  size={24}
-                  color="#6B788E"
+                Password Transaksi
+              </Text>
+
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Masukan Password Transaksi"
+                  secureTextEntry={!showPassword}
+                  value={password}
+                  onChangeText={handlePasswordChange}
                 />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={toggleShowPassword}
+                  style={{ position: "absolute", right: 10, top: 10 }}
+                >
+                  <Ionicons
+                    name={showPassword ? "eye-outline" : "eye-off-outline"}
+                    size={24}
+                    color="#6B788E"
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
 
-        <ModalStatusInformation
-          modalVisible={modalVisible}
-          closeModal={closeModal}
-        />
-      </ScrollView>
-      <View style={styles.bottomButtonContainer}>
-        <ButtonPrimary
-          text="Selanjutnya"
-          onPress={() => {
-            handleCreateTransaction();
-          }}
-          disable={!password}
-        />
-      </View>
-    </SafeAreaView>
+          <ModalStatusInformation
+            modalVisible={modalVisible}
+            closeModal={closeModal}
+          />
+        </ScrollView>
+        <View style={styles.bottomButtonContainer}>
+          <ButtonPrimary
+            text="Selanjutnya"
+            onPress={() => {
+              handleCreateTransaction();
+            }}
+            disable={!password}
+          />
+        </View>
+      </SafeAreaView>
+    </AlertNotificationRoot>
   );
 };
 

@@ -27,6 +27,9 @@ export const createNewTransaction = async (
     );
     return response.data.data;
   } catch (error) {
+    if (error.response && error.response.status === 400) {
+      throw error;
+    }
     console.error("Error fetching transaction data:", error);
     return null;
   }
