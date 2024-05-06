@@ -124,16 +124,13 @@ const RingkasanLaporan = ({ route }) => {
                     <TouchableOpacity onPress={() => handleImageClick(index)}>
                       <View
                         style={{
+                          flex: 1,
                           justifyContent: "center",
                           alignItems: "center",
                         }}
                       >
                         {loading && (
-                          <ActivityIndicator
-                            style={styles.loader}
-                            size="large"
-                            color="#F37548"
-                          />
+                          <ActivityIndicator size="large" color="#F37548" />
                         )}
 
                         <Image
