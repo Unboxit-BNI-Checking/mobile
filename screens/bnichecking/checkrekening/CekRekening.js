@@ -33,7 +33,7 @@ const CekRekening = () => {
           type: ALERT_TYPE.WARNING,
           title: "Perhatian",
           textBody:
-            "No rekening tidak ditemukan.",
+            "Nomor rekening yang anda masukkan tidak valid.",
           button: "Tutup",
         });
       });
