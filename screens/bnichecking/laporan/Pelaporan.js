@@ -7,8 +7,9 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CardPelaporan from "../../../component/pelaporan/CardPelaporan";
 import icons from "../../../constants/icons";
 import { useNavigation } from "@react-navigation/native";
@@ -26,41 +27,55 @@ const Pelaporan = () => {
   const [activeTabContent, setActiveTabContent] = useState("Dilaporkan");
   const [dataLaporan, setDataLaporan] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const getAllReports = async () => {
+    try {
+      const reports = await getAllReportsMadeByCurrentUser();
+      const formattedReports = formatReports(reports);
+      setDataLaporan(formattedReports);
+      setIsLoading(false);
+      console.log(formattedReports);
+    } catch (error) {
+      console.error("Error fetching reports:", error);
+      // Handle error as needed
+    }
+  };
+
+  const formatReports = (reports) => {
+    return reports.map((report) => ({
+      report_id: report.reports_id,
+      status:
+        report.status === 3 || report.status === 4 || report.status === 5
+          ? "Selesai"
+          : reportStatus[report.status - 1],
+      status_int: report.status,
+      created_at_report: report.created_at_reports,
+      chronology: report.chronology,
+      amount: report.amount,
+      reports_id: report.reports_id,
+      created_at_reports: report.created_at_reports,
+      account_number_source: report.account_number_source,
+      account_number_source_username: report.account_number_source_username,
+      account_number_destination: report.account_number_destination,
+      account_number_destination_username:
+        report.account_number_destination_username,
+      created_at_transaction: report.created_at_transaction,
+      attachment: report.attachment,
+    }));
+  };
 
   useEffect(() => {
-    getAllReports = async () => {
-      // Fetching reports
-      reports = await getAllReportsMadeByCurrentUser();
-      formattedReports = reports.map((report) => {
-        // Formatting reports
-        return {
-          report_id: report.reports_id,
-          status: reportStatus[report.status - 1],
-          status_int: report.status,
-          created_at_report: report.created_at_reports,
-          chronology: report.chronology,
-          amount: report.amount,
-          reports_id: report.reports_id,
-          created_at_reports: report.created_at_reports,
-          account_number_source: report.account_number_source,
-          account_number_source_username: report.account_number_source_username,
-          account_number_destination: report.account_number_destination,
-          account_number_destination_username:
-            report.account_number_destination_username,
-          created_at_transaction: report.created_at_transaction,
-          attachment: report.attachment,
-        };
-      });
-      // Setting data to state
-      setDataLaporan(formattedReports);
-      // Setting isLoading to false after data fetching is complete
-      setIsLoading(false);
-    };
-
-    // Calling the function to fetch data
     getAllReports();
   }, []);
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      getAllReports(); // Refresh data
+    }, 500);
+  }, []);
   const handleTabPress = (tab) => {
     setActiveButton(tab);
     setActiveTabContent(tab);
@@ -181,6 +196,9 @@ const Pelaporan = () => {
       <ScrollView
         contentContainerStyle={
           isLoading ? { flexGrow: 1, justifyContent: "center" } : null
+        }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         {isLoading ? ( // Display loading indicator if isLoading is true
