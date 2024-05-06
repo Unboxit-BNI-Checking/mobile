@@ -48,7 +48,8 @@ const TransferConfirm = ({ route, navigation }) => {
       summary.account_number_source,
       summary.account_number_destination,
       summary.amount,
-      summary.note
+      summary.note,
+      password
     );
     navigation.navigate("TransferSuccess", {
       summary: transactionSummary,
@@ -116,7 +117,6 @@ const TransferConfirm = ({ route, navigation }) => {
           <View
             style={{
               backgroundColor: "#F5F6F7",
-
               height: 48,
               justifyContent: "center",
               borderRadius: 6,

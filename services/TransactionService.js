@@ -6,7 +6,8 @@ export const createNewTransaction = async (
   accountNumberSource,
   accountNumberDestination,
   amount,
-  note
+  note,
+  password
 ) => {
   try {
     const response = await axios.post(
@@ -16,6 +17,7 @@ export const createNewTransaction = async (
         account_number_destination: accountNumberDestination,
         amount: amount,
         note: note,
+        password: password,
       },
       {
         headers: {
