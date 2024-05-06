@@ -2,7 +2,6 @@ import React from "react";
 import { Modal, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import ButtonNextClose from "../button/ButtonNextClose";
 import CheckboxCustom from "../checkbox/CheckboxCustom";
-import ButtonPrimary from "../button/ButtonPrimary";
 import { useNavigation } from "@react-navigation/native";
 import { checkAccountNumberReport } from "../../services/ReportService";
 const modalContent = {

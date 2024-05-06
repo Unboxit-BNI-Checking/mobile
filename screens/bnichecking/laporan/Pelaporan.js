@@ -35,7 +35,6 @@ const Pelaporan = () => {
       const formattedReports = formatReports(reports);
       setDataLaporan(formattedReports);
       setIsLoading(false);
-      console.log(formattedReports);
     } catch (error) {
       console.error("Error fetching reports:", error);
       // Handle error as needed
