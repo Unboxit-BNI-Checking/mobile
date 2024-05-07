@@ -21,6 +21,7 @@ import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
 import RupiahFormatComponent from "../../../component/text/RupiahFormatComponent";
+import TimeFormatComponent from "../../../component/text/TimeFormatComponent";
 
 const SertakanLaporan = ({ route }) => {
   const { transactionSummary } = route.params;
@@ -85,26 +86,13 @@ const SertakanLaporan = ({ route }) => {
             nomorRekeningDilaporkan={
               transactionSummary.account_number_destination
             }
-            // tanggalTransaksiDilaporkan={new Date(
-            //   transactionSummary.transaction_time
-            // ).toLocaleDateString()}
             tanggalTransaksiDilaporkan={
               <DateFormatComponent
                 dateString={transactionSummary.transaction_time}
               />
             }
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
-            jamTransaksiDilaporkan={
-              new Date(transactionSummary.transaction_time).toLocaleTimeString(
-                [],
-                {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                  hour12: false,
-                }
-              ) + " WIB"
-            }
+            jamTransaksiDilaporkan={<TimeFormatComponent timestamp={transactionSummary.transaction_time} />}
           />
           <View style={styles.separator}></View>
           <View style={styles.peristiwaContainer}>

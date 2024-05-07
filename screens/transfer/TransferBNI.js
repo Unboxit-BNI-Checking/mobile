@@ -86,7 +86,7 @@ const TransferBNI = ({ navigation }) => {
               type: ALERT_TYPE.WARNING,
               title: "Perhatian",
               textBody:
-                "Nomor akun sudah pernah terdaftar dengan nama yang berbeda",
+                "Nomor rekening sudah terdaftar dengan nama yang berbeda",
               button: "Tutup",
             });
             return;
