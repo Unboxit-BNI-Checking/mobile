@@ -13,6 +13,7 @@ import ModalStatusInformation from "../../component/modal/ModalStatusInformation
 import ButtonNextClose from "../../component/button/ButtonNextClose";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import { validateTransaction } from "../../services/TransactionService";
+import { parseIndonesianCurrency } from "../../util/parseIndonesianCurrency";
 
 const TransferHasilCekRekening = ({ route, navigation }) => {
   const { reportData, transactionSummary } = route.params;
@@ -31,7 +32,7 @@ const TransferHasilCekRekening = ({ route, navigation }) => {
       summary: await validateTransaction(
         transactionSummary.accountNumberSource,
         transactionSummary.accountNumberDestination,
-        transactionSummary.nominal,
+        parseIndonesianCurrency(transactionSummary.nominal),
         transactionSummary.note
       ),
     });

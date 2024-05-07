@@ -28,6 +28,7 @@ import {
   AlertNotificationRoot,
   Dialog,
 } from "react-native-alert-notification";
+import { parseIndonesianCurrency } from "../../util/parseIndonesianCurrency";
 
 const TransferBNI = ({ navigation }) => {
   const [showSaldo, setShowSaldo] = useState(false);
@@ -166,18 +167,6 @@ const TransferBNI = ({ navigation }) => {
     setNominal(formattedValue);
   };
 
-  function parseIndonesianCurrency(currencyString) {
-    const numericString = currencyString.replace(/[^\d.]/g, "");
-
-    const dotIndex = numericString.lastIndexOf(".");
-    const cleanNumericString =
-      numericString.substring(0, dotIndex) +
-      numericString.substring(dotIndex + 1);
-
-    const parsedValue = parseInt(cleanNumericString, 10);
-
-    return parsedValue;
-  }
 
   const handleNoteChange = (text) => {
     setNote(text); // Perbarui state nominal dengan nilai input
