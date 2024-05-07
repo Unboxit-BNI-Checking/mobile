@@ -82,16 +82,22 @@ const TransferBNI = ({ navigation }) => {
       .then((transactionSummary) => {
         switch (transactionSummary.is_favourite) {
           case 2:
-            Alert.alert(
-              "Perhatian",
-              "Nomor akun sudah pernah terdaftar dengan nama yang berbeda"
-            );
+            Dialog.show({
+              type: ALERT_TYPE.WARNING,
+              title: "Perhatian",
+              textBody:
+                "Nomor akun sudah pernah terdaftar dengan nama yang berbeda",
+              button: "Tutup",
+            });
             return;
           case 3:
-            Alert.alert(
-              "Perhatian",
-              "Nama favorit sudah pernah terdaftar dengan nomor akun yang berbeda"
-            );
+            Dialog.show({
+              type: ALERT_TYPE.WARNING,
+              title: "Perhatian",
+              textBody:
+                "Nama favorit sudah pernah terdaftar dengan nomor akun yang berbeda",
+              button: "Tutup",
+            });
             return;
         }
 
@@ -126,7 +132,7 @@ const TransferBNI = ({ navigation }) => {
       accountNumberSource,
       accountNumberDestination,
       parseIndonesianCurrency(nominal),
-      note,
+      note
     );
     navigation.replace("TransferConfirm", {
       summary: transactionSummary,
@@ -166,7 +172,6 @@ const TransferBNI = ({ navigation }) => {
     const formattedValue = formatCurrency(value);
     setNominal(formattedValue);
   };
-
 
   const handleNoteChange = (text) => {
     setNote(text); // Perbarui state nominal dengan nilai input
