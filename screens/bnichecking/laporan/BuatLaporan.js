@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
@@ -296,7 +297,7 @@ const BuatLaporan = () => {
                   color: amountColor,
                 }}
               >
-                {"-" + transaction.amount}
+                <RupiahFormatComponent value={"-" + transaction.amount} />
               </Text>
               <Text
                 style={{
@@ -307,12 +308,7 @@ const BuatLaporan = () => {
                   color: amountColor,
                 }}
               >
-                {new Date(transaction.transaction_time).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                  hour12: false,
-                })}
+                <TimeFormatComponent timestamp={transaction.transaction_time} />
               </Text>
             </View>
           </View>
@@ -370,8 +366,21 @@ const BuatLaporan = () => {
             />
             {selectedAccount ? (
               transactionHistory.length === 0 ? (
-                // TODO: Give styling
-                <Text>Belum ada transaksi</Text>
+                <View style={{ marginTop: 100 }}>
+                  <Image
+                    source={icons.icNoReport}
+                    style={{ alignSelf: "center", width: 150, height: 150 }}
+                  />
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontFamily: "PlusJakartaSansBold",
+                      color: "#6B788E",
+                    }}
+                  >
+                    Belum Ada Transaksi
+                  </Text>
+                </View>
               ) : (
                 <View>
                   <Text
