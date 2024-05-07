@@ -39,7 +39,9 @@ export const validateTransaction = async (
   accountNumberSource,
   accountNumberDestination,
   amount,
-  note
+  note,
+  favouriteName,
+  isFavourite
 ) => {
   try {
     const response = await axios.post(
@@ -49,6 +51,8 @@ export const validateTransaction = async (
         account_number_destination: accountNumberDestination,
         amount: amount,
         note: note,
+        name: favouriteName,
+        is_favourite: isFavourite,
       },
       {
         headers: {

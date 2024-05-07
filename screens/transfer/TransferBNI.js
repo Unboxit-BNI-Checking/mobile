@@ -48,6 +48,7 @@ const TransferBNI = ({ navigation }) => {
   const [accountNumberDestination, setAccountNumberDestination] =
     useState(null);
   const [selectedBalance, setSelectedBalance] = useState(null);
+  const [favouriteName, setFavouriteName] = useState(null)
 
   useEffect(() => {
     async function getData() {
@@ -73,9 +74,20 @@ const TransferBNI = ({ navigation }) => {
       accountNumberSource,
       accountNumberDestination,
       nominal,
-      note
+      note,
+      favouriteName.trim(),
+      isChecked
     )
       .then((transactionSummary) => {
+        if (isChecked) {
+          if (transactionSummary.is_favourite_description != "Favourite added successfully") {
+            Alert.alert("Perhatian", transactionSummary.is_favourite_description);
+            return
+          }
+  
+          Alert.alert("Perhatian", transactionSummary.is_favourite_description);
+        }
+
         setStatus(transactionSummary.account_number_destination_status ?? 1);
         if (
           transactionSummary.account_number_destination_status == 1 &&
@@ -209,6 +221,7 @@ const TransferBNI = ({ navigation }) => {
     setNominal(null);
     setNote(null);
     setIsChecked(false);
+    setFavouriteName(null)
   };
 
   return (
@@ -438,6 +451,8 @@ const TransferBNI = ({ navigation }) => {
                   editable={isChecked}
                   placeholder={!isChecked ? "(max 30 karakter)" : null}
                   placeholderTextColor={"#98A1B0"}
+                  value={favouriteName}
+                  onChangeText={(text) => {setFavouriteName(text)}}
                 />
               </View>
             </View>
