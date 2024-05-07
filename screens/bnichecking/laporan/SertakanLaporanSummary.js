@@ -113,9 +113,6 @@ const SertakanLaporanSummary = ({ route }) => {
               nomorRekeningDilaporkan={
                 transactionSummary.account_number_destination
               }
-              // tanggalTransaksiDilaporkan={new Date(
-              //   transactionSummary.transaction_time
-              // ).toLocaleDateString()}
               tanggalTransaksiDilaporkan={
                 <DateFormatComponent
                   dateString={transactionSummary.transaction_time}

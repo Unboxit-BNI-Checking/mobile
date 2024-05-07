@@ -20,6 +20,7 @@ import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import { useNavigation } from "@react-navigation/native";
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
 import RupiahFormatComponent from "../../../component/text/RupiahFormatComponent";
+import TimeFormatComponent from "../../../component/text/TimeFormatComponent";
 
 const RingkasanLaporan = ({ route }) => {
   const { reportData } = route.params;
@@ -99,14 +100,9 @@ const RingkasanLaporan = ({ route }) => {
                 }}
               >
                 {
-                  new Date(
-                    reportData.created_at_report
-                  ).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                    hour12: false,
-                  })
+                  <TimeFormatComponent
+                    timestamp={reportData.created_at_report}
+                  />
                 }
               </Text>
             </View>
@@ -119,23 +115,21 @@ const RingkasanLaporan = ({ route }) => {
             namaRekeningDilaporkan={
               reportData.account_number_destination_username
             }
-            nominalRekeningDilaporkan={<RupiahFormatComponent value={reportData.amount} />}
+            nominalRekeningDilaporkan={
+              <RupiahFormatComponent value={reportData.amount} />
+            }
             nomorRekeningDilaporkan={reportData.account_number_destination}
-            
             tanggalTransaksiDilaporkan={
               <DateFormatComponent
                 dateString={reportData.created_at_transaction}
               />
             }
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
-            jamTransaksiDilaporkan={new Date(
-              reportData.created_at_transaction
-            ).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: false,
-            })}
+            jamTransaksiDilaporkan={
+              <TimeFormatComponent
+                timestamp={reportData.created_at_transaction}
+              />
+            }
           />
           <View style={styles.separator}></View>
           <View style={styles.peristiwaContainer}>

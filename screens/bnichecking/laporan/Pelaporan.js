@@ -19,6 +19,7 @@ import MaterialIcon from "@expo/vector-icons/MaterialIcons";
 import { getAllReportsMadeByCurrentUser } from "../../../services/ReportService";
 import { reportStatus } from "../../../constants/reportStatus";
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
+import TimeFormatComponent from "../../../component/text/TimeFormatComponent";
 
 const Pelaporan = () => {
   const navigation = useNavigation();
@@ -232,16 +233,7 @@ const Pelaporan = () => {
                               dateString={item.created_at_report}
                             />
                           }
-                          timeLaporan={
-                            new Date(
-                              item.created_at_report
-                            ).toLocaleTimeString([], {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                              second: "2-digit",
-                              hour12: false,
-                            })
-                          }
+                          timeLaporan={<TimeFormatComponent timestamp={item.created_at_report} />}
                           status={item.status}
                         />
                       </View>

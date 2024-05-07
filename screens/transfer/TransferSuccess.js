@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
 import RupiahFormatComponent from "../../component/text/RupiahFormatComponent";
 import DateFormatComponent from "../../component/text/DateFormatComponent";
+import TimeFormatComponent from "../../component/text/TimeFormatComponent";
 
 const TransferSuccess = ({ route, navigation }) => {
   const { summary } = route.params;
@@ -56,12 +57,7 @@ const TransferSuccess = ({ route, navigation }) => {
           <LabelValidasiComponent
             title={"Waktu Transaksi"}
             subTitle={
-              new Date(summary.transaction_time).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: false,
-              }) + " WIB"
+              <TimeFormatComponent timestamp={summary.transaction_time} />
             }
           />
           <LabelValidasiComponent title={"Bank Tujuan"} subTitle={"BNI"} />
