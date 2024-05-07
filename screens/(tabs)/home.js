@@ -222,7 +222,7 @@ export default function Home({ navigation }) {
             style={{ width: 24, height: 24 }}
           />
           <TouchableOpacity onPress={handleLogout}>
-            <Image source={icons.icListen} style={{ width: 24, height: 24 }} />
+            <Image source={icons.icLogOut} style={{ width: 24, height: 24 }} />
           </TouchableOpacity>
         </View>
       </View>

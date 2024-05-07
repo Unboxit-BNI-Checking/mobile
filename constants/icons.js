@@ -50,6 +50,7 @@ import icShare from "../assets/icons/ic-share.png";
 import icBiometricLoginForm from "../assets/icons/ic-biometric-login-form.png";
 import icNoReport from "../assets/icons/ic-no-report.png";
 import icTambahkanLaporan from "../assets/icons/ic-tambahkan-laporan.png";
+import icLogOut from "../assets/icons/ic-keluar-home.png";
 
 export default {
   icBni,
@@ -104,4 +105,5 @@ export default {
   icBiometricLoginForm,
   icNoReport,
   icTambahkanLaporan,
+  icLogOut,
 };
