@@ -80,13 +80,13 @@ const TransferBNI = ({ navigation }) => {
       isChecked
     )
       .then((transactionSummary) => {
-        if (isChecked) {
-          if (transactionSummary.is_favourite_description != "Favourite added successfully") {
-            Alert.alert("Perhatian", transactionSummary.is_favourite_description);
+        switch (transactionSummary.is_favourite) {
+          case 2:
+            Alert.alert("Perhatian", "Nomor akun sudah pernah terdaftar dengan nama yang berbeda");
             return
-          }
-  
-          Alert.alert("Perhatian", transactionSummary.is_favourite_description);
+          case 3:
+            Alert.alert("Perhatian", "Nama favorit sudah pernah terdaftar dengan nomor akun yang berbeda");
+            return
         }
 
         setStatus(transactionSummary.account_number_destination_status ?? 1);

@@ -304,6 +304,13 @@ const BuatLaporan = () => {
                   )
                 );
               })
+              .sort((a, b) => {
+                if (a.is_reported !== b.is_reported) {
+                  return a.is_reported ? 1 : -1; // Place true values at the bottom
+                } else {
+                  return a.transaction_time - b.transaction_time; // Sort by second index of transactionTime
+                }
+              })
               .map((transaction) => renderItem(transaction))}
           </View>
         </View>
