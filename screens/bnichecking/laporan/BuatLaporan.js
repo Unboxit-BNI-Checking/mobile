@@ -20,6 +20,8 @@ import {
   getTransactionHistory,
 } from "../../../services/TransactionService";
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
+import RupiahFormatComponent from "../../../component/text/RupiahFormatComponent";
+import TimeFormatComponent from "../../../component/text/TimeFormatComponent";
 
 const BuatLaporan = () => {
   const navigation = useNavigation();
@@ -43,12 +45,6 @@ const BuatLaporan = () => {
     fetchAccountNumbers();
   }, []);
 
-  const selectTransaction = (transaction) => {
-    if (!transaction.is_reported) {
-      setSelectedTransaction(transaction); // Memilih transaksi yang dipilih
-    }
-  };
-
   const selectAccount = (account) => {
     setSelectedAccount(account); // Memilih rekening yang dipilih
     getTransactionHistory(account)
@@ -68,158 +64,262 @@ const BuatLaporan = () => {
     });
   };
 
-  transactionComponentColor = (transactionId) => {
+  const selectTransaction = (transaction) => {
+    if (!transaction.is_reported) {
+      setSelectedTransaction(transaction);
+    }
+  };
+
+  const transactionComponentColor = (transactionId) => {
     return selectedTransaction &&
       selectedTransaction.transaction_id === transactionId
       ? "#F15922"
       : "#6B788E";
   };
 
-  const renderItem = (transaction) => (
-    <TouchableOpacity
-      key={transaction.transaction_id}
-      onPress={() => selectTransaction(transaction)} // Memanggil fungsi untuk memilih transaksi yang dipilih
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 8,
-          borderWidth: 1,
-          borderColor:
-            selectedTransaction &&
-            selectedTransaction.transaction_id === transaction.transaction_id // Memeriksa apakah transaksi saat ini dipilih
-              ? "#F15922"
-              : "#C2C7D0",
-          borderRadius: 8,
-          padding: 8,
-        }}
+  const renderItem = (transaction) => {
+    const isSelected =
+      selectedTransaction &&
+      selectedTransaction.transaction_id === transaction.transaction_id;
+    const borderColor = isSelected ? "#F15922" : "#C2C7D0";
+    const textColor = isSelected ? "#F15922" : "#243757";
+    const amountColor = transactionComponentColor(transaction.transaction_id);
+
+    return (
+      <TouchableOpacity
+        key={transaction.transaction_id}
+        onPress={() => selectTransaction(transaction)}
       >
-        <Image
-          source={
-            selectedTransaction &&
-            selectedTransaction.transaction_id === transaction.transaction_id // Menetapkan gambar radio sesuai dengan apakah transaksi saat ini dipilih atau tidak
-              ? icons.icRadioActive
-              : icons.icRadioInactive
-          }
-          style={{ width: 20, height: 20 }}
-        />
-        <View>
+        {transaction.is_reported ? (
           <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 8,
+              borderWidth: 1,
+              borderColor,
+              borderRadius: 8,
+              padding: 8,
+            }}
           >
-            <Text
-              style={{
-                fontFamily: "PlusJakartaSansMedium",
-                color:
-                  selectedTransaction &&
-                  selectedTransaction.transaction_id ===
-                    transaction.transaction_id // Menetapkan warna teks sesuai dengan apakah transaksi saat ini dipilih atau tidak
-                    ? "#F15922"
-                    : "#243757",
-                fontSize: 12,
-              }}
-            >
-              {
-                <DateFormatComponent
-                  dateString={transaction.transaction_time}
-                />
-              }
-            </Text>
-            <View
-              style={{
-                paddingHorizontal: 16,
-                paddingVertical: 2,
-                height: 26,
-                alignSelf: "baseline",
-                borderRadius: 50,
-                backgroundColor: "#E7F8EF",
-              }}
-            >
-              <Text
+            <View>
+              <Image
+                source={icons.icRadioIsReported}
+                style={{ width: 20, height: 20 }}
+              />
+            </View>
+
+            <View style={{ flex: 1 }}>
+              <View
                 style={{
-                  fontSize: 12,
-                  fontFamily: "PlusJakartaSansBold",
-                  textAlign: "center",
-                  lineHeight: 20, // Adjust line height as needed
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               >
-                Dilaporkan
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansMedium",
+                    color: "#6B788E",
+                    fontSize: 12,
+                  }}
+                >
+                  <DateFormatComponent
+                    dateString={transaction.transaction_time}
+                  />
+                </Text>
+
+                <View
+                  style={{
+                    paddingHorizontal: 8,
+                    paddingVertical: 4,
+                    borderRadius: 50,
+                    backgroundColor: "#EBEDF0",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      lineHeight: 14,
+                      fontFamily: "PlusJakartaSansBold",
+                      textAlign: "center",
+                      color: "#6B788E",
+                    }}
+                  >
+                    Dilaporkan
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansBold",
+                    color: "#6B788E",
+                  }}
+                >
+                  {transaction.account_destination_owner_name}
+                </Text>
+
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansBold",
+                    marginRight: 8,
+                    textAlign: "right",
+                    color: amountColor,
+                  }}
+                >
+                  <RupiahFormatComponent value={"-" + transaction.amount} />
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansMedium",
+                    color: "#6B788E",
+                  }}
+                >
+                  {transaction.account_number_destination}
+                </Text>
+
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansMedium",
+                    marginRight: 8,
+                    textAlign: "right",
+                    color: amountColor,
+                  }}
+                >
+                  <TimeFormatComponent
+                    timestamp={transaction.transaction_time}
+                  />
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansMedium",
+                    color: "#6B788E",
+                  }}
+                >
+                  Bank Negara Indonesia
+                </Text>
+              </View>
+            </View>
+          </View>
+        ) : (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 8,
+              borderWidth: 1,
+              borderColor,
+              borderRadius: 8,
+              padding: 8,
+            }}
+          >
+            <Image
+              source={isSelected ? icons.icRadioActive : icons.icRadioInactive}
+              style={{ width: 20, height: 20 }}
+            />
+            <View>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: "PlusJakartaSansMedium",
+                      color: textColor,
+                      fontSize: 12,
+                    }}
+                  >
+                    <DateFormatComponent
+                      dateString={transaction.transaction_time}
+                    />
+                  </Text>
+                </View>
+              </View>
+              <Text
+                style={{ fontFamily: "PlusJakartaSansBold", color: textColor }}
+              >
+                {transaction.account_destination_owner_name}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "PlusJakartaSansMedium",
+                  color: amountColor,
+                }}
+              >
+                {transaction.account_number_destination}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "PlusJakartaSansMedium",
+                  color: amountColor,
+                }}
+              >
+                {"Bank Negara Indonesia"}
+              </Text>
+            </View>
+            <View style={{ flex: 1 }}></View>
+            <View style={{}}>
+              <Text
+                style={{
+                  fontFamily: "PlusJakartaSansBold",
+                  marginRight: 8,
+                  textAlign: "right",
+                  color: amountColor,
+                }}
+              >
+                {"-" + transaction.amount}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "PlusJakartaSansMedium",
+                  marginRight: 8,
+                  color: "#6B788E",
+                  textAlign: "right",
+                  color: amountColor,
+                }}
+              >
+                {new Date(transaction.transaction_time).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  hour12: false,
+                })}
               </Text>
             </View>
           </View>
-
-          <Text
-            style={{
-              fontFamily: "PlusJakartaSansBold",
-              color:
-                selectedTransaction &&
-                selectedTransaction.transaction_id ===
-                  transaction.transaction_id
-                  ? "#F15922"
-                  : "#243757",
-            }}
-          >
-            {transaction.account_destination_owner_name}
-          </Text>
-          <Text
-            style={{
-              fontFamily: "PlusJakartaSansMedium",
-              color: transactionComponentColor(transaction.transaction_id),
-            }}
-          >
-            {transaction.account_number_destination}
-          </Text>
-          <Text
-            style={{
-              fontFamily: "PlusJakartaSansMedium",
-              color: transactionComponentColor(transaction.transaction_id),
-            }}
-          >
-            {"Bank Negara Indonesia"}
-          </Text>
-        </View>
-        <View style={{ flex: 1 }}></View>
-        <View style={{}}>
-          <Text
-            style={{
-              fontFamily: "PlusJakartaSansBold",
-              marginRight: 8,
-              textAlign: "right",
-              color: transactionComponentColor(transaction.transaction_id),
-            }}
-          >
-            {"-" + transaction.amount}
-          </Text>
-          <Text
-            style={{
-              fontFamily: "PlusJakartaSansMedium",
-              marginRight: 8,
-              color: "#6B788E",
-              textAlign: "right",
-              color: transactionComponentColor(transaction.transaction_id),
-            }}
-          >
-            {new Date(transaction.transaction_time).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: false,
-            })}
-          </Text>
-
-          <Text
-            style={{
-              textAlign: "right",
-              color: transaction.is_reported ? "red" : "green",
-            }}
-          >
-            {transaction.is_reported ? "Sudah dilaporkan" : "Belum dilaporkan"}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+        )}
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -272,29 +372,30 @@ const BuatLaporan = () => {
               transactionHistory.length === 0 ? (
                 // TODO: Give styling
                 <Text>Belum ada transaksi</Text>
-              ) :
-              <View>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontFamily: "PlusJakartaSansBold",
-                    marginBottom: 10,
-                    marginTop: 5,
-                  }}
-                >
-                  Pilih Transaksi yang ingin dilaporkan
-                </Text>
-                <View style={styles.inputContainer}>
-                  <Image source={icons.icSearchCekRekening} />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Cari Transaksi"
-                    placeholderTextColor={"#98A1B0"}
-                    value={searchInput}
-                    onChangeText={(text) => setSearchInput(text)}
-                  />
+              ) : (
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontFamily: "PlusJakartaSansBold",
+                      marginBottom: 10,
+                      marginTop: 5,
+                    }}
+                  >
+                    Pilih Transaksi yang ingin dilaporkan
+                  </Text>
+                  <View style={styles.inputContainer}>
+                    <Image source={icons.icSearchCekRekening} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Cari Transaksi"
+                      placeholderTextColor={"#98A1B0"}
+                      value={searchInput}
+                      onChangeText={(text) => setSearchInput(text)}
+                    />
+                  </View>
                 </View>
-              </View>
+              )
             ) : null}
 
             {transactionHistory

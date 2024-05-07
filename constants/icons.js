@@ -35,6 +35,7 @@ import icPelaporan from "../assets/icons/ic-pelaporan.png";
 import icAddButton from "../assets/icons/ic-add-button.png";
 import icRadioActive from "../assets/icons/ic-radio-active.png";
 import icRadioInactive from "../assets/icons/ic-radio-inactive.png";
+import icRadioIsReported from "../assets/icons/ic-radio-is-reported.png";
 import icPoinHome from "../assets/icons/ic-poin-home.png";
 import icArrowRightPoin from "../assets/icons/ic-arrow-right-poin.png";
 import icInfoValidasiPayment from "../assets/icons/ic-info-validasi-payment.png";
@@ -51,6 +52,7 @@ import icBiometricLoginForm from "../assets/icons/ic-biometric-login-form.png";
 import icNoReport from "../assets/icons/ic-no-report.png";
 import icTambahkanLaporan from "../assets/icons/ic-tambahkan-laporan.png";
 import icLogOut from "../assets/icons/ic-keluar-home.png";
+
 
 export default {
   icBni,
@@ -90,6 +92,7 @@ export default {
   icAddButton,
   icRadioActive,
   icRadioInactive,
+  icRadioIsReported,
   icPoinHome,
   icArrowRightPoin,
   icInfoValidasiPayment,
