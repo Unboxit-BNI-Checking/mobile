@@ -40,7 +40,9 @@ const LaporanBerhasilTerkirim = () => {
           closeName={"Balik Ke Home"}
           nextName={"Lihat Laporan"}
           handleNextButtonClick={() => {
-            navigation.replace("Pelaporan");
+            navigation.reset({
+               routes: [{ name: "Pelaporan" }],
+            })
           }}
           handleCloseButtonClick={() => {
             navigation.replace("Tabs");
