@@ -15,7 +15,11 @@ import { StackActions, useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import { checkAccountNumberReport } from "../../../services/ReportService";
-import { ALERT_TYPE, AlertNotificationRoot, Dialog } from "react-native-alert-notification";
+import {
+  ALERT_TYPE,
+  AlertNotificationRoot,
+  Dialog,
+} from "react-native-alert-notification";
 
 const CekRekening = () => {
   const navigation = useNavigation();
@@ -32,8 +36,7 @@ const CekRekening = () => {
         Dialog.show({
           type: ALERT_TYPE.WARNING,
           title: "Perhatian",
-          textBody:
-            "Nomor rekening yang anda masukkan tidak valid.",
+          textBody: "Nomor rekening yang anda masukkan tidak valid.",
           button: "Tutup",
         });
       });
@@ -91,7 +94,8 @@ const CekRekening = () => {
               <Image source={icons.icSearchCekRekening} />
               <TextInput
                 style={styles.input}
-                placeholder="Masukan Nomor Rekening"
+                placeholder="Masukkan Nomor Rekening"
+                placeholderTextColor={"#98A1B0"}
                 value={rekening}
                 onChangeText={setRekening}
                 keyboardType="number-pad"

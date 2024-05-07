@@ -162,6 +162,7 @@ const TransferConfirm = ({ route, navigation }) => {
                 <TextInput
                   style={styles.input}
                   placeholder="Masukan Password Transaksi"
+                  placeholderTextColor={"#98A1B0"}
                   secureTextEntry={!showPassword}
                   value={password}
                   onChangeText={handlePasswordChange}
