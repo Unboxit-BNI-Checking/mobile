@@ -105,7 +105,9 @@ const BuatLaporan = () => {
           style={{ width: 20, height: 20 }}
         />
         <View>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Text
               style={{
                 fontFamily: "PlusJakartaSansMedium",
@@ -240,7 +242,7 @@ const BuatLaporan = () => {
           </Text>
           <View style={{ gap: 8 }}>
             <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-              Rekening Pelaporan
+              Rekening Pelapor
             </Text>
 
             <Dropdown
