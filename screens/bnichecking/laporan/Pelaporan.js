@@ -208,11 +208,13 @@ const Pelaporan = () => {
           </View>
         ) : (
           <>
-            {activeTabContent === "Dilaporkan" &&
-              (dataLaporan.filter((item) => item.status === "Dilaporkan")
+            {(activeTabContent === "Dilaporkan" || activeTabContent === "Diproses" ||
+              activeTabContent === "Selesai") &&
+              (dataLaporan.filter((item) => item.status === activeTabContent)
                 .length > 0 ? (
                 dataLaporan
-                  .filter((item) => item.status === "Dilaporkan")
+                  .filter((item) => item.status === activeTabContent)
+                  .sort((a, b) => new Date(b.created_at_report) - new Date(a.created_at_report))
                   .map((item) => (
                     <Pressable
                       key={item.report_id}
@@ -230,48 +232,15 @@ const Pelaporan = () => {
                               dateString={item.created_at_report}
                             />
                           }
-                          status={item.status}
-                        />
-                      </View>
-                    </Pressable>
-                  ))
-              ) : (
-                <View style={{ marginTop: 100 }}>
-                  <Image
-                    source={icons.icNoReport}
-                    style={{ alignSelf: "center", width: 150, height: 150 }}
-                  />
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontFamily: "PlusJakartaSansBold",
-                      color: "#6B788E",
-                    }}
-                  >
-                    Belum Ada Pelaporan
-                  </Text>
-                </View>
-              ))}
-            {(activeTabContent === "Diproses" ||
-              activeTabContent === "Selesai") &&
-              (dataLaporan.filter((item) => item.status === activeTabContent)
-                .length > 0 ? (
-                dataLaporan
-                  .filter((item) => item.status === activeTabContent)
-                  .map((item) => (
-                    <Pressable
-                      key={item.report_id}
-                      onPress={() => handleSeeReportDetail(item)}
-                    >
-                      <View
-                        style={{ paddingHorizontal: 20, paddingVertical: 10 }}
-                      >
-                        <CardPelaporan
-                          titleReportId={item.report_id}
-                          dateLaporan={
-                            <DateFormatComponent
-                              dateString={item.created_at_report}
-                            />
+                          timeLaporan={
+                            new Date(
+                              item.created_at_report
+                            ).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              second: "2-digit",
+                              hour12: false,
+                            })
                           }
                           status={item.status}
                         />

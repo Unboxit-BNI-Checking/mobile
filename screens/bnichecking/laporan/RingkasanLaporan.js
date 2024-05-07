@@ -79,11 +79,34 @@ const RingkasanLaporan = ({ route }) => {
                   fontFamily: "PlusJakartaSansRegular",
                 }}
               >
-                {/* {new Date(reportData.created_at_report).toLocaleDateString()} */}
                 {
                   <DateFormatComponent
                     dateString={reportData.created_at_report}
                   />
+                }
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", gap: 4 }}>
+              <Text
+                style={{ color: "#6B788E", fontFamily: "PlusJakartaSansBold" }}
+              >
+                Waktu Laporan
+              </Text>
+              <Text
+                style={{
+                  color: "#6B788E",
+                  fontFamily: "PlusJakartaSansRegular",
+                }}
+              >
+                {
+                  new Date(
+                    reportData.created_at_report
+                  ).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: false,
+                  })
                 }
               </Text>
             </View>

@@ -45,11 +45,10 @@ const TransferBNI = ({ navigation }) => {
   const [dataRekening, setDataRekening] = useState([]);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [accountNumberSource, setAccountNumberSource] = useState(null);
-  const [accountNumberDestination, setAccountNumberDestination] = useState(
-    null
-  );
+  const [accountNumberDestination, setAccountNumberDestination] =
+    useState(null);
   const [selectedBalance, setSelectedBalance] = useState(null);
-  const [favouriteName, setFavouriteName] = useState(null)
+  const [favouriteName, setFavouriteName] = useState(null);
 
   useEffect(() => {
     async function getData() {
@@ -74,19 +73,25 @@ const TransferBNI = ({ navigation }) => {
     validateTransaction(
       accountNumberSource,
       accountNumberDestination,
-      nominal,
+      parseIndonesianCurrency(nominal),
       note,
-      favouriteName.trim(),
+      favouriteName ? favouriteName.trim() : "",
       isChecked
     )
       .then((transactionSummary) => {
         switch (transactionSummary.is_favourite) {
           case 2:
-            Alert.alert("Perhatian", "Nomor akun sudah pernah terdaftar dengan nama yang berbeda");
-            return
+            Alert.alert(
+              "Perhatian",
+              "Nomor akun sudah pernah terdaftar dengan nama yang berbeda"
+            );
+            return;
           case 3:
-            Alert.alert("Perhatian", "Nama favorit sudah pernah terdaftar dengan nomor akun yang berbeda");
-            return
+            Alert.alert(
+              "Perhatian",
+              "Nama favorit sudah pernah terdaftar dengan nomor akun yang berbeda"
+            );
+            return;
         }
 
         setStatus(transactionSummary.account_number_destination_status ?? 1);
@@ -119,8 +124,8 @@ const TransferBNI = ({ navigation }) => {
     let transactionSummary = await validateTransaction(
       accountNumberSource,
       accountNumberDestination,
-      nominal,
-      note
+      parseIndonesianCurrency(nominal),
+      note,
     );
     navigation.replace("TransferConfirm", {
       summary: transactionSummary,
@@ -142,34 +147,37 @@ const TransferBNI = ({ navigation }) => {
     }
   };
 
-  // const formatCurrency = (value) => {
-  //   // Hapus semua karakter kecuali angka
-  //   let formattedValue = value.replace(/[^0-9]/g, '');
+  const formatCurrency = (value) => {
+    // Hapus semua karakter kecuali angka
+    let formattedValue = value.replace(/[^0-9]/g, "");
 
-  //   // Format sebagai mata uang Rupiah
-  //   if (formattedValue) {
-  //     formattedValue = 'Rp' + parseInt(formattedValue, 10).toLocaleString('id-ID');
-  //   }
+    // Format sebagai mata uang Rupiah
+    if (formattedValue) {
+      formattedValue =
+        "Rp" + parseInt(formattedValue, 10).toLocaleString("id-ID");
+    }
 
-  //   return formattedValue;
-  // };
-
-  // const handleNominalChange = (value) => {
-  //   // Format input saat berubah
-  //   const formattedValue = formatCurrency(value);
-  //   setNominal(formattedValue);
-  // };
-
-  const handleNominalChange = (text) => {
-    // Menghapus karakter non-digit
-    let filteredText = text.replace(/\D/g, "");
-
-    // Menghapus awalan nol jika ada
-    filteredText = filteredText.replace(/^0+/, "");
-
-    // Update the state with the filtered text
-    setNominal(filteredText);
+    return formattedValue;
   };
+
+  const handleNominalChange = (value) => {
+    // Format input saat berubah
+    const formattedValue = formatCurrency(value);
+    setNominal(formattedValue);
+  };
+
+  function parseIndonesianCurrency(currencyString) {
+    const numericString = currencyString.replace(/[^\d.]/g, "");
+
+    const dotIndex = numericString.lastIndexOf(".");
+    const cleanNumericString =
+      numericString.substring(0, dotIndex) +
+      numericString.substring(dotIndex + 1);
+
+    const parsedValue = parseInt(cleanNumericString, 10);
+
+    return parsedValue;
+  }
 
   const handleNoteChange = (text) => {
     setNote(text); // Perbarui state nominal dengan nilai input
@@ -223,7 +231,7 @@ const TransferBNI = ({ navigation }) => {
     setNominal(null);
     setNote(null);
     setIsChecked(false);
-    setFavouriteName(null)
+    setFavouriteName(null);
   };
 
   return (
@@ -454,7 +462,9 @@ const TransferBNI = ({ navigation }) => {
                   placeholder={!isChecked ? "(max 30 karakter)" : null}
                   placeholderTextColor={"#98A1B0"}
                   value={favouriteName}
-                  onChangeText={(text) => {setFavouriteName(text)}}
+                  onChangeText={(text) => {
+                    setFavouriteName(text);
+                  }}
                 />
               </View>
             </View>

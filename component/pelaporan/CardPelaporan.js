@@ -25,7 +25,7 @@ const getStatusStyles = (status) => {
   return { backgroundColor, fontColor };
 };
 
-const CardPelaporan = ({ titleReportId, dateLaporan, status }) => {
+const CardPelaporan = ({ titleReportId, dateLaporan, timeLaporan, status }) => {
   const { backgroundColor, fontColor } = getStatusStyles(status);
 
   return (
@@ -44,6 +44,10 @@ const CardPelaporan = ({ titleReportId, dateLaporan, status }) => {
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Tanggal Laporan</Text>
           <Text style={styles.infoText}>{dateLaporan}</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Text style={styles.infoLabel}>Waktu Laporan</Text>
+          <Text style={styles.infoText}>{timeLaporan}</Text>
         </View>
       </View>
       <View style={[styles.statusBadge, { backgroundColor }]}>
