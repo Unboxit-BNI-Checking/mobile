@@ -64,7 +64,7 @@ const LoginScreen = () => {
         type: ALERT_TYPE.WARNING,
         title: "Login Gagal",
         textBody:
-          "User ID atau password yang Anda masukkan salah. Silahkan coba kembali",
+          "User ID atau MPIN yang Anda masukkan salah. Silahkan coba kembali",
       });
       setModalVisible(false);
     } finally {
@@ -153,7 +153,8 @@ const LoginScreen = () => {
                 <View style={styles.inputContainer}>
                   <TextInput
                     style={styles.input}
-                    placeholder="Masukan User ID"
+                    placeholder="Masukkan User ID"
+                    placeholderTextColor={"#98A1B0"}
                     value={userId}
                     onChangeText={(text) => setUserId(text.replace(/\s/g, ""))}
                   />
@@ -165,7 +166,8 @@ const LoginScreen = () => {
                 <View style={styles.inputContainer}>
                   <TextInput
                     style={styles.input}
-                    placeholder="Masukan MPIN"
+                    placeholder="Masukkan MPIN"
+                    placeholderTextColor={"#98A1B0"}
                     secureTextEntry={!showMpin}
                     value={mpin}
                     onChangeText={handleMpinChange}
