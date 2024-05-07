@@ -269,6 +269,10 @@ const BuatLaporan = () => {
               )}
             />
             {selectedAccount ? (
+              transactionHistory.length === 0 ? (
+                // TODO: Give styling
+                <Text>Belum ada transaksi</Text>
+              ) :
               <View>
                 <Text
                   style={{
