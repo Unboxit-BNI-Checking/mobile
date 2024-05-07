@@ -20,6 +20,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import CardDataPelaporan from "../../../component/pelaporan/CardDataPelaporan";
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
+import RupiahFormatComponent from "../../../component/text/RupiahFormatComponent";
 
 const SertakanLaporan = ({ route }) => {
   const { transactionSummary } = route.params;
@@ -77,7 +78,10 @@ const SertakanLaporan = ({ route }) => {
             namaRekeningPelapor={transactionSummary.account_name_source}
             nomorRekeningPelapor={transactionSummary.account_number_source}
             namaRekeningDilaporkan={transactionSummary.account_name_destination}
-            nominalRekeningDilaporkan={transactionSummary.amount}
+            // nominalRekeningDilaporkan={transactionSummary.amount}
+            nominalRekeningDilaporkan={
+              <RupiahFormatComponent value={transactionSummary.amount} />
+            }
             nomorRekeningDilaporkan={
               transactionSummary.account_number_destination
             }
@@ -112,6 +116,7 @@ const SertakanLaporan = ({ route }) => {
                 numberOfLines={5}
                 multiline={true}
                 placeholder="Tulis Kronologi Peristiwa Yang Dilaporkan"
+                placeholderTextColor={"#98A1B0"}
                 onChangeText={setText}
                 value={text}
               />
@@ -122,8 +127,11 @@ const SertakanLaporan = ({ route }) => {
             <Text style={styles.label}>Lampiran</Text>
             <TouchableOpacity onPress={pickImages}>
               <View style={styles.inputImage}>
-                <Image source={icons.icPaste} style={styles.pasteIcon} />
-                <Text style={styles.addText}>Tambahkan Bukti Disini</Text>
+                <Image
+                  source={icons.icTambahkanLaporan}
+                  style={styles.pasteIcon}
+                />
+                <Text style={styles.addText}>Tambahkan Lampiran</Text>
                 <Text style={styles.uploadInfo}>
                   Anda bisa upload lebih dari 1 file
                 </Text>
@@ -240,7 +248,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     color: "#6B788E",
     fontSize: 12,
-    fontFamily: "PlusJakartaSansRegular",
+    fontFamily: "PlusJakartaSansMedium",
   },
   addTextMore: {
     textDecorationLine: "underline",
@@ -251,7 +259,7 @@ const styles = StyleSheet.create({
   uploadInfo: {
     color: "#6B788E",
     fontSize: 12,
-    fontFamily: "PlusJakartaSansRegular",
+    fontFamily: "PlusJakartaSansMedium",
   },
   addButtonImage: {
     flexDirection: "row",

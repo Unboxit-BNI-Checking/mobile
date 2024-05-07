@@ -45,8 +45,9 @@ const TransferBNI = ({ navigation }) => {
   const [dataRekening, setDataRekening] = useState([]);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [accountNumberSource, setAccountNumberSource] = useState(null);
-  const [accountNumberDestination, setAccountNumberDestination] =
-    useState(null);
+  const [accountNumberDestination, setAccountNumberDestination] = useState(
+    null
+  );
   const [selectedBalance, setSelectedBalance] = useState(null);
   const [favouriteName, setFavouriteName] = useState(null)
 
@@ -103,7 +104,8 @@ const TransferBNI = ({ navigation }) => {
         Dialog.show({
           type: ALERT_TYPE.WARNING,
           title: "Perhatian",
-          textBody: "Nomor rekening yang anda masukkan\ntidak valid.",
+          textBody:
+            "Transaksi anda tidak dapat diproses. Nomor rekening yang anda masukkan tidak valid. Silahkan ulangi transaksi anda.",
           button: "Tutup",
         });
       });

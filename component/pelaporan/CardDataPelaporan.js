@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
   },
   subHeaderText: {
     color: "#6B788E",
-    fontFamily: "PlusJakartaSansRegular",
+    fontFamily: "PlusJakartaSansMedium",
   },
   text: {
     color: "#6B788E",
-    fontFamily: "PlusJakartaSansRegular",
+    fontFamily: "PlusJakartaSansMedium",
   },
   row: {
     flexDirection: "row",
