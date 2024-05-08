@@ -186,7 +186,7 @@ const TransferBNI = ({ navigation }) => {
   const handleNextButtonPrimary = async () => {
     AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
       if (isWarningOn === "1") {
-        if (parseInt(nominal) < 1) {
+        if (parseIndonesianCurrency(nominal) < 1) {
           Dialog.show({
             type: ALERT_TYPE.WARNING,
             title: "Perhatian",
@@ -194,7 +194,7 @@ const TransferBNI = ({ navigation }) => {
               "Silahkan isi nominal dengan benar untuk melanjutkan transaksi.",
             button: "Tutup",
           });
-        } else if (selectedBalance < nominal) {
+        } else if (selectedBalance < parseIndonesianCurrency(nominal)) {
           Dialog.show({
             type: ALERT_TYPE.WARNING,
             title: "Perhatian",

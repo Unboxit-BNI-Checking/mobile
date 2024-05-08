@@ -1,11 +1,11 @@
 export function parseIndonesianCurrency(currencyString) {
+  // Remove all non-numeric characters except dots
   const numericString = currencyString.replace(/[^\d.]/g, "");
 
-  const dotIndex = numericString.lastIndexOf(".");
-  const cleanNumericString =
-    numericString.substring(0, dotIndex) +
-    numericString.substring(dotIndex + 1);
+  // Remove all dots from the string
+  const cleanNumericString = numericString.replace(/\./g, "");
 
+  // Parse the cleaned numeric string into an integer
   const parsedValue = parseInt(cleanNumericString, 10);
 
   return parsedValue;
