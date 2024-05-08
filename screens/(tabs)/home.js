@@ -311,9 +311,10 @@ export default function Home({ navigation }) {
                         height: 26,
                         backgroundColor: "#F5F6F7",
                         flexDirection: "row",
-                        paddingHorizontal: 8,
-                        paddingVertical: 4,
                         borderRadius: 50,
+                        justifyContent: "center",
+                        paddingHorizontal: 8,
+                        paddingVertical: 2,
                       }}
                     >
                       <Image
@@ -333,6 +334,7 @@ export default function Home({ navigation }) {
                       >
                         3.165
                       </Text>
+
                       <Image
                         source={icons.icArrowRightPoin}
                         style={{
@@ -340,7 +342,6 @@ export default function Home({ navigation }) {
                           width: 10,
                           alignSelf: "center",
                         }}
-                        resizeMode="contain"
                       />
                     </View>
                   </View>
