@@ -91,7 +91,11 @@ const SertakanLaporan = ({ route }) => {
               />
             }
             bankRekeningDilaporkan={"Bank Negara Indonesia"}
-            jamTransaksiDilaporkan={<TimeFormatComponent timestamp={transactionSummary.transaction_time} />}
+            jamTransaksiDilaporkan={
+              <TimeFormatComponent
+                timestamp={transactionSummary.transaction_time}
+              />
+            }
           />
           <View style={styles.separator}></View>
           <View style={styles.peristiwaContainer}>
@@ -287,7 +291,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: 15,
+    top: 10,
     right: 20,
     backgroundColor: "#D6264F",
     borderRadius: 50,
