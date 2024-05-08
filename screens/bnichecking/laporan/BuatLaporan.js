@@ -22,6 +22,7 @@ import {
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
 import RupiahFormatComponent from "../../../component/text/RupiahFormatComponent";
 import TimeFormatComponent from "../../../component/text/TimeFormatComponent";
+import TruncatedTextComponent from "../../../component/text/TruncatedTextComponent";
 
 const BuatLaporan = () => {
   const navigation = useNavigation();
@@ -163,7 +164,10 @@ const BuatLaporan = () => {
                     color: "#6B788E",
                   }}
                 >
-                  {transaction.account_destination_owner_name}
+                  <TruncatedTextComponent
+                    text={transaction.account_destination_owner_name}
+                    maxLength={20}
+                  />
                 </Text>
 
                 <Text
@@ -267,8 +271,12 @@ const BuatLaporan = () => {
               <Text
                 style={{ fontFamily: "PlusJakartaSansBold", color: textColor }}
               >
-                {transaction.account_destination_owner_name}
+                <TruncatedTextComponent
+                  text={transaction.account_destination_owner_name}
+                  maxLength={20}
+                />
               </Text>
+
               <Text
                 style={{
                   fontFamily: "PlusJakartaSansMedium",
