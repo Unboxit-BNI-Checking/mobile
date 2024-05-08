@@ -8,6 +8,7 @@ import {
   RefreshControl,
   Modal,
   FlatList,
+  Alert,
 } from "react-native";
 import icons from "../../constants/icons";
 import Octicons from "@expo/vector-icons/Octicons";
@@ -19,6 +20,11 @@ import images from "../../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import { userLogout } from "../../services/UserService";
+import {
+  ALERT_TYPE,
+  AlertNotificationRoot,
+  Dialog,
+} from "react-native-alert-notification";
 
 const data = [
   {
@@ -188,174 +194,90 @@ export default function Home({ navigation }) {
     getAccount();
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      // Call the logout function
-      await userLogout();
-      // Navigate to the login screen (or any other screen you want to navigate to after logout)
-      navigation.reset({ index: 0, routes: [{ name: "LoginScreen" }] });
-    } catch (error) {
-      console.error("Error logging out:", error);
-      // Handle logout error if necessary
-    }
+  const handleLogout = () => {
+    Dialog.show({
+      type: ALERT_TYPE.DANGER,
+      title: "Perhatian",
+      textBody: "Apakah anda yakin ingin keluar dari aplikasi?",
+      button: "Keluar",
+      onPressButton: async () => {
+        try {
+          // Call the logout function
+          await userLogout();
+          // Navigate to the login screen (or any other screen you want to navigate to after logout)
+          navigation.reset({ index: 0, routes: [{ name: "LoginScreen" }] });
+        } catch (error) {
+          console.error("Error logging out:", error);
+          // Handle logout error if necessary
+        }
+      },
+    });
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#F37548" }}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <View style={{ flexDirection: "row", marginHorizontal: 15 }}>
-          <Image
-            source={icons.icBni}
-            style={{ width: 80, height: 50 }}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={{ flexDirection: "row", gap: 10, paddingHorizontal: 18 }}>
-          <Image
-            source={icons.icNotification}
-            style={{ width: 24, height: 24 }}
-          />
-          <TouchableOpacity onPress={handleLogout}>
-            <Image source={icons.icLogOut} style={{ width: 24, height: 24 }} />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={{ backgroundColor: "#fff" }}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
+    <AlertNotificationRoot>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#F37548" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
-          <View>
-            <View style={{ height: 260 }}>
-              <View
-                style={{
-                  backgroundColor: "#F37548",
-                  height: "82%",
-                  borderBottomLeftRadius: 50,
-                  borderBottomRightRadius: 50,
-                }}
-              >
-                <View style={{ marginHorizontal: 16, marginTop: 14 }}>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontFamily: "PlusJakartaSansMedium",
-                      fontSize: 16,
-                    }}
-                  >
-                    Halo,
-                  </Text>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontFamily: "PlusJakartaSansBold",
-                      fontSize: 16,
-                    }}
-                  >
-                    {accountData && selectedAccount === "0"
-                      ? "No account selected"
-                      : accountData &&
-                        accountData.account.find(
-                          (acc) => acc.account_number === selectedAccount
-                        )?.customer_name}
-                  </Text>
-                </View>
-              </View>
-              <View style={{ backgroundColor: "blue" }}>
+          <View style={{ flexDirection: "row", marginHorizontal: 15 }}>
+            <Image
+              source={icons.icBni}
+              style={{ width: 80, height: 50 }}
+              resizeMode="contain"
+            />
+          </View>
+          <View
+            style={{ flexDirection: "row", gap: 10, paddingHorizontal: 18 }}
+          >
+            <Image
+              source={icons.icNotification}
+              style={{ width: 24, height: 24 }}
+            />
+            <TouchableOpacity onPress={handleLogout}>
+              <Image
+                source={icons.icLogOut}
+                style={{ width: 24, height: 24 }}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={{ backgroundColor: "#fff" }}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            <View>
+              <View style={{ height: 260 }}>
                 <View
                   style={{
-                    marginHorizontal: 16,
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    marginTop: -130,
-                    paddingHorizontal: 16,
-                    paddingVertical: 14,
-                    backgroundColor: "white",
-                    borderRadius: 16,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                      width: 0,
-                      height: 4,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 18,
-                    elevation: 5,
+                    backgroundColor: "#F37548",
+                    height: "82%",
+                    borderBottomLeftRadius: 50,
+                    borderBottomRightRadius: 50,
                   }}
                 >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                  <View style={{ marginHorizontal: 16, marginTop: 14 }}>
                     <Text
                       style={{
-                        fontFamily: "PlusJakartaSansBold",
-                        color: "#5D6B82",
+                        color: "white",
+                        fontFamily: "PlusJakartaSansMedium",
+                        fontSize: 16,
                       }}
                     >
-                      BNI Taplus Muda
+                      Halo,
                     </Text>
-                    <View
-                      style={{
-                        height: 26,
-                        backgroundColor: "#F5F6F7",
-                        flexDirection: "row",
-                        borderRadius: 50,
-                        justifyContent: "center",
-                        paddingHorizontal: 8,
-                        paddingVertical: 2,
-                      }}
-                    >
-                      <Image
-                        source={icons.icPoinHome}
-                        style={{
-                          height: 15,
-                          width: 32,
-                        }}
-                        resizeMode="contain"
-                      />
-                      <Text
-                        style={{
-                          color: "#F15922",
-                          fontSize: 12,
-                          fontFamily: "PlusJakartaSansBold",
-                        }}
-                      >
-                        3.165
-                      </Text>
-
-                      <Image
-                        source={icons.icArrowRightPoin}
-                        style={{
-                          height: 10,
-                          width: 10,
-                          alignSelf: "center",
-                        }}
-                      />
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      gap: 5,
-                      alignItems: "center",
-                    }}
-                  >
                     <Text
                       style={{
-                        color: "#5D6B82",
-                        fontFamily: "PlusJakartaSansRegular",
+                        color: "white",
+                        fontFamily: "PlusJakartaSansBold",
+                        fontSize: 16,
                       }}
                     >
                       {accountData && selectedAccount === "0"
@@ -363,37 +285,117 @@ export default function Home({ navigation }) {
                         : accountData &&
                           accountData.account.find(
                             (acc) => acc.account_number === selectedAccount
-                          )?.account_number}
+                          )?.customer_name}
                     </Text>
-                    <Octicons name="copy" size={16} color="#98A1B0" />
                   </View>
+                </View>
+                <View style={{ backgroundColor: "blue" }}>
                   <View
                     style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 8,
-                      marginTop: 14,
+                      marginHorizontal: 16,
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      marginTop: -130,
+                      paddingHorizontal: 16,
+                      paddingVertical: 14,
+                      backgroundColor: "white",
+                      borderRadius: 16,
+                      shadowColor: "#000",
+                      shadowOffset: {
+                        width: 0,
+                        height: 4,
+                      },
+                      shadowOpacity: 0.25,
+                      shadowRadius: 18,
+                      elevation: 5,
                     }}
                   >
-                    {showBalance ? (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       <Text
                         style={{
                           fontFamily: "PlusJakartaSansBold",
-                          fontSize: 16,
                           color: "#5D6B82",
                         }}
                       >
-                        {accountData && selectedAccount === "0"
-                          ? "No Balance"
-                          : accountData &&
-                            `Rp${new Intl.NumberFormat("id-ID").format(
-                              accountData.account.find(
-                                (acc) => acc.account_number === selectedAccount
-                              )?.balance
-                            )}`}
+                        BNI Taplus Muda
                       </Text>
-                    ) : (
-                      <TouchableOpacity onPress={() => setShowBalance(true)}>
+                      <View
+                        style={{
+                          height: 26,
+                          backgroundColor: "#F5F6F7",
+                          flexDirection: "row",
+                          borderRadius: 50,
+                          justifyContent: "center",
+                          paddingHorizontal: 8,
+                          paddingVertical: 2,
+                        }}
+                      >
+                        <Image
+                          source={icons.icPoinHome}
+                          style={{
+                            height: 15,
+                            width: 32,
+                          }}
+                          resizeMode="contain"
+                        />
+                        <Text
+                          style={{
+                            color: "#F15922",
+                            fontSize: 12,
+                            fontFamily: "PlusJakartaSansBold",
+                          }}
+                        >
+                          3.165
+                        </Text>
+
+                        <Image
+                          source={icons.icArrowRightPoin}
+                          style={{
+                            height: 10,
+                            width: 10,
+                            alignSelf: "center",
+                          }}
+                        />
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        gap: 5,
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "#5D6B82",
+                          fontFamily: "PlusJakartaSansRegular",
+                        }}
+                      >
+                        {accountData && selectedAccount === "0"
+                          ? "No account selected"
+                          : accountData &&
+                            accountData.account.find(
+                              (acc) => acc.account_number === selectedAccount
+                            )?.account_number}
+                      </Text>
+                      <Octicons name="copy" size={16} color="#98A1B0" />
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 8,
+                        marginTop: 14,
+                      }}
+                    >
+                      {showBalance ? (
                         <Text
                           style={{
                             fontFamily: "PlusJakartaSansBold",
@@ -401,117 +403,141 @@ export default function Home({ navigation }) {
                             color: "#5D6B82",
                           }}
                         >
-                          Rp******
+                          {accountData && selectedAccount === "0"
+                            ? "No Balance"
+                            : accountData &&
+                              `Rp${new Intl.NumberFormat("id-ID").format(
+                                accountData.account.find(
+                                  (acc) =>
+                                    acc.account_number === selectedAccount
+                                )?.balance
+                              )}`}
                         </Text>
+                      ) : (
+                        <TouchableOpacity onPress={() => setShowBalance(true)}>
+                          <Text
+                            style={{
+                              fontFamily: "PlusJakartaSansBold",
+                              fontSize: 16,
+                              color: "#5D6B82",
+                            }}
+                          >
+                            Rp******
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                      <TouchableOpacity
+                        onPress={() => setShowBalance(!showBalance)}
+                        style={{ marginTop: 4 }}
+                      >
+                        <Ionicons
+                          name={showBalance ? "eye-outline" : "eye-off-outline"}
+                          size={18}
+                          color="#5D6B82"
+                        />
                       </TouchableOpacity>
-                    )}
-                    <TouchableOpacity
-                      onPress={() => setShowBalance(!showBalance)}
-                      style={{ marginTop: 4 }}
-                    >
-                      <Ionicons
-                        name={showBalance ? "eye-outline" : "eye-off-outline"}
-                        size={18}
-                        color="#5D6B82"
-                      />
-                    </TouchableOpacity>
-                  </View>
+                    </View>
 
-                  <View
-                    style={{
-                      borderBottomColor: "#E5E5E5",
-                      borderBottomWidth: 1,
-                      marginTop: 14,
-                    }}
-                  />
-                  <TouchableOpacity onPress={() => setModalVisible(true)}>
                     <View
                       style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
+                        borderBottomColor: "#E5E5E5",
+                        borderBottomWidth: 1,
                         marginTop: 14,
                       }}
-                    >
-                      <Text
+                    />
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                      <View
                         style={{
-                          fontFamily: "PlusJakartaSansRegular",
-                          color: "#5D6B82",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          marginTop: 14,
                         }}
                       >
-                        Semua Rekeningmu
-                      </Text>
-                      <Ionicons name="chevron-down" size={18} color="#5D6B82" />
-                    </View>
-                  </TouchableOpacity>
+                        <Text
+                          style={{
+                            fontFamily: "PlusJakartaSansRegular",
+                            color: "#5D6B82",
+                          }}
+                        >
+                          Semua Rekeningmu
+                        </Text>
+                        <Ionicons
+                          name="chevron-down"
+                          size={18}
+                          color="#5D6B82"
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
+              <MenuComponent />
+              <PromotionComponent />
             </View>
-            <MenuComponent />
-            <PromotionComponent />
-          </View>
-        </ScrollView>
-      </View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "flex-end", // Align the modal to the bottom
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-          }}
+          </ScrollView>
+        </View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
         >
           <View
             style={{
-              backgroundColor: "white",
-              padding: 20,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
+              flex: 1,
+              justifyContent: "flex-end", // Align the modal to the bottom
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
             }}
           >
-            <Text
+            <View
               style={{
-                fontSize: 18,
-                marginBottom: 15,
-                fontFamily: "PlusJakartaSansBold",
+                backgroundColor: "white",
+                padding: 20,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
               }}
             >
-              Pilih Rekening
-            </Text>
-            <FlatList
-              data={accountData && accountData.account}
-              keyExtractor={(item) => item.account_id.toString()}
-              renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleAccountSelect(item)}>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginBottom: 15,
-                    }}
-                  >
-                    <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
-                      {item.account_number}
-                    </Text>
-                    <Image
-                      source={
-                        item.account_number === selectedAccount
-                          ? icons.icRadioActive
-                          : icons.icRadioInactive
-                      }
-                      style={{ width: 22, height: 22 }}
-                    />
-                  </View>
-                </TouchableOpacity>
-              )}
-            />
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginBottom: 15,
+                  fontFamily: "PlusJakartaSansBold",
+                }}
+              >
+                Pilih Rekening
+              </Text>
+              <FlatList
+                data={accountData && accountData.account}
+                keyExtractor={(item) => item.account_id.toString()}
+                renderItem={({ item }) => (
+                  <TouchableOpacity onPress={() => handleAccountSelect(item)}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        marginBottom: 15,
+                      }}
+                    >
+                      <Text style={{ fontFamily: "PlusJakartaSansMedium" }}>
+                        {item.account_number}
+                      </Text>
+                      <Image
+                        source={
+                          item.account_number === selectedAccount
+                            ? icons.icRadioActive
+                            : icons.icRadioInactive
+                        }
+                        style={{ width: 22, height: 22 }}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
           </View>
-        </View>
-      </Modal>
-    </SafeAreaView>
+        </Modal>
+      </SafeAreaView>
+    </AlertNotificationRoot>
   );
 }
