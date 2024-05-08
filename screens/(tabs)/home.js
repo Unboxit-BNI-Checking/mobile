@@ -17,8 +17,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import images from "../../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomAppBar from "../../component/header/CustomAppBar";
 import { userLogout } from "../../services/UserService";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const data = [
   {
@@ -471,6 +471,7 @@ export default function Home({ navigation }) {
               borderTopRightRadius: 10,
             }}
           >
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
             <Text
               style={{
                 fontSize: 18,
@@ -480,6 +481,9 @@ export default function Home({ navigation }) {
             >
               Pilih Rekening
             </Text>
+            <MaterialIcons name="close" size={24} color="black" onPress={() => setModalVisible(false)} />
+            </View>
+           
             <FlatList
               data={accountData && accountData.account}
               keyExtractor={(item) => item.account_id.toString()}
