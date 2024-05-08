@@ -31,6 +31,8 @@ const TransferConfirm = ({ route, navigation }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
 
   const handlePasswordChange = (text) => {
     setPassword(text);
@@ -49,6 +51,8 @@ const TransferConfirm = ({ route, navigation }) => {
   };
 
   const handleCreateTransaction = async () => {
+    setLoading(true);
+    setDisableButton(true);
     try {
       let transactionSummary = await createNewTransaction(
         summary.account_number_source,
@@ -69,8 +73,15 @@ const TransferConfirm = ({ route, navigation }) => {
           button: "Tutup",
         });
       }
+    } finally {
+      const randomDelay = Math.floor(Math.random() * (1000 - 500)) + 500;
+      setTimeout(() => {
+        setLoading(false);
+        setDisableButton(false);
+      }, randomDelay);
     }
   };
+
   return (
     <AlertNotificationRoot>
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -192,7 +203,8 @@ const TransferConfirm = ({ route, navigation }) => {
             onPress={() => {
               handleCreateTransaction();
             }}
-            disable={!password}
+            disable={!password || disableButton}
+            loading={loading}
           />
         </View>
       </SafeAreaView>
