@@ -56,7 +56,9 @@ const SertakanLaporanSummary = ({ route }) => {
       );
 
       if (success) {
-        navigation.replace("LaporanBerhasilTerkirim");
+        navigation.reset({
+          routes: [{ name: "LaporanBerhasilTerkirim" }],
+        });
       }
     } catch (error) {
       Toast.show({

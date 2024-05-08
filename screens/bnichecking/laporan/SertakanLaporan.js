@@ -6,7 +6,6 @@ import {
   TextInput,
   ScrollView,
   Modal,
-  TouchableHighlight,
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
