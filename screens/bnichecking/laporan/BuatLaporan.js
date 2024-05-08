@@ -178,7 +178,8 @@ const BuatLaporan = () => {
                     color: amountColor,
                   }}
                 >
-                  <RupiahFormatComponent value={"-" + transaction.amount} />
+                  -
+                  <RupiahFormatComponent value={transaction.amount} />
                 </Text>
               </View>
 
@@ -304,7 +305,8 @@ const BuatLaporan = () => {
                   color: amountColor,
                 }}
               >
-                <RupiahFormatComponent value={"-" + transaction.amount} />
+                -
+                <RupiahFormatComponent value={transaction.amount} />
               </Text>
               <Text
                 style={{
