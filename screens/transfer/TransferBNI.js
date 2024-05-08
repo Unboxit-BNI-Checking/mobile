@@ -78,9 +78,7 @@ const TransferBNI = ({ navigation }) => {
       accountNumberSource,
       accountNumberDestination,
       parseIndonesianCurrency(nominal),
-      note,
-      favouriteName ? favouriteName.trim() : "",
-      isChecked
+      note
     )
       .then((transactionSummary) => {
         switch (transactionSummary.is_favourite) {
@@ -107,11 +105,12 @@ const TransferBNI = ({ navigation }) => {
         setStatus(transactionSummary.account_number_destination_status ?? 1);
         if (
           transactionSummary.account_number_destination_status == 1 &&
-          transactionSummary.is_favourite
+          transactionSummary.is_favourite === 0
         ) {
-          navigation.navigate("TransferConfirm", {
+          navigation.replace("TransferConfirm", {
             summary: transactionSummary,
           });
+          return;
         }
         setModalVisible(true);
       })
@@ -135,13 +134,15 @@ const TransferBNI = ({ navigation }) => {
       accountNumberSource,
       accountNumberDestination,
       parseIndonesianCurrency(nominal),
-      note
+      note,
+      favouriteName ? favouriteName.trim() : "",
+      isChecked
     );
 
-    navigation.navigate("TransferConfirm", {
+    navigation.replace("TransferConfirm", {
       summary: transactionSummary,
     });
-    closeModal();
+    // closeModal();
   };
 
   const handleCloseButtonClick = () => {
@@ -230,7 +231,7 @@ const TransferBNI = ({ navigation }) => {
   return (
     <AlertNotificationRoot theme="light">
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <CustomAppBar
           title="Transfer Antar BNI"
           onLeftPress={() => navigation.replace("Transfer")}
