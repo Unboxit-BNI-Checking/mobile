@@ -1,13 +1,15 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, StatusBar } from "react-native";
 import React from "react";
 import icons from "../../../constants/icons";
 import ButtonNextClose from "../../../component/button/ButtonNextClose";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const LaporanBerhasilTerkirim = () => {
   const navigation = useNavigation();
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <View
         style={{
           flex: 1,
@@ -49,7 +51,7 @@ const LaporanBerhasilTerkirim = () => {
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
+  StatusBar,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -43,6 +44,7 @@ const TransferHasilCekRekening = ({ route, navigation }) => {
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Hasil Cek Rekening"
         // onLeftPress={() => navigation.goBack()}

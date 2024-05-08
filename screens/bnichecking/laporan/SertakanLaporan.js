@@ -7,6 +7,7 @@ import {
   ScrollView,
   Modal,
   TouchableOpacity,
+  StatusBar,
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
@@ -66,6 +67,7 @@ const SertakanLaporan = ({ route }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
+        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Sertakan Laporan"
         onLeftPress={() => navigation.goBack()}

@@ -65,6 +65,7 @@ const Transfer = () => {
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Transfer"
         onLeftPress={() => navigation.reset({ routes: [{ name: "Tabs" }] })}

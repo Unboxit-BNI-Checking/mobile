@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from "react-native";
 import icons from "../../constants/icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -23,6 +23,7 @@ const BniChecking = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="BNI Checking"
         onLeftPress={() => navigation.reset({ routes: [{ name: "Tabs" }] })}

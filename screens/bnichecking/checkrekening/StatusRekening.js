@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
 import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const StatusRekening = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <Text
         style={{
           color: "#243757",
@@ -78,7 +80,7 @@ const StatusRekening = () => {
           Nomor Rekening ini terindikasi Penipuan dan {"\n"}sudah diblokir.
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

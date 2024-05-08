@@ -1,8 +1,9 @@
-import { View, Text, Image, ImageBackground } from "react-native";
+import { View, Text, Image, ImageBackground, StatusBar } from "react-native";
 import React from "react";
 import images from "../constants/images";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SplashScreenCustom = () => {
   const navigation = useNavigation();
@@ -13,7 +14,7 @@ const SplashScreenCustom = () => {
   }, []);
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         justifyContent: "space-between",
@@ -21,6 +22,7 @@ const SplashScreenCustom = () => {
         backgroundColor: "white",
       }}
     >
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <Image
         source={images.background46}
         style={{ width: "100%", height: 401 }}
@@ -89,7 +91,7 @@ const SplashScreenCustom = () => {
           Hak Cipta © 2024 BNI Mobile Banking
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

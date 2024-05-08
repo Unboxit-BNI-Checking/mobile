@@ -7,6 +7,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  StatusBar,
 } from "react-native";
 import icons from "../../constants/icons";
 import LabelValidasiComponent from "../../component/label/LabelValidasiComponent";
@@ -83,8 +84,9 @@ const TransferConfirm = ({ route, navigation }) => {
   };
 
   return (
-    <AlertNotificationRoot>
+    <AlertNotificationRoot theme="light">
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <CustomAppBar
           title="Validasi"
           onLeftPress={() => navigation.replace("TransferBNI")}

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  StatusBar,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
@@ -374,6 +375,7 @@ const BuatLaporan = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Pelapor"
         onLeftPress={() => navigation.navigate("Pelaporan")}

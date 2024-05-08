@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  StatusBar,
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../constants/icons";
@@ -32,6 +33,7 @@ const TransferSuccess = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar title="Status" />
       <ScrollView>
         <View style={styles.contentContainer}>

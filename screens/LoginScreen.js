@@ -9,6 +9,7 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
+  StatusBar,
 } from "react-native";
 import images from "../constants/images";
 import icons from "../constants/icons";
@@ -22,9 +23,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ALERT_TYPE,
   AlertNotificationRoot,
-  Dialog,
   Toast,
 } from "react-native-alert-notification";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -92,8 +93,10 @@ const LoginScreen = () => {
           label: "#FFFFFF",
         },
       ]}
+      theme="light"
     >
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <Image
           source={images.background46}
           style={styles.backgroundImage}
@@ -211,7 +214,7 @@ const LoginScreen = () => {
             </View>
           </View>
         </Modal>
-      </View>
+      </SafeAreaView>
     </AlertNotificationRoot>
   );
 };

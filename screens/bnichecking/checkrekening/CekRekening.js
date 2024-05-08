@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  StatusBar,
 } from "react-native";
 import React, { useState } from "react";
 import icons from "../../../constants/icons";
@@ -43,8 +44,9 @@ const CekRekening = () => {
   };
 
   return (
-    <AlertNotificationRoot>
+    <AlertNotificationRoot theme="light">
       <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <CustomAppBar
           title="Cek Rekening"
           onLeftPress={() => navigation.navigate("BNIChecking")}

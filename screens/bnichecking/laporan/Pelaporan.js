@@ -8,6 +8,7 @@ import {
   Image,
   ActivityIndicator,
   RefreshControl,
+  StatusBar,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import CardPelaporan from "../../../component/pelaporan/CardPelaporan";
@@ -89,6 +90,7 @@ const Pelaporan = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Pelaporan"
         onLeftPress={() => navigation.replace("BNIChecking")}

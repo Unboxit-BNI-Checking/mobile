@@ -9,6 +9,7 @@ import {
   Modal,
   FlatList,
   Alert,
+  StatusBar,
 } from "react-native";
 import icons from "../../constants/icons";
 import Octicons from "@expo/vector-icons/Octicons";
@@ -215,8 +216,9 @@ export default function Home({ navigation }) {
   };
 
   return (
-    <AlertNotificationRoot>
+    <AlertNotificationRoot theme="light">
       <SafeAreaView style={{ flex: 1, backgroundColor: "#F37548" }}>
+        <StatusBar backgroundColor={"#F37548"} barStyle="light-content" />
         <View
           style={{
             flexDirection: "row",

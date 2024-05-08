@@ -8,6 +8,7 @@ import {
   TextInput,
   ScrollView,
   Alert,
+  StatusBar,
 } from "react-native";
 import ButtonPrimary from "../../component/button/ButtonPrimary";
 import { Dropdown } from "react-native-element-dropdown";
@@ -227,8 +228,9 @@ const TransferBNI = ({ navigation }) => {
   };
 
   return (
-    <AlertNotificationRoot>
+    <AlertNotificationRoot theme="light">
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <CustomAppBar
           title="Transfer Antar BNI"
           onLeftPress={() => navigation.replace("Transfer")}
