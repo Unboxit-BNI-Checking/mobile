@@ -78,7 +78,9 @@ const TransferBNI = ({ navigation }) => {
       accountNumberSource,
       accountNumberDestination,
       parseIndonesianCurrency(nominal),
-      note
+      note,
+      favouriteName ? favouriteName.trim() : "",
+      isChecked
     )
       .then((transactionSummary) => {
         switch (transactionSummary.is_favourite) {
@@ -110,7 +112,6 @@ const TransferBNI = ({ navigation }) => {
           navigation.replace("TransferConfirm", {
             summary: transactionSummary,
           });
-          return;
         }
         setModalVisible(true);
       })
@@ -124,7 +125,6 @@ const TransferBNI = ({ navigation }) => {
         });
       });
   };
-
   const closeModal = () => {
     setModalVisible(false);
   };
@@ -134,15 +134,13 @@ const TransferBNI = ({ navigation }) => {
       accountNumberSource,
       accountNumberDestination,
       parseIndonesianCurrency(nominal),
-      note,
-      favouriteName ? favouriteName.trim() : "",
-      isChecked
+      note
     );
 
-    navigation.replace("TransferConfirm", {
+    navigation.navigate("TransferConfirm", {
       summary: transactionSummary,
     });
-    // closeModal();
+    closeModal();
   };
 
   const handleCloseButtonClick = () => {
