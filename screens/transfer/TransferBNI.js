@@ -16,7 +16,6 @@ import CheckboxCustom from "../../component/checkbox/CheckboxCustom";
 import icons from "../../constants/icons";
 import { getUserAccountNumbersData } from "../../services/UserService";
 import getFavouriteData from "../../services/FavouriteService";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
@@ -24,7 +23,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { validateTransaction } from "../../services/TransactionService";
 import {
   ALERT_TYPE,
-  AlertNotificationDialog,
   AlertNotificationRoot,
   Dialog,
 } from "react-native-alert-notification";
@@ -58,7 +56,11 @@ const TransferBNI = ({ navigation }) => {
     }
     getData();
   }, []);
-
+  const handleTabPress = (tab) => {
+    setActiveButton(tab);
+    setActiveTabContent(tab);
+    resetValues();
+  };
   const handleDropdownChange = (item) => {
     setSelectedAccountId(item.value);
     setAccountNumberDestination(item.accountNumber);
@@ -106,7 +108,7 @@ const TransferBNI = ({ navigation }) => {
           transactionSummary.account_number_destination_status == 1 &&
           transactionSummary.is_favourite
         ) {
-          navigation.replace("TransferConfirm", {
+          navigation.navigate("TransferConfirm", {
             summary: transactionSummary,
           });
         }
@@ -134,9 +136,11 @@ const TransferBNI = ({ navigation }) => {
       parseIndonesianCurrency(nominal),
       note
     );
-    navigation.replace("TransferConfirm", {
+
+    navigation.navigate("TransferConfirm", {
       summary: transactionSummary,
     });
+    closeModal();
   };
 
   const handleCloseButtonClick = () => {
@@ -175,12 +179,6 @@ const TransferBNI = ({ navigation }) => {
 
   const handleNoteChange = (text) => {
     setNote(text); // Perbarui state nominal dengan nilai input
-  };
-
-  const handleTabPress = (tab) => {
-    setActiveButton(tab);
-    setActiveTabContent(tab);
-    resetValues();
   };
 
   const handleNextButtonPrimary = async () => {

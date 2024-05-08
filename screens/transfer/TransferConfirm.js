@@ -61,7 +61,7 @@ const TransferConfirm = ({ route, navigation }) => {
         summary.note,
         password
       );
-      navigation.navigate("TransferSuccess", {
+      navigation.replace("TransferSuccess", {
         summary: transactionSummary,
       });
     } catch (error) {
