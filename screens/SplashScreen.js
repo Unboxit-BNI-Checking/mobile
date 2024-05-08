@@ -8,7 +8,7 @@ const SplashScreenCustom = () => {
   const navigation = useNavigation();
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate("LoginScreen");
+      navigation.replace("LoginScreen");
     }, 2000);
   }, []);
 
