@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import TruncatedTextComponent from "../text/TruncatedTextComponent";
 
 const CardDataPelaporan = ({
   namaRekeningPelapor,
@@ -25,7 +26,7 @@ const CardDataPelaporan = ({
       <View style={styles.innerContainer}>
         <Text style={styles.headerText}>Transaksi yang dipilih</Text>
         <View style={styles.spaceBetweenRow}>
-          <Text style={styles.headerText}>{namaRekeningDilaporkan}</Text>
+          <Text style={styles.headerText}><TruncatedTextComponent text={namaRekeningDilaporkan} maxLength={25} /></Text>
           <Text style={styles.headerText}>-{nominalRekeningDilaporkan}</Text>
         </View>
         <View style={styles.spaceBetweenRow}>

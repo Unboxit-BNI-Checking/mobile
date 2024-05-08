@@ -118,17 +118,32 @@ const BuatLaporan = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Text
-                  style={{
-                    fontFamily: "PlusJakartaSansMedium",
-                    color: "#6B788E",
-                    fontSize: 12,
-                  }}
-                >
-                  <DateFormatComponent
-                    dateString={transaction.transaction_time}
-                  />
-                </Text>
+                <View style={{ flexDirection: "row", gap: 4 }}>
+                  <Text
+                    style={{
+                      fontFamily: "PlusJakartaSansBold",
+                      color: "#6B788E",
+                      fontSize: 12,
+                    }}
+                  >
+                    <DateFormatComponent
+                      dateString={transaction.transaction_time}
+                    />
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: "PlusJakartaSansMedium",
+                      marginRight: 8,
+                      textAlign: "right",
+                      fontSize: 12,
+                      color: amountColor,
+                    }}
+                  >
+                    <TimeFormatComponent
+                      timestamp={transaction.transaction_time}
+                    />
+                  </Text>
+                </View>
 
                 <View
                   style={{
@@ -155,7 +170,6 @@ const BuatLaporan = () => {
                 style={{
                   flex: 1,
                   flexDirection: "row",
-                  justifyContent: "space-between",
                 }}
               >
                 <Text
@@ -166,20 +180,8 @@ const BuatLaporan = () => {
                 >
                   <TruncatedTextComponent
                     text={transaction.account_destination_owner_name}
-                    maxLength={20}
+                    maxLength={28}
                   />
-                </Text>
-
-                <Text
-                  style={{
-                    fontFamily: "PlusJakartaSansBold",
-                    marginRight: 8,
-                    textAlign: "right",
-                    color: amountColor,
-                  }}
-                >
-                  -
-                  <RupiahFormatComponent value={transaction.amount} />
                 </Text>
               </View>
 
@@ -187,7 +189,8 @@ const BuatLaporan = () => {
                 style={{
                   flex: 1,
                   flexDirection: "row",
-                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: 4,
                 }}
               >
                 <Text
@@ -198,18 +201,21 @@ const BuatLaporan = () => {
                 >
                   {transaction.account_number_destination}
                 </Text>
-
+                <View
+                  style={{
+                    height: 4,
+                    width: 4,
+                    backgroundColor: "#6B788E",
+                    borderRadius: 100,
+                  }}
+                ></View>
                 <Text
                   style={{
                     fontFamily: "PlusJakartaSansMedium",
-                    marginRight: 8,
-                    textAlign: "right",
-                    color: amountColor,
+                    color: "#6B788E",
                   }}
                 >
-                  <TimeFormatComponent
-                    timestamp={transaction.transaction_time}
-                  />
+                  Bank Negara Indonesia
                 </Text>
               </View>
 
@@ -222,11 +228,13 @@ const BuatLaporan = () => {
               >
                 <Text
                   style={{
-                    fontFamily: "PlusJakartaSansMedium",
-                    color: "#6B788E",
+                    fontFamily: "PlusJakartaSansBold",
+
+                    textAlign: "right",
+                    color: amountColor,
                   }}
                 >
-                  Bank Negara Indonesia
+                  -<RupiahFormatComponent value={transaction.amount} />
                 </Text>
               </View>
             </View>
@@ -243,11 +251,16 @@ const BuatLaporan = () => {
               padding: 8,
             }}
           >
-            <Image
-              source={isSelected ? icons.icRadioActive : icons.icRadioInactive}
-              style={{ width: 20, height: 20 }}
-            />
             <View>
+              <Image
+                source={
+                  isSelected ? icons.icRadioActive : icons.icRadioInactive
+                }
+                style={{ width: 20, height: 20 }}
+              />
+            </View>
+
+            <View style={{ flex: 1 }}>
               <View
                 style={{
                   flex: 1,
@@ -255,11 +268,11 @@ const BuatLaporan = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <View>
+                <View style={{ flexDirection: "row", gap: 4 }}>
                   <Text
                     style={{
-                      fontFamily: "PlusJakartaSansMedium",
-                      color: textColor,
+                      fontFamily: "PlusJakartaSansBold",
+                      color: "#F15922",
                       fontSize: 12,
                     }}
                   >
@@ -267,58 +280,91 @@ const BuatLaporan = () => {
                       dateString={transaction.transaction_time}
                     />
                   </Text>
+                  <Text
+                    style={{
+                      fontFamily: "PlusJakartaSansMedium",
+                      marginRight: 8,
+                      textAlign: "right",
+                      fontSize: 12,
+                      color: amountColor,
+                    }}
+                  >
+                    <TimeFormatComponent
+                      timestamp={transaction.transaction_time}
+                    />
+                  </Text>
                 </View>
               </View>
-              <Text
-                style={{ fontFamily: "PlusJakartaSansBold", color: textColor }}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                }}
               >
-                <TruncatedTextComponent
-                  text={transaction.account_destination_owner_name}
-                  maxLength={20}
-                />
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansBold",
+                    color: textColor,
+                  }}
+                >
+                  <TruncatedTextComponent
+                    text={transaction.account_destination_owner_name}
+                    maxLength={28}
+                  />
+                </Text>
+              </View>
 
-              <Text
+              <View
                 style={{
-                  fontFamily: "PlusJakartaSansMedium",
-                  color: amountColor,
+                  flex: 1,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 4,
                 }}
               >
-                {transaction.account_number_destination}
-              </Text>
-              <Text
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansMedium",
+                    color: amountColor,
+                  }}
+                >
+                  {transaction.account_number_destination}
+                </Text>
+                <View
+                  style={{
+                    height: 4,
+                    width: 4,
+                    backgroundColor: amountColor,
+                    borderRadius: 100,
+                  }}
+                ></View>
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansMedium",
+                    color: amountColor,
+                  }}
+                >
+                  Bank Negara Indonesia
+                </Text>
+              </View>
+
+              <View
                 style={{
-                  fontFamily: "PlusJakartaSansMedium",
-                  color: amountColor,
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               >
-                {"Bank Negara Indonesia"}
-              </Text>
-            </View>
-            <View style={{ flex: 1 }}></View>
-            <View style={{}}>
-              <Text
-                style={{
-                  fontFamily: "PlusJakartaSansBold",
-                  marginRight: 8,
-                  textAlign: "right",
-                  color: amountColor,
-                }}
-              >
-                -
-                <RupiahFormatComponent value={transaction.amount} />
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "PlusJakartaSansMedium",
-                  marginRight: 8,
-                  color: "#6B788E",
-                  textAlign: "right",
-                  color: amountColor,
-                }}
-              >
-                <TimeFormatComponent timestamp={transaction.transaction_time} />
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSansBold",
+                    textAlign: "right",
+                    color: textColor,
+                  }}
+                >
+                  -<RupiahFormatComponent value={transaction.amount} />
+                </Text>
+              </View>
             </View>
           </View>
         )}
