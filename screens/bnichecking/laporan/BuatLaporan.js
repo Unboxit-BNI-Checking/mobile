@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";

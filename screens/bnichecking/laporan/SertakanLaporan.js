@@ -78,8 +78,7 @@ const SertakanLaporan = ({ route }) => {
           <CardDataPelaporan
             namaRekeningPelapor={transactionSummary.account_name_source}
             nomorRekeningPelapor={transactionSummary.account_number_source}
-            namaRekeningDilaporkan={transactionSummary.account_name_destination}
-            // nominalRekeningDilaporkan={transactionSummary.amount}
+            namaRekeningDilaporkan={transactionSummary.account_name_destination} 
             nominalRekeningDilaporkan={
               <RupiahFormatComponent value={transactionSummary.amount} />
             }

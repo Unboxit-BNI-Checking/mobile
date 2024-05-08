@@ -25,6 +25,7 @@ import {
 } from "react-native-alert-notification";
 import DateFormatComponent from "../../../component/text/DateFormatComponent";
 import RupiahFormatComponent from "../../../component/text/RupiahFormatComponent";
+import TimeFormatComponent from "../../../component/text/TimeFormatComponent";
 
 const SertakanLaporanSummary = ({ route }) => {
   const { transactionSummary, attachments, chronology } = route.params;
@@ -120,14 +121,9 @@ const SertakanLaporanSummary = ({ route }) => {
               }
               bankRekeningDilaporkan={"Bank Negara Indonesia"}
               jamTransaksiDilaporkan={
-                new Date(
-                  transactionSummary.transaction_time
-                ).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                  hour12: false,
-                }) + " WIB"
+                <TimeFormatComponent
+                  timestamp={transactionSummary.transaction_time}
+                />
               }
             />
             <View style={styles.separator}></View>
