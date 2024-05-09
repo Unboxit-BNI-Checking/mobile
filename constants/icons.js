@@ -52,6 +52,7 @@ import icBiometricLoginForm from "../assets/icons/ic-biometric-login-form.png";
 import icNoReport from "../assets/icons/ic-no-report.png";
 import icTambahkanLaporan from "../assets/icons/ic-tambahkan-laporan.png";
 import icLogOut from "../assets/icons/ic-keluar-home.png";
+import icWarning from "../assets/icons/ic-warning.png";
 
 
 export default {
@@ -109,4 +110,5 @@ export default {
   icNoReport,
   icTambahkanLaporan,
   icLogOut,
+  icWarning
 };
