@@ -35,8 +35,8 @@ const ButtonPrimary = ({
             <Text style={textStyles}>{text}</Text>
             <Image
               source={iconUrl}
-              style={styles.btnImg(dimension)}
-              resizeMode="contain"
+              style={[styles.btnImg(dimension) ] }
+              resizeMode="cover"
             />
           </>
         )}
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    marginRight: 10,
+    marginRight: 5,
     fontFamily: "PlusJakartaSansMedium",
   },
   disabledButton: {
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   btnImg: (dimension) => ({
     width: dimension,
     height: dimension,
+    marginTop: 3,
   }),
   loadingIndicator: {
     marginRight: 10, // Adjust margin to separate loading indicator from text

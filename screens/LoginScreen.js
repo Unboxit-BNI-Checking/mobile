@@ -104,7 +104,6 @@ const LoginScreen = () => {
         />
         <View style={styles.logoContainer}>
           <Image source={images.bnilogo} style={styles.logo} />
-          {/* <Text style={styles.logoText}>Melayani Negeri Kebanggaan Bangsa</Text> */}
         </View>
 
         <View style={styles.buttonContainer}>
@@ -112,7 +111,7 @@ const LoginScreen = () => {
             <ButtonPrimary
               text="Login"
               iconUrl={icons.icBiometricLogin}
-              dimension={20}
+              dimension={22}
               onPress={openModal}
             />
           </View>
@@ -281,7 +280,6 @@ const styles = StyleSheet.create({
   },
   bottomSheet: {
     backgroundColor: "white",
-
     marginHorizontal: 20,
     borderRadius: 20,
     padding: 20,
