@@ -9,7 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/material-top-tabs": "^6.6.13",
     "@react-navigation/native": "^6.1.17",
@@ -19,7 +19,7 @@
     "expo-checkbox": "~2.7.0",
     "expo-font": "~11.10.3",
     "expo-image-picker": "~14.7.1",
-    "expo-router": "^3.4.9",
+    "expo-router": "^3.4.10",
     "expo-splash-screen": "^0.26.5",
     "form-data": "^4.0.0",
     "react": "18.2.0",
