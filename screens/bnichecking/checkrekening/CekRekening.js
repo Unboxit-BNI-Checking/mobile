@@ -49,7 +49,7 @@ const CekRekening = () => {
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <CustomAppBar
           title="Cek Rekening"
-          onLeftPress={() => navigation.navigate("BNIChecking")}
+          onLeftPress={() => navigation.goBack()}
           leftIcon={icons.icArrowForward}
           dimension={24}
         />

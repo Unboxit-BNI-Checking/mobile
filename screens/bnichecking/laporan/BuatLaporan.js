@@ -378,7 +378,7 @@ const BuatLaporan = () => {
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Pelapor"
-        onLeftPress={() => navigation.navigate("Pelaporan")}
+        onLeftPress={() => navigation.goBack()}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />

@@ -48,8 +48,6 @@ const HasilCekRekening = ({ route, navigation }) => {
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Hasil Cek Rekening"
-        // onLeftPress={() => navigation.goBack()}
-        // leftIcon={icons.icArrowForward}
         dimension={24}
       />
       <View style={styles.container}>

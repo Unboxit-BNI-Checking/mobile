@@ -7,9 +7,7 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
-  Alert,
   StatusBar,
-  ToastAndroid,
 } from "react-native";
 import ButtonPrimary from "../../component/button/ButtonPrimary";
 import { Dropdown } from "react-native-element-dropdown";
@@ -95,7 +93,7 @@ const TransferBNI = ({ navigation }) => {
             transactionSummary.is_favourite === 0 &&
             transactionSummary.account_number_destination_status === 1
           ) {
-            navigation.replace("TransferConfirm", {
+            navigation.navigate("TransferConfirm", {
               summary: transactionSummary,
             });
           } else if (transactionSummary.is_favourite === 1) {
@@ -134,7 +132,7 @@ const TransferBNI = ({ navigation }) => {
             (transactionSummary.is_favourite === 0 ||
               transactionSummary.is_favourite === 2)
           ) {
-            navigation.replace("TransferConfirm", {
+            navigation.navigate("TransferConfirm", {
               summary: transactionSummary,
             });
           } else {

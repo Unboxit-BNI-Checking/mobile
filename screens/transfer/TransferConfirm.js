@@ -94,7 +94,7 @@ const TransferConfirm = ({ route, navigation }) => {
         <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <CustomAppBar
           title="Validasi"
-          onLeftPress={() => navigation.replace("TransferBNI")}
+          onLeftPress={() => navigation.goBack()}
           leftIcon={icons.icArrowForward}
           dimension={24}
         />
