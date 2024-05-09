@@ -232,7 +232,7 @@ const TransferBNI = ({ navigation }) => {
         <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <CustomAppBar
           title="Transfer Antar BNI"
-          onLeftPress={() => navigation.replace("Transfer")}
+          onLeftPress={() => navigation.goBack()}
           leftIcon={icons.icArrowForward}
           dimension={24}
         />
