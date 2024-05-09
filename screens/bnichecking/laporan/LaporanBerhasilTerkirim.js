@@ -42,12 +42,25 @@ const LaporanBerhasilTerkirim = () => {
           closeName={"Balik Ke Home"}
           nextName={"Lihat Laporan"}
           handleNextButtonClick={() => {
+            // navigation.reset({
+            //    routes: [{ name: "Pelaporan" }],
+            // })
             navigation.reset({
-               routes: [{ name: "Pelaporan" }],
-            })
+              index: 1,
+              routes: [
+                { name: "Tabs" },
+                { name: "BNIChecking" },
+                { name: "Pelaporan" }, 
+              ],
+            });
           }}
           handleCloseButtonClick={() => {
-            navigation.replace("Tabs");
+            navigation.reset({
+              index: 0,
+              routes: [
+                { name: "Tabs" },
+              ],
+            });
           }}
         />
       </View>

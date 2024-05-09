@@ -58,8 +58,15 @@ const SertakanLaporanSummary = ({ route }) => {
 
       if (success) {
         navigation.reset({
-          routes: [{ name: "LaporanBerhasilTerkirim" }],
+          index: 2,
+          routes: [
+            { name: "Tabs" },
+            { name: "BNIChecking" },
+            { name: "Pelaporan" }, 
+            { name: "LaporanBerhasilTerkirim" },
+          ],
         });
+        
       }
     } catch (error) {
       Toast.show({

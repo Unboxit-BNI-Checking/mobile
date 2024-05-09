@@ -93,7 +93,7 @@ const Pelaporan = () => {
        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Pelaporan"
-        onLeftPress={() => navigation.replace("BNIChecking")}
+        onLeftPress={() => navigation.goBack()}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />
@@ -264,7 +264,7 @@ const Pelaporan = () => {
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.replace("BuatLaporan")}
+          onPress={() => navigation.navigate("BuatLaporan")}
         >
           <View style={{ flexDirection: "row", gap: 8 }}>
             <MaterialIcon name="add" size={24} color="#fff" />
