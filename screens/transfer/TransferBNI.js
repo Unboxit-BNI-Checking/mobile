@@ -85,7 +85,7 @@ const TransferBNI = ({ navigation }) => {
         setStatus(transactionSummary.account_number_destination_status ?? 1);
         if (isChecked) {
           // isChecked = true
-          // 4. nomer rekening sama dan nama sama persis dia langsung (0)
+          // 4. nomer rekening sama dan nama sama persis dia  isfavourite === (0)
           // 7. nomer rekening tidak ada dan nama tidak ada maka dia nge save (1)
           // 5. nomer rekening sama tapi nama beda maka dia alert nomer rekening ada (2)
           // 6. nomer rekening beda tapi ada nama yang sama maka dia alert nama sudah terdaftar (3)
@@ -127,6 +127,7 @@ const TransferBNI = ({ navigation }) => {
           // 1. dia kalau ada di daftar favorite maka langsung (0)
           // 2. kalau dia input baru tanpa dia tidak centang dia akan pop up (4)
           // 3. kalau dia input baru nomer rekening ada difavorite (2)
+
           if (
             transactionSummary.account_number_destination_status === 1 &&
             (transactionSummary.is_favourite === 0 ||
@@ -183,6 +184,14 @@ const TransferBNI = ({ navigation }) => {
       AsyncStorage.setItem("isWarningOn", "0");
     } else {
       AsyncStorage.setItem("isWarningOn", "1");
+    }
+  };
+
+  const handleCheckboxFavouriteChange = () => {
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+    if (!newCheckedState) {
+        setFavouriteName(null);
     }
   };
 
@@ -471,7 +480,7 @@ const TransferBNI = ({ navigation }) => {
 
                 <CheckboxCustom
                   value={isChecked}
-                  onValueChange={setIsChecked}
+                  onValueChange={handleCheckboxFavouriteChange}
                   label="Simpan ke Daftar Favorit"
                 />
                 <TextInput
