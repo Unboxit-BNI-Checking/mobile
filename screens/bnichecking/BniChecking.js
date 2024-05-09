@@ -1,4 +1,11 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  StatusBar,
+} from "react-native";
 import icons from "../../constants/icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,15 +25,13 @@ const data = [
     image: icons.icPelaporan,
   },
 ];
-const BniChecking = () => {
-  const navigation = useNavigation();
-
+const BniChecking = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="BNI Checking"
-        onLeftPress={() => navigation.reset({ routes: [{ name: "Tabs" }] })}
+        onLeftPress={() => navigation.goBack()}
         leftIcon={icons.icArrowForward}
         dimension={24}
       />

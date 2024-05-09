@@ -30,15 +30,22 @@ const HasilCekRekening = ({ route, navigation }) => {
   };
 
   const handleNextButtonClick = () => {
-    navigation.replace("CekRekening");
+    navigation.reset({
+      index: 0,
+      routes: [
+        { name: "Tabs" },
+        { name: "BNIChecking" },
+        { name: "CekRekening" },
+      ],
+    });
   };
 
   const handleCloseButtonClick = () => {
-    navigation.replace("Tabs");
+    navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Hasil Cek Rekening"
         // onLeftPress={() => navigation.goBack()}
