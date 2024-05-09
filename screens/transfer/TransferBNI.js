@@ -213,36 +213,36 @@ const TransferBNI = ({ navigation }) => {
   };
 
   const handleNextButtonPrimary = async () => {
-    AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
-      if (isWarningOn === "1") {
-        if (parseIndonesianCurrency(nominal) < 1) {
-          setModalTitle("Perhatian");
-          setModalMessage(
-            "Silahkan isi nominal dengan benar untuk melanjutkan transaksi."
-          );
-          setModalConfirmText("Tutup");
-          setIsModalNotification(true);
-        } else if (selectedBalance < parseIndonesianCurrency(nominal)) {
-          setModalTitle("Perhatian");
-          setModalMessage(
-            "Saldo pada rekening Anda tidak cukup. Pastikan saldo Anda tersedia dan silahkan ulangi transaksi Anda."
-          );
-          setModalConfirmText("Tutup");
-          setIsModalNotification(true);
-        } else if (accountNumberDestination.length !== 10) {
-          setModalTitle("Perhatian");
-          setModalMessage(
-            "Transaksi anda tidak dapat diproses. Nomor rekening yang anda masukkan tidak valid. Silahkan ulangi transaksi Anda."
-          );
-          setModalConfirmText("Tutup");
-          setIsModalNotification(true);
-        } else {
+    if (parseIndonesianCurrency(nominal) < 1) {
+      setModalTitle("Perhatian");
+      setModalMessage(
+        "Silahkan isi nominal dengan benar untuk melanjutkan transaksi."
+      );
+      setModalConfirmText("Tutup");
+      setIsModalNotification(true);
+    } else if (selectedBalance < parseIndonesianCurrency(nominal)) {
+      setModalTitle("Perhatian");
+      setModalMessage(
+        "Saldo pada rekening Anda tidak cukup. Pastikan saldo Anda tersedia dan silahkan ulangi transaksi Anda."
+      );
+      setModalConfirmText("Tutup");
+      setIsModalNotification(true);
+    } else if (accountNumberDestination.length !== 10) {
+      setModalTitle("Perhatian");
+      setModalMessage(
+        "Transaksi anda tidak dapat diproses. Nomor rekening yang anda masukkan tidak valid. Silahkan ulangi transaksi Anda."
+      );
+      setModalConfirmText("Tutup");
+      setIsModalNotification(true);
+    } else {
+      AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
+        if (isWarningOn === "1") {
           openModal();
+        } else {
+          await handleNextButtonClick();
         }
-      } else {
-        await handleNextButtonClick();
-      }
-    });
+      });
+    }
   };
 
   const resetValues = () => {
