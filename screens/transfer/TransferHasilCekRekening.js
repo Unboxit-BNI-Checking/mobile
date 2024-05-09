@@ -40,15 +40,13 @@ const TransferHasilCekRekening = ({ route, navigation }) => {
   };
 
   const handleCloseButtonClick = () => {
-    navigation.replace("TransferBNI");
+    navigation.goBack();
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar
         title="Hasil Cek Rekening"
-        // onLeftPress={() => navigation.goBack()}
-        // leftIcon={icons.icArrowForward}
         dimension={24}
       />
       <View style={styles.container}>

@@ -77,7 +77,6 @@ const Transfer = () => {
           <View style={styles.contentMenu} key={item.id}>
             <TouchableOpacity
               key={item.id}
-              // onPress={() => sampleCallback(item.name)}\
               onPress={() => handleButtonMenu(item)}
             >
               <View>

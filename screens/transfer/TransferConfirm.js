@@ -62,9 +62,14 @@ const TransferConfirm = ({ route, navigation }) => {
         summary.note,
         password
       );
-      navigation.replace("TransferSuccess", {
-        summary: transactionSummary,
+      navigation.reset({
+        index: 0,
+        routes: [
+          { name: "Tabs" }, 
+          { name: "TransferSuccess", params: { summary: transactionSummary } },
+        ],
       });
+      
     } catch (error) {
       if (error.response && error.response.status === 400) {
         Dialog.show({

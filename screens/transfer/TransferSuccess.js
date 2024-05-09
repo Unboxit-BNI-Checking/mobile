@@ -19,6 +19,7 @@ import ModalStatusInformation from "../../component/modal/ModalStatusInformation
 import RupiahFormatComponent from "../../component/text/RupiahFormatComponent";
 import DateFormatComponent from "../../component/text/DateFormatComponent";
 import TimeFormatComponent from "../../component/text/TimeFormatComponent";
+import { StackActions } from "@react-navigation/native";
 
 const TransferSuccess = ({ route, navigation }) => {
   const { summary } = route.params;
@@ -33,7 +34,7 @@ const TransferSuccess = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-       <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+      <StatusBar backgroundColor={"white"} barStyle="dark-content" />
       <CustomAppBar title="Status" />
       <ScrollView>
         <View style={styles.contentContainer}>
@@ -54,7 +55,9 @@ const TransferSuccess = ({ route, navigation }) => {
           />
           <LabelValidasiComponent
             title={"Tanggal Transaksi"}
-            subTitle={<DateFormatComponent dateString={summary.transaction_time} />}
+            subTitle={
+              <DateFormatComponent dateString={summary.transaction_time} />
+            }
           />
           <LabelValidasiComponent
             title={"Waktu Transaksi"}
@@ -99,7 +102,14 @@ const TransferSuccess = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                navigation.navigate("Transfer");
+                // navigation.replace("Transfer");
+                navigation.reset({
+                  index: 0,
+                  routes: [
+                    { name: "Tabs" }, 
+                    { name: "Transfer"},
+                  ],
+                });
               }}
             >
               <Image
@@ -124,7 +134,7 @@ const TransferSuccess = ({ route, navigation }) => {
         <ButtonPrimary
           text="Kembali Ke Home"
           onPress={() => {
-            navigation.replace("Tabs");
+            navigation.dispatch(StackActions.popToTop());
           }}
         />
       </View>
