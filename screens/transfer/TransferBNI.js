@@ -107,9 +107,9 @@ const TransferBNI = ({ navigation }) => {
         setStatus(transactionSummary.account_number_destination_status ?? 1);
         if (
           transactionSummary.account_number_destination_status == 1 &&
-          transactionSummary.is_favourite
+          transactionSummary.is_favourite === 0
         ) {
-          navigation.navigate("TransferConfirm", {
+          navigation.replace("TransferConfirm", {
             summary: transactionSummary,
           });
         }
