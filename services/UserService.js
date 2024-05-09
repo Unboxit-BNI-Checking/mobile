@@ -23,6 +23,7 @@ export const userLogout = async () => {
   try {
     // Remove token from AsyncStorage
     await AsyncStorage.removeItem("token");
+    await AsyncStorage.setItem("isWarningOn", "1");
     return true;
   } catch (error) {
     console.error("Error logging out:", error);

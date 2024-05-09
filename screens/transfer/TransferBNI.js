@@ -9,6 +9,7 @@ import {
   ScrollView,
   Alert,
   StatusBar,
+  ToastAndroid,
 } from "react-native";
 import ButtonPrimary from "../../component/button/ButtonPrimary";
 import { Dropdown } from "react-native-element-dropdown";
@@ -83,8 +84,25 @@ const TransferBNI = ({ navigation }) => {
       isChecked
     )
       .then((transactionSummary) => {
-        switch (transactionSummary.is_favourite) {
-          case 2:
+        setStatus(transactionSummary.account_number_destination_status ?? 1);
+        if (isChecked) {
+          // isChecked = true
+          // 4. nomer rekening sama dan nama sama persis dia langsung (0)
+          // 7. nomer rekening tidak ada dan nama tidak ada maka dia nge save (1)
+          // 5. nomer rekening sama tapi nama beda maka dia alert nomer rekening ada (2)
+          // 6. nomer rekening beda tapi ada nama yang sama maka dia alert nama sudah terdaftar (3)
+          if (
+            transactionSummary.is_favourite === 0 &&
+            transactionSummary.account_number_destination_status === 1
+          ) {
+            navigation.replace("TransferConfirm", {
+              summary: transactionSummary,
+            });
+          } else if (transactionSummary.is_favourite === 1) {
+            // ToastAndroid.show("Favorit sudah ditambahkan", ToastAndroid.SHORT);
+            setModalVisible(true);
+            return;
+          } else if (transactionSummary.is_favourite === 2) {
             Dialog.show({
               type: ALERT_TYPE.WARNING,
               title: "Perhatian",
@@ -93,7 +111,7 @@ const TransferBNI = ({ navigation }) => {
               button: "Tutup",
             });
             return;
-          case 3:
+          } else if (transactionSummary.is_favourite === 3) {
             Dialog.show({
               type: ALERT_TYPE.WARNING,
               title: "Perhatian",
@@ -102,18 +120,28 @@ const TransferBNI = ({ navigation }) => {
               button: "Tutup",
             });
             return;
+          } else {
+            setModalVisible(true);
+            return;
+          }
+        } else {
+          // isChecked = false
+          // 1. dia kalau ada di daftar favorite maka langsung (0)
+          // 2. kalau dia input baru tanpa dia tidak centang dia akan pop up (4)
+          // 3. kalau dia input baru nomer rekening ada difavorite (2)
+          if (
+            transactionSummary.account_number_destination_status === 1 &&
+            (transactionSummary.is_favourite === 0 ||
+              transactionSummary.is_favourite === 2)
+          ) {
+            navigation.replace("TransferConfirm", {
+              summary: transactionSummary,
+            });
+          } else {
+            setModalVisible(true);
+            return;
+          }
         }
-
-        setStatus(transactionSummary.account_number_destination_status ?? 1);
-        if (
-          transactionSummary.account_number_destination_status == 1 &&
-          transactionSummary.is_favourite === 0
-        ) {
-          navigation.replace("TransferConfirm", {
-            summary: transactionSummary,
-          });
-        }
-        setModalVisible(true);
       })
       .catch((error) => {
         Dialog.show({
@@ -134,7 +162,9 @@ const TransferBNI = ({ navigation }) => {
       accountNumberSource,
       accountNumberDestination,
       parseIndonesianCurrency(nominal),
-      note
+      note,
+      favouriteName ? favouriteName.trim() : "",
+      isChecked
     );
 
     navigation.navigate("TransferConfirm", {
