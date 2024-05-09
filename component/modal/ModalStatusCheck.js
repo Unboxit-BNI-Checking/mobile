@@ -149,15 +149,15 @@ const ModalStatusCheck = ({
               </Text>
             ) : null}
           </View>
-          {status !== 1 ? null : (
-            <View style={{ marginTop: 5, marginBottom: 10 }}>
+        
+            <View style={{ marginTop: 5, marginBottom: 5 }}>
               <CheckboxCustom
                 value={isChecked}
                 onValueChange={handleCheckboxChange}
                 label="Jangan tunjukan ini lagi hari ini"
               />
             </View>
-          )}
+         
 
           <View style={{ marginTop: 10 }}>
             <ButtonNextClose
