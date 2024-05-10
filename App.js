@@ -1,6 +1,6 @@
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useFonts } from "expo-font";
 import Transfer from "./screens/transfer/Transfer";
 import Tabs from "./screens/(tabs)/tabs";
@@ -19,7 +19,6 @@ import SertakanLaporanSummary from "./screens/bnichecking/laporan/SertakanLapora
 import SplashScreenCustom from "./screens/SplashScreen";
 import LoginScreen from "./screens/LoginScreen";
 import BniChecking from "./screens/bnichecking/BniChecking";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import TransferHasilCekRekening from "./screens/transfer/TransferHasilCekRekening";
 
 // import * as SplashScreen from "expo-splash-screen";
