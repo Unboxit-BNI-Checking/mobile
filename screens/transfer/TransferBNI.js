@@ -30,7 +30,6 @@ const TransferBNI = ({ navigation }) => {
   const [activeTabContent, setActiveTabContent] = useState("Daftar Favorit");
   const [dataNomorRekening, setDataNomorRekening] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
-  const [isCheckedModal, setIsCheckedModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [status, setStatus] = useState(1);
   const [nominal, setNominal] = useState("");
@@ -168,18 +167,10 @@ const TransferBNI = ({ navigation }) => {
 
   const handleCloseButtonClick = () => {
     setModalVisible(!modalVisible);
-    AsyncStorage.setItem("isWarningOn", "1");
-    setIsCheckedModal(false);
+    
   };
 
-  const handleCheckboxChange = () => {
-    setIsCheckedModal(!isCheckedModal);
-    if (!isCheckedModal) {
-      AsyncStorage.setItem("isWarningOn", "0");
-    } else {
-      AsyncStorage.setItem("isWarningOn", "1");
-    }
-  };
+
 
   const handleCheckboxFavouriteChange = () => {
     const newCheckedState = !isChecked;
@@ -235,13 +226,7 @@ const TransferBNI = ({ navigation }) => {
       setModalConfirmText("Tutup");
       setIsModalNotification(true);
     } else {
-      AsyncStorage.getItem("isWarningOn").then(async (isWarningOn) => {
-        if (isWarningOn === "1") {
-          openModal();
-        } else {
-          await handleNextButtonClick();
-        }
-      });
+      openModal();
     }
   };
 
@@ -518,8 +503,6 @@ const TransferBNI = ({ navigation }) => {
           modalVisible={modalVisible}
           handleNextButtonClick={handleNextButtonClick}
           handleCloseButtonClick={handleCloseButtonClick}
-          isChecked={isCheckedModal}
-          handleCheckboxChange={handleCheckboxChange}
           accountNumberDestination={accountNumberDestination}
           accountNumberSource={accountNumberSource}
           nominal={nominal}

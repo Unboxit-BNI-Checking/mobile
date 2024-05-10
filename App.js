@@ -23,9 +23,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import TransferHasilCekRekening from "./screens/transfer/TransferHasilCekRekening";
 
 // import * as SplashScreen from "expo-splash-screen";
-
-AsyncStorage.setItem("isWarningOn", JSON.stringify(1));
-
 // SplashScreen.preventAutoHideAsync();
 export default function App() {
   const Stack = createNativeStackNavigator();

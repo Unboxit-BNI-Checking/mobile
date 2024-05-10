@@ -92,8 +92,6 @@ const ModalStatusCheck = ({
   status,
   handleNextButtonClick,
   handleCloseButtonClick,
-  handleCheckboxChange,
-  isChecked,
   accountNumberDestination,
   accountNumberSource,
   nominal,
@@ -148,16 +146,7 @@ const ModalStatusCheck = ({
                 Apakah Anda yakin tetap ingin melanjutkan?
               </Text>
             ) : null}
-          </View>
-        
-            <View style={{ marginTop: 5, marginBottom: 5 }}>
-              <CheckboxCustom
-                value={isChecked}
-                onValueChange={handleCheckboxChange}
-                label="Jangan tunjukan ini lagi hari ini"
-              />
-            </View>
-         
+          </View> 
 
           <View style={{ marginTop: 10 }}>
             <ButtonNextClose
