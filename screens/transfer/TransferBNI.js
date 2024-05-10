@@ -141,7 +141,11 @@ const TransferBNI = ({ navigation }) => {
         }
       })
       .catch((error) => {
-        console.error("Error validating transaction:", error);
+        // console.error("Error validating transaction:", error);
+        setModalTitle("Perhatian");
+        setModalMessage("Transaksi anda tidak dapat diproses. Nomor rekening yang anda masukkan tidak valid. Silahkan ulangi transaksi Anda.");
+        setModalConfirmText("Tutup");
+        setIsModalNotification(true);
       });
   };
   const closeModal = () => {
@@ -166,10 +170,7 @@ const TransferBNI = ({ navigation }) => {
 
   const handleCloseButtonClick = () => {
     setModalVisible(!modalVisible);
-    
   };
-
-
 
   const handleCheckboxFavouriteChange = () => {
     const newCheckedState = !isChecked;
