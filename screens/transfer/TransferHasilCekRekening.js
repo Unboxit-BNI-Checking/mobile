@@ -1,10 +1,8 @@
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   StyleSheet,
-  Modal,
   StatusBar,
 } from "react-native";
 import React, { useState } from "react";

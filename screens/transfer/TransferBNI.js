@@ -19,7 +19,6 @@ import getFavouriteData from "../../services/FavouriteService";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusCheck from "../../component/modal/ModalStatusCheck";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { validateTransaction } from "../../services/TransactionService";
 import { parseIndonesianCurrency } from "../../util/parseIndonesianCurrency";
 import ModalNotification from "../../component/modal/ModalNotification";

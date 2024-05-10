@@ -7,8 +7,6 @@ import {
   StyleSheet,
   Modal,
   TextInput,
-  Alert,
-  ActivityIndicator,
   StatusBar,
 } from "react-native";
 import images from "../constants/images";

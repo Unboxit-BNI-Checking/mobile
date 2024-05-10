@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TextInput,
   ScrollView,
@@ -14,14 +13,12 @@ import LabelValidasiComponent from "../../component/label/LabelValidasiComponent
 import LabelValidasiPengirimComponent from "../../component/label/LabelValidasiPengirimComponent";
 import LabelStatusComponent from "../../component/label/LabelStatusComponent";
 import ButtonPrimary from "../../component/button/ButtonPrimary";
-
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../component/header/CustomAppBar";
 import ModalStatusInformation from "../../component/modal/ModalStatusInformation";
 import { createNewTransaction } from "../../services/TransactionService";
 import RupiahFormatComponent from "../../component/text/RupiahFormatComponent";
-
 import ModalNotification from "../../component/modal/ModalNotification";
 
 const TransferConfirm = ({ route, navigation }) => {

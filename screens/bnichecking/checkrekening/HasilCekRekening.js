@@ -8,13 +8,11 @@ import {
   StatusBar,
 } from "react-native";
 import React, { useState } from "react";
-import icons from "../../../constants/icons";
 
 import ButtonNextClose from "../../../component/button/ButtonNextClose";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppBar from "../../../component/header/CustomAppBar";
 import ModalStatusInformation from "../../../component/modal/ModalStatusInformation";
-import LabelValidasiComponent from "../../../component/label/LabelValidasiComponent";
 import LabelStatusComponent from "../../../component/label/LabelStatusComponent";
 
 const HasilCekRekening = ({ route, navigation }) => {

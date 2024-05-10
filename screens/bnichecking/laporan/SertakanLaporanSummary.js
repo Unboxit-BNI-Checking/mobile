@@ -2,12 +2,10 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   Image,
   ScrollView,
   TouchableOpacity,
   Modal,
-  Alert,
   StatusBar,
 } from "react-native";
 import React, { useState } from "react";
