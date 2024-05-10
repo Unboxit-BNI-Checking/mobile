@@ -1,8 +1,4 @@
-import {
-  View,
-  Platform,
-  Image,
-} from "react-native";
+import { View, Platform, Image } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./home";
@@ -68,6 +64,12 @@ const Tabs = () => {
       <Tab.Screen
         name="Riwayat"
         component={Riwayat}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            // Prevent default action
+            e.preventDefault();
+          },
+        })}
         options={{
           title: "Riwayat",
           tabBarLabelStyle: {
@@ -92,6 +94,12 @@ const Tabs = () => {
       <Tab.Screen
         name="Qris"
         component={Qris}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            // Prevent default action
+            e.preventDefault();
+          },
+        })}
         options={{
           title: "",
           tabBarLabelStyle: {
@@ -127,6 +135,12 @@ const Tabs = () => {
       <Tab.Screen
         name="Favorite"
         component={Favorite}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            // Prevent default action
+            e.preventDefault();
+          },
+        })}
         options={{
           title: "Favorite",
           tabBarLabelStyle: {
@@ -151,6 +165,12 @@ const Tabs = () => {
       <Tab.Screen
         name="Pengaturan"
         component={Pengaturan}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            // Prevent default action
+            e.preventDefault();
+          },
+        })}
         options={{
           title: "Pengaturan",
           tabBarLabelStyle: {
