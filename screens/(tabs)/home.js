@@ -240,16 +240,16 @@ export default function Home({ navigation }) {
           }
         >
           <View>
-            <View style={{ height: 260 }}>
+            <View style={{ height: 250 }}>
               <View
                 style={{
                   backgroundColor: "#F37548",
-                  height: "82%",
-                  borderBottomLeftRadius: 50,
-                  borderBottomRightRadius: 50,
+                  height: "68%",
+                  borderBottomLeftRadius: 28,
+                  borderBottomRightRadius: 28,
                 }}
               >
-                <View style={{ marginHorizontal: 16, marginTop: 14 }}>
+                <View style={{ marginHorizontal: 16, marginTop: 10 }}>
                   <Text
                     style={{
                       color: "white",
@@ -283,7 +283,8 @@ export default function Home({ navigation }) {
                     top: 0,
                     left: 0,
                     right: 0,
-                    marginTop: -130,
+                    marginTop: -90,
+
                     paddingHorizontal: 16,
                     paddingVertical: 14,
                     backgroundColor: "white",
@@ -453,6 +454,13 @@ export default function Home({ navigation }) {
               </View>
             </View>
             <MenuComponent />
+            <View
+              style={{
+                height: 8,
+                backgroundColor: "#F5F6F7",
+                marginTop: 16
+              }}
+            ></View>
             <PromotionComponent />
           </View>
         </ScrollView>
