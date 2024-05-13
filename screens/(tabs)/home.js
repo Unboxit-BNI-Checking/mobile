@@ -43,27 +43,28 @@ const data = [
   },
   {
     id: 4,
+    name: "Rekeningku",
+    route: "transfer/TransferRekeningku",
+    image: icons.icRekeningku,
+  },
+
+  {
+    id: 5,
     name: "Pembelian",
     route: "transfer/TransferPembelian",
     image: icons.icPembelian,
   },
   {
-    id: 5,
-    name: "Investasi",
-    route: "transfer/TransferInvestasi",
-    image: icons.icInvestasi,
-  },
-  {
     id: 6,
-    name: "Rekeningku",
-    route: "transfer/TransferRekeningku",
-    image: icons.icRekeningku,
-  },
-  {
-    id: 7,
     name: "BNI\nChecking",
     route: "BNIChecking",
     image: icons.icKredible,
+  },
+  {
+    id: 7,
+    name: "Investasi",
+    route: "transfer/TransferInvestasi",
+    image: icons.icInvestasi,
   },
   {
     id: 8,
